@@ -28,7 +28,7 @@ public class StudentDAO {
     public Student getStudentById(int userId) {
         // Prepare the queries for both users and students tables
         String userQuery = "SELECT * FROM users WHERE user_id = ?";
-        String studentQuery = "SELECT * FROM students WHERE student_id = ?";
+        String studentQuery = "SELECT * FROM students WHERE user_id = ?";
 
         try (PreparedStatement userStmt = connection.prepareStatement(userQuery);
              PreparedStatement studentStmt = connection.prepareStatement(studentQuery)) {

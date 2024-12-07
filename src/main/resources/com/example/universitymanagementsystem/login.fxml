@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="370.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.LoginController">
    <children>
-      <TextField fx:id="emailField" layoutX="153.0" layoutY="125.0" promptText="User Name" />
+      <TextField fx:id="userIdField" layoutX="153.0" layoutY="125.0" promptText="User Name" />
       <PasswordField fx:id="passwordField" layoutX="154.0" layoutY="173.0" promptText="********" />
       <Button layoutX="213.0" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#handleLogin" text="Login" />
    </children>

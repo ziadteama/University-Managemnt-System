@@ -52,19 +52,13 @@ public class LoginController {
 
         if (isAuthentic) {
             Student student = studentDAO.getStudentById(userIdInt);
-            if (student != null) {
-                System.out.println("Student object fetched: " + student.getName()); // Debugging log
-                redirectToDashboard(student);
-            } else {
-                errorLabel.setText("Student data not found!");
-                errorLabel.setVisible(true);
-            }
+            redirectToDashboard(student);
         } else {
+            // Incorrect credentials, show error label
             errorLabel.setText("Invalid credentials! Please try again.");
             errorLabel.setVisible(true);
         }
     }
-
 
     private void redirectToDashboard(Student student) {
         try {
