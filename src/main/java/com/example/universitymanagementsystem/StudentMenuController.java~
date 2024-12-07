@@ -9,7 +9,6 @@ import java.sql.SQLException;
 public class StudentMenuController {
     private Student student;
 
-
     @FXML
     private Label helloUser;
 
@@ -22,22 +21,23 @@ public class StudentMenuController {
             this.studentDAO = new StudentDAO(dbConnection); // Pass the connection to DAO
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Database connection failed.");
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     public void initialize() {
         if (student != null) {
             helloUser.setText("Hello, " + student.getName());
+        } else {
+            System.out.println("Student object is null!"); // Debugging log
         }
-        else helloUser.setText("data retrieval error");
     }
 
     public void setStudent(Student student) {
         this.student = student;
+        System.out.println("Student object set in StudentMenuController: " + student.getName()); // Debugging log
+       // initialize();  // Ensure the label is updated after the student is set
     }
-
 }

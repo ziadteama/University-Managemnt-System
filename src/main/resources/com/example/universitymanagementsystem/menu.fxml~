@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="400.0" prefWidth="199.0" spacing="10.0" style="-fx-background-color: #e2ddd9;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"  xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.universitymanagementsystem.MenuController">
+    <children>
+        <!-- Invisible spacers for even distribution -->
+        <AnchorPane VBox.vgrow="ALWAYS" />
+        <Button mnemonicParsing="false" text="Registration" VBox.vgrow="NEVER" />
+        <AnchorPane VBox.vgrow="ALWAYS" />
+        <Button mnemonicParsing="false" text="Results" VBox.vgrow="NEVER"  />
+        <AnchorPane VBox.vgrow="ALWAYS" />
+        <Button mnemonicParsing="false" text="Withdrawal Request" VBox.vgrow="NEVER"  />
+        <AnchorPane VBox.vgrow="ALWAYS" />
+        <Button mnemonicParsing="false" text="Logout" VBox.vgrow="NEVER" onAction="#handleLogout" />
+        <AnchorPane VBox.vgrow="ALWAYS" />
+    </children>
+</VBox>
