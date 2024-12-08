@@ -11,20 +11,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="537.0" prefWidth="878.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.StudentMenuController">
    <children>
       <!-- Navigation bar VBox -->
-      <VBox alignment="CENTER" prefHeight="537.0" prefWidth="181.0" spacing="10.0" style="-fx-background-color: #e2ddd9;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <!-- Invisible spacers for even distribution -->
-            <AnchorPane VBox.vgrow="ALWAYS" />
-            <Button mnemonicParsing="false" text="Registeration" VBox.vgrow="NEVER" />
-            <AnchorPane VBox.vgrow="ALWAYS" />
-            <Button mnemonicParsing="false" text="Results" VBox.vgrow="NEVER" />
-            <AnchorPane VBox.vgrow="ALWAYS" />
-            <Button mnemonicParsing="false" text="withdrrawal request " VBox.vgrow="NEVER" />
-            <AnchorPane VBox.vgrow="ALWAYS" />
-            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#handleLogout" text="Logout" VBox.vgrow="NEVER" />
-            <AnchorPane VBox.vgrow="ALWAYS" />
-         </children>
-      </VBox>
+       <fx:include source="menu.fxml" />
       <GridPane gridLinesVisible="true" layoutX="227.0" layoutY="126.0" prefHeight="280.0" prefWidth="614.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
