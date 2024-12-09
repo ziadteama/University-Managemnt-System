@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="466.0" prefWidth="444.0" spacing="20.0" style="-fx-padding: 30;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.CourseCardController">
+<VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="466.0" spacing="20.0" style="-fx-padding: 30;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.CourseCardController">
     <children>
         <HBox spacing="20.0">
-            <Label fx:id="courseNameLabel" style="-fx-font-size: 16px;" text="Course Name"/>
-            <Label fx:id="courseNameLabel2" style="-fx-font-size: 16px;" text="course name here!!"/>
+            <Label fx:id="courseNameLabel" style="-fx-font-size: 16px;" text="Course Name" HBox.hgrow="ALWAYS" />
+            <Label fx:id="courseNameLabel2" style="-fx-font-size: 16px;" text="course name here!!" HBox.hgrow="ALWAYS" />
         </HBox>
         <HBox spacing="20.0">
             <children>

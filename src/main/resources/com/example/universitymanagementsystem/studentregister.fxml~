@@ -4,7 +4,11 @@
 <?import javafx.scene.layout.FlowPane?>
 
 <AnchorPane prefHeight="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.StudentRegisterController">
-       <FlowPane fx:id="coursesContainer" hgap="10" layoutX="199.0" vgap="10" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+       <FlowPane fx:id="coursesContainer"
+                 hgap="10" vgap="10"
+                 prefWidth="Region.USE_COMPUTED_SIZE"
+                 prefHeight="Region.USE_COMPUTED_SIZE"
+                 prefWrapLength="Region.USE_COMPUTED_SIZE"> />
 
      <!-- Menu on the left side -->
      <fx:include source="menu.fxml" />
