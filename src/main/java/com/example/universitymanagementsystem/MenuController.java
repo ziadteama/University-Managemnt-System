@@ -9,7 +9,6 @@ import javafx.scene.Parent;
 
 public class MenuController {
 
-    private Student currentStudent; // This holds the logged-in student object
 
     @FXML
     private Button logoutButton;
@@ -18,13 +17,12 @@ public class MenuController {
     private Button registerButton;
 
     public void initialize() {
-        this.currentStudent = StudentSession.getCurrentStudent();
     }
 
     @FXML
     private void handleLogout() {
         // Step 1: Destruct (clear) the student object
-        currentStudent = null;
+        StudentSession.setCurrentStudent(null);
 
         // Step 2: Redirect the user back to the login scene
         try {
