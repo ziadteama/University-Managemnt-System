@@ -13,10 +13,10 @@ public class MenuController {
 
     @FXML
     private Button logoutButton;
+    private Button registerButton;
 
-    // Initialize the controller with the student object (passed from LoginController)
-    public void initialize(Student student) {
-        this.currentStudent = student;
+    public void initialize() {
+        this.currentStudent = StudentSession.getCurrentStudent();
     }
 
     @FXML
@@ -36,6 +36,27 @@ public class MenuController {
             stage.setScene(loginScene);
             stage.setTitle("Login");
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void handleRegister() {
+        try {
+            // Load the register scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("studentregister.fxml"));
+            Parent root = loader.load();
+
+            // Get the RegisterController
+            StudentMenuController registerController = loader.getController();
+
+            // Pass the currentStudent object to the RegisterController
+            registerController.initialize();
+
+            // Get the current stage and set the new scene (register screen)
+            Stage stage = (Stage) registerButton.getScene().getWindow();
+            Scene registerScene = new Scene(root);
+            stage.setScene(registerScene);
+            stage.setTitle("Register");
         } catch (Exception e) {
             e.printStackTrace();
         }

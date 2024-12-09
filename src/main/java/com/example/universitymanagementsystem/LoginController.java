@@ -53,8 +53,30 @@ public class LoginController {
         if (isAuthentic) {
             Student student = studentDAO.getStudentById(userIdInt);
             if (student != null) {
+                // Set the student in the session
+                StudentSession.setCurrentStudent(student);
                 System.out.println("Student object fetched: " + student.getName()); // Debugging log
-                redirectToDashboard(student);
+
+                // Load the student menu scene
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("studentmenu.fxml"));
+                    Parent root = loader.load();
+
+                    // Pass the current student to the StudentMenuController
+                    StudentMenuController studentMenuController = loader.getController();
+
+                    // The controller can now access the student from the session
+                    studentMenuController.initialize(); // This will be automatically called
+
+                    // Redirect to the student dashboard/menu
+                    Stage stage = (Stage) userIdField.getScene().getWindow();
+                    Scene dashboardScene = new Scene(root);
+                    stage.setScene(dashboardScene);
+                    stage.setTitle("Welcome to the Dashboard");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } else {
                 errorLabel.setText("Student data not found!");
                 errorLabel.setVisible(true);
@@ -66,14 +88,13 @@ public class LoginController {
     }
 
 
-    private void redirectToDashboard(Student student) {
+    private void redirectToDashboard() {
         try {
             // Load the next scene (e.g., Dashboard)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("studentmenu.fxml"));
             Parent root = loader.load();
 
-            StudentMenuController controller = loader.getController();
-            controller.setStudent(student);
+
             Stage stage = (Stage) userIdField.getScene().getWindow();
             Scene dashboardScene = new Scene(root);
             stage.setScene(dashboardScene);
