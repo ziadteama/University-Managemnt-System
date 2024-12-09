@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.universitymanagementsystem.StudentRegisterController"
-            prefHeight="400.0" prefWidth="600.0" >
-    <fx:include source="menu.fxml" />
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.StudentRegisterController">
+
+    <!-- HBox to hold menu and content side by side -->
+    <HBox>
+
+        <!-- Menu on the left side -->
+        <fx:include source="menu.fxml" />
+
+        <!-- Main content (FlowPane) that takes the remaining space -->
+        <ScrollPane prefHeight="400.0" HBox.hgrow="ALWAYS">
+            <content>
+                <FlowPane fx:id="coursesContainer" hgap="10" vgap="10" />
+            </content>
+        </ScrollPane>
+
+    </HBox>
 
 </AnchorPane>

@@ -1,0 +1,74 @@
+package com.example.universitymanagementsystem;
+
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class EnrollmentsDAO {
+    private Connection connection;
+
+    public EnrollmentsDAO(Connection connection) {
+        this.connection = connection;
+    }
+
+    public List<CanEnroll> getCanEnroll(int userId) {
+        List<CanEnroll> courses = new ArrayList<>();
+
+        String query = """
+                    SELECT
+                                                                 c.course_name,
+                                                                 c.course_id AS course_code,
+                                                                 c.credit_hours,
+                                                                 dr.name AS lecturer_name,
+                                                                 ta.name AS tutor_name,
+                                                                 MAX(CASE WHEN s.class_type = 'lecture' THEN CONCAT(s.period, ' at ', s.location) END) AS lecture_time,
+                                                                 MAX(CASE WHEN s.class_type = 'tutorial' THEN CONCAT(s.period, ' at ', s.location) END) AS tutorial_time,
+                                                                 s.day_of_week
+                                                             FROM\s
+                                                                 schedules s
+                                                             JOIN\s
+                                                                 sections sec ON s.section_id = sec.section_id
+                                                             JOIN\s
+                                                                 courses c ON sec.course_id = c.course_id
+                                                             JOIN\s
+                                                                 users dr ON sec.dr_id = dr.user_id AND dr.role = 'dr'
+                                                             JOIN\s
+                                                                 users ta ON sec.ta_id = ta.user_id AND ta.role = 'ta'
+                                                             WHERE\s
+                                                                 s.major = (SELECT major FROM users WHERE user_id = ?) -- Student's major
+                                                                 AND sec.period = 'Fall' -- Filter by semester
+                                                                 AND sec.year = 2022 -- Filter by year
+                                                             GROUP BY\s
+                                                                 c.course_name, c.course_id, c.credit_hours, dr.name, ta.name, s.day_of_week
+                                                             ORDER BY\s
+                                                                 c.course_id, s.day_of_week;
+                
+                """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                CanEnroll course = new CanEnroll();
+                course.setCourseName(rs.getString("course_name"));
+                course.setCourseCode(rs.getString("course_code"));
+                course.setCreditHours(rs.getInt("credit_hours"));
+                course.setLecturerName(rs.getString("lecturer_name"));
+                course.setTutorName(rs.getString("tutor_name"));
+                course.setLectureTime(rs.getString("class_period")); // Use correct alias
+                course.setTutorialTime(rs.getString("location")); // Assuming this for tutorial time
+
+                courses.add(course);
+            }
+        } catch (SQLException e) {
+            System.err.println("Database error: " + e.getMessage());
+        }
+
+        return courses;
+    }
+}

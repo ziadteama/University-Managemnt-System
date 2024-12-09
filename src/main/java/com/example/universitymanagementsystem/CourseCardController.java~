@@ -37,10 +37,10 @@ public class CourseCardController {
     /**
      * Initializes the course details for this card.
      */
-    public void setCourseDetails(String courseName, String courseCode, int creditHours, String lecturer, String tutor, String lectureTimeText, String tutorialTimeText) {
+    public void setCourseDetails(String courseName, String courseCode, String creditHours, String lecturer, String tutor, String lectureTimeText, String tutorialTimeText) {
         courseNameLabel2.setText(courseName);
         courseNameLabel21.setText(courseCode);
-        courseNameLabel212.setText(String.valueOf(creditHours));
+        courseNameLabel212.setText(creditHours);
         courseNameLabel211.setText(lecturer);
         courseNameLabel2111.setText(tutor);
         lectureTime.setText(lectureTimeText);
@@ -58,7 +58,7 @@ public class CourseCardController {
      * @param tutorialTime Tutorial Time
      * @return Node representing the course card
      */
-    public static Node createCard(String courseName, String courseCode,int creditHours, String lecturer, String tutor, String lectureTime, String tutorialTime) {
+    public static Node createCard(String courseName, String courseCode,String creditHours, String lecturer, String tutor, String lectureTime, String tutorialTime) {
         try {
             // Load the FXML file for the course card
             FXMLLoader loader = new FXMLLoader(CourseCardController.class.getResource("registerationcard.fxml"));
