@@ -1,7 +1,5 @@
 package com.example.universitymanagementsystem;
 
-import java.util.List;
-
 public class Enrollments {
     private int userId;           // Student ID
     private String sectionId;     // Section ID (foreign key)
@@ -13,10 +11,11 @@ public class Enrollments {
     private double cw;            // Continuous work score (e.g., assignments)
     private double finalExam;     // Final exam score
     private double totalMark;     // Total mark (computed from the scores)
+    private String classType;     // Type of class (lecture or tutorial)
 
     // Constructor
     public Enrollments(int userId, String sectionId, String grade, int semesterTaken, int pointsGained,
-                      double seventhExam, double twelfthExam, double cw, double finalExam, double totalMark) {
+                       double seventhExam, double twelfthExam, double cw, double finalExam, double totalMark, String classType) {
         this.userId = userId;
         this.sectionId = sectionId;
         this.grade = grade;
@@ -27,6 +26,7 @@ public class Enrollments {
         this.cw = cw;
         this.finalExam = finalExam;
         this.totalMark = totalMark;
+        this.classType = classType;
     }
 
     // Getters and Setters
@@ -90,7 +90,6 @@ public class Enrollments {
         return cw;
     }
 
-
     public void setCw(double cw) {
         this.cw = cw;
     }
@@ -110,5 +109,12 @@ public class Enrollments {
     public void setTotalMark(double totalMark) {
         this.totalMark = totalMark;
     }
-}
 
+    public String getClassType() {
+        return classType;
+    }
+
+    public void setClassType(String classType) {
+        this.classType = classType;
+    }
+}

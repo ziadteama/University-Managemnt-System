@@ -77,6 +77,7 @@ public class StudentDAO {
 
                     while (enrollmentsRs.next()) {
                         // Retrieve enrollment details from the enrollments table
+
                         String sectionId = enrollmentsRs.getString("section_id");
                         Date enrollmentDate = enrollmentsRs.getDate("enrollment_date");
                         String grade = enrollmentsRs.getString("grade");
@@ -90,7 +91,7 @@ public class StudentDAO {
 
                         // Create the Enrollment object and add it to the list
                         Enrollments enrollment = new Enrollments(
-                                userId, sectionId, enrollmentDate, grade, semesterTaken, pointsGained,
+                                userId, sectionId, grade, semesterTaken, pointsGained,
                                 seventhExam, twelfthExam, cw, finalExam, totalMark
                         );
                         enrollments.add(enrollment);
