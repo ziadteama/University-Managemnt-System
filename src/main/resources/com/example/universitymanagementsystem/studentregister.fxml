@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 
-<AnchorPane prefHeight="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.StudentRegisterController">
-       <FlowPane fx:id="coursesContainer" hgap="10" layoutX="199.0" vgap="10" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+<AnchorPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.StudentRegisterController">
+    <fx:include source="menu.fxml" />
 
-     <!-- Menu on the left side -->
-     <fx:include source="menu.fxml" />
-
+    <ScrollPane fitToHeight="false" fitToWidth="true" hbarPolicy="NEVER" layoutX="216.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <content>
+            <FlowPane fx:id="coursesContainer" hgap="10.0" prefWrapLength="600.0" vgap="10.0">
+            </FlowPane>
+        </content>
+    </ScrollPane>
 </AnchorPane>
