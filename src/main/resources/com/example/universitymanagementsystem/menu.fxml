@@ -8,7 +8,7 @@
     <children>
         <!-- Invisible spacers for even distribution -->
         <AnchorPane VBox.vgrow="ALWAYS" />
-        <Button fx:id="registerButton" mnemonicParsing="false" text="Registration" VBox.vgrow="NEVER" />
+        <Button fx:id="registerButton" mnemonicParsing="false" onAction="#handleRegister" text="Registration" VBox.vgrow="NEVER" />
         <AnchorPane VBox.vgrow="ALWAYS" />
         <Button mnemonicParsing="false" text="Results" VBox.vgrow="NEVER" />
         <AnchorPane VBox.vgrow="ALWAYS" />

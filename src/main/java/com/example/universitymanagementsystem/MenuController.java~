@@ -49,8 +49,11 @@ public class MenuController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("studentregister.fxml"));
             Parent root = loader.load();
 
-            // Get the StudentRegisterController
-            StudentRegisterController registerController = loader.getController();
+            // Get the RegisterController
+            StudentMenuController registerController = loader.getController();
+
+            // Pass the currentStudent object to the RegisterController
+            registerController.initialize();
 
             // Get the current stage and set the new scene (register screen)
             Stage stage = (Stage) registerButton.getScene().getWindow();
@@ -61,5 +64,4 @@ public class MenuController {
             e.printStackTrace();
         }
     }
-
 }
