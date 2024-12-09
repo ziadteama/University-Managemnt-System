@@ -1,6 +1,8 @@
 package com.example.universitymanagementsystem;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentDAO {
     private Connection connection;
@@ -26,12 +28,14 @@ public class StudentDAO {
 
     // Method to get a student by userId (studentId)
     public Student getStudentById(int userId) {
-        // Prepare the queries for both users and students tables
+        // Prepare the queries for both users, students, and enrollments tables
         String userQuery = "SELECT * FROM users WHERE user_id = ?";
-        String studentQuery = "SELECT * FROM students WHERE user_id = ?";
+        String studentQuery = "SELECT * FROM students WHERE student_id = ?";
+        String enrollmentsQuery = "SELECT * FROM enrollments WHERE user_id = ?";
 
         try (PreparedStatement userStmt = connection.prepareStatement(userQuery);
-             PreparedStatement studentStmt = connection.prepareStatement(studentQuery)) {
+             PreparedStatement studentStmt = connection.prepareStatement(studentQuery);
+             PreparedStatement enrollmentsStmt = connection.prepareStatement(enrollmentsQuery)) {
 
             // Set the user_id for the users table query
             userStmt.setInt(1, userId);
@@ -44,7 +48,7 @@ public class StudentDAO {
                 String role = userRs.getString("role");
                 String major = userRs.getString("major");
                 String gender = userRs.getString("gender");
-                Date dot = userRs.getDate("dob");
+                Date dob = userRs.getDate("dob");
                 String phoneNumber = userRs.getString("phone_number");
                 String password = userRs.getString("pass");
 
@@ -60,11 +64,42 @@ public class StudentDAO {
                     int currentSemester = studentRs.getInt("current_semester");
                     String yearEntry = studentRs.getString("year_entry");
 
-                    // Create and return the Student object with data from both tables
-                    return new Student(
-                            userId, name, email, role, major, gender, dot, phoneNumber, password,
+                    // Create the Student object
+                    Student student = new Student(
+                            userId, name, email, role, major, gender, dob, phoneNumber, password,
                             gpa, advisorId, status, currentSemester, yearEntry
                     );
+
+                    // Fetch the enrollments and set them to the student object
+                    enrollmentsStmt.setInt(1, userId);
+                    ResultSet enrollmentsRs = enrollmentsStmt.executeQuery();
+                    List<Enrollments> enrollments = new ArrayList<>();
+
+                    while (enrollmentsRs.next()) {
+                        // Retrieve enrollment details from the enrollments table
+                        String sectionId = enrollmentsRs.getString("section_id");
+                        Date enrollmentDate = enrollmentsRs.getDate("enrollment_date");
+                        String grade = enrollmentsRs.getString("grade");
+                        int semesterTaken = enrollmentsRs.getInt("semester_taken");
+                        int pointsGained = enrollmentsRs.getInt("points_gained");
+                        double seventhExam = enrollmentsRs.getDouble("seventh_exam");
+                        double twelfthExam = enrollmentsRs.getDouble("twelfth_exam");
+                        double cw = enrollmentsRs.getDouble("cw");
+                        double finalExam = enrollmentsRs.getDouble("final_exam");
+                        double totalMark = enrollmentsRs.getDouble("total_mark");
+
+                        // Create the Enrollment object and add it to the list
+                        Enrollments enrollment = new Enrollments(
+                                userId, sectionId, enrollmentDate, grade, semesterTaken, pointsGained,
+                                seventhExam, twelfthExam, cw, finalExam, totalMark
+                        );
+                        enrollments.add(enrollment);
+                    }
+
+                    // Set the enrollments to the student object
+                    student.setEnrollments(enrollments);
+
+                    return student; // Return the student with the enrollments set
                 }
             }
         } catch (SQLException e) {
@@ -74,63 +109,5 @@ public class StudentDAO {
         return null;  // Return null if no student is found
     }
 
-
-    // Method to add a new student to the database
-    public boolean addStudent(Student student) {
-        String query = "INSERT INTO students (user_id, name, email, role, major, gender, dot, phone_number, pass) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, student.getUserId());
-            stmt.setString(2, student.getName());
-            stmt.setString(3, student.getEmail());
-            stmt.setString(4, student.getRole());
-            stmt.setString(5, student.getMajor());
-            stmt.setString(6, student.getGender());
-            stmt.setDate(7, new java.sql.Date(student.getDateOfTransaction().getTime()));
-            stmt.setString(8, student.getPhoneNumber());
-            stmt.setString(9, student.getPassword());
-
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;  // Return true if at least one row is inserted
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    // Method to update a student's information
-    public boolean updateStudent(Student student) {
-        String query = "UPDATE students SET name = ?, email = ?, role = ?, major = ?, gender = ?, dot = ?, phone_number = ?, pass = ? WHERE user_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, student.getName());
-            stmt.setString(2, student.getEmail());
-            stmt.setString(3, student.getRole());
-            stmt.setString(4, student.getMajor());
-            stmt.setString(5, student.getGender());
-            stmt.setDate(6, new java.sql.Date(student.getDateOfTransaction().getTime()));
-            stmt.setString(7, student.getPhoneNumber());
-            stmt.setString(8, student.getPassword());
-            stmt.setInt(9, student.getUserId());
-
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;  // Return true if at least one row is updated
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    // Method to delete a student by userId (studentId)
-    public boolean deleteStudent(int userId) {
-        String query = "DELETE FROM students WHERE user_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, userId);
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;  // Return true if at least one row is deleted
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+    // Other methods like addStudent, updateStudent, deleteStudent...
 }
-

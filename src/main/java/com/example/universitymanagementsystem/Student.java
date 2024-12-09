@@ -1,5 +1,7 @@
 package com.example.universitymanagementsystem;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Student extends User {
     private double gpa;               // gpa (decimal(3,2))
@@ -7,6 +9,8 @@ public class Student extends User {
     private String status;            // status (enum: 'active', 'suspended', 'withdrawn')
     private int currentSemester;      // current_semester (int)
     private String yearEntry;         // year_entry (varchar(4))
+    private List<Enrollments> enrollments;
+    private List<Enrollments> completedEnrollments;
 
     // Constructor
     public Student(int userId, String name, String email, String role, String major, String gender,
@@ -18,6 +22,8 @@ public class Student extends User {
         this.status = status;
         this.currentSemester = currentSemester;
         this.yearEntry = yearEntry;
+        this.enrollments = new ArrayList<>();
+        this.completedEnrollments = new ArrayList<>();
     }
 
     // Getters and Setters
@@ -59,6 +65,12 @@ public class Student extends User {
 
     public void setYearEntry(String yearEntry) {
         this.yearEntry = yearEntry;
+    }
+    public void setEnrollments(List<Enrollments> enrollments) {
+        this.enrollments = enrollments;
+    }
+    public List<Enrollments> getEnrollments() {
+        return enrollments;
     }
 
     @Override
