@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.Node;
+import javafx.scene.control.TableView;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -13,6 +14,12 @@ public class StudentRegisterController {
     private Student student;
     private EnrollmentsDAO enrollmentsDAO;
     private List<CanEnroll> canEnroll;
+
+    @FXML
+    private FlowPane coursesContainer; // VBox to hold the course cards
+
+    @FXML
+    private TableView<CourseSchedule> scheduleTable; // The schedule table where courses will be added
 
     public StudentRegisterController() {
         try {
@@ -26,16 +33,11 @@ public class StudentRegisterController {
         }
     }
 
-    @FXML
-    private FlowPane coursesContainer; // VBox to hold the course cards
-
     /**
      * Initializes the `canEnroll` list and renders course cards dynamically.
      */
-
     @FXML
     public void initialize() {
-        // Load the courses using the DAO
         student = StudentSession.getCurrentStudent();
         canEnroll = enrollmentsDAO.getCanEnroll(student.getUserId());
 
@@ -63,6 +65,7 @@ public class StudentRegisterController {
         for (CanEnroll course : canEnroll) {
             // Create a card dynamically
             Node courseCard = CourseCardController.createCard(
+                    course.getSectionId(),
                     course.getCourseName(),
                     course.getCourseCode(),
                     course.getCreditHours(),
@@ -77,5 +80,20 @@ public class StudentRegisterController {
                 coursesContainer.getChildren().add(courseCard);
             }
         }
+    }
+
+    /**
+     * Adds the selected course to the schedule table.
+     */
+    public void addCourseToSchedule(CourseSchedule courseSchedule) {
+        // Add the course to the schedule (you can define the schedule logic)
+        scheduleTable.getItems().add(courseSchedule);
+    }
+
+    /**
+     * Removes the course card from the FlowPane after it is added to the schedule.
+     */
+    public void removeCourseCard(Node courseCard) {
+        coursesContainer.getChildren().remove(courseCard);
     }
 }

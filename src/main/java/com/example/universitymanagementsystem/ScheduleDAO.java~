@@ -15,11 +15,11 @@ public class ScheduleDAO {
         this.connection = connection;
     }
 
-    // Method to get schedule details by section_id
-    public List<CourseSchedule> getScheduleBySectionId(String sectionId) {
+    // Method to get schedule details by schedule_id
+    public List<CourseSchedule> getScheduleById(String scheduleId) {
         List<CourseSchedule> schedules = new ArrayList<>();
 
-        // SQL query to get schedule details based on section_id
+        // SQL query to get schedule details based on schedule_id
         String query = """
             SELECT
                 s.schedule_id,
@@ -33,13 +33,13 @@ public class ScheduleDAO {
             FROM 
                 schedules s
             WHERE 
-                s.section_id = ? 
+                s.schedule_id = ? -- Retrieve by schedule_id
             ORDER BY 
                 s.schedule_id;
         """;
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, sectionId);  // Set the section_id parameter
+            stmt.setString(1, scheduleId);  // Set the schedule_id parameter
             ResultSet rs = stmt.executeQuery();
 
             // Process the result set

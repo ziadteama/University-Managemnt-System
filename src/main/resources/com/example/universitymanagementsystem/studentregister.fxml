@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 
 <AnchorPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.StudentRegisterController">
     <fx:include source="menu.fxml" />
 
-    <ScrollPane fitToHeight="false" fitToWidth="true" hbarPolicy="NEVER" layoutX="216.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <ScrollPane fitToHeight="false" fitToWidth="true" hbarPolicy="NEVER" layoutX="216.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="400.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <content>
             <FlowPane fx:id="coursesContainer" hgap="20.0" prefWrapLength="500.0" vgap="10.0">
             </FlowPane>
         </content>
     </ScrollPane>
+   <TableView layoutX="210.0" layoutY="171.0" prefHeight="204.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="220.0">
+     <columns>
+       <TableColumn prefWidth="75.0" text="Days" />
+       <TableColumn prefWidth="75.0" text="First" />
+         <TableColumn prefWidth="75.0" text="Second" />
+         <TableColumn prefWidth="75.0" text="Third" />
+         <TableColumn prefWidth="75.0" text="Fourth" />
+         <TableColumn prefWidth="75.0" text="Fifth" />
+         <TableColumn prefWidth="75.0" text="Sixth" />
+     </columns>
+   </TableView>
 </AnchorPane>

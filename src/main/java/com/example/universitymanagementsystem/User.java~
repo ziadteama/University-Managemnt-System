@@ -3,7 +3,7 @@ package com.example.universitymanagementsystem;
 import java.util.Date;
 
 public class User {
-    private int userId;
+    private int userId;            // user_id (primary key, auto-incremented)
     private String name;           // name
     private String email;          // email
     private String role;           // role (enum: 'student', 'ta', 'dr')

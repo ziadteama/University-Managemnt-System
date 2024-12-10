@@ -1,15 +1,49 @@
 package com.example.universitymanagementsystem;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CanEnroll {
+    private String dayOfWeek;
+    private String sectionId;
     private String courseName;
     private String courseCode;
     private int creditHours;
     private String lecturerName;
     private String tutorName;
-    private String lectureTime; // Includes location
-    private String tutorialTime; // Includes location
+    private String lectureDay;
+    private String tutorialDay;
+    private String lectureTime;
+    private String tutorialTime;
+    // Map of periods to course details (lecture and tutorial combined)
 
-    // Getters and Setters
+
+
+    public String getDayOfWeek() {
+        return dayOfWeek;
+    }
+    public String getLectureDay(){
+        return this.lectureDay;
+    }
+    public void setLectureDay(String lectureDay){
+        this.lectureDay = lectureDay;
+    }
+    public String getTutorialDay(){
+        return this.tutorialDay;
+    }
+    public void setTutorialDay(String tutorialDay){
+
+        this.tutorialDay = tutorialDay;
+    }
+
+    public String getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
+    }
+
     public String getCourseName() {
         return courseName;
     }
@@ -49,20 +83,19 @@ public class CanEnroll {
     public void setTutorName(String tutorName) {
         this.tutorName = tutorName;
     }
-
-    public String getLectureTime() {
-        return lectureTime;
+    public String getLectureTime(){
+        return this.lectureTime;
     }
-
-    public void setLectureTime(String lectureTime) {
+    public void setLectureTime(String lectureTime){
         this.lectureTime = lectureTime;
     }
-
-    public String getTutorialTime() {
-        return tutorialTime;
+    public String getTutorialTime(){
+        return this.tutorialTime;
     }
-
-    public void setTutorialTime(String tutorialTime) {
+    public void setTutorialTime(String tutorialTime){
         this.tutorialTime = tutorialTime;
     }
+
+    // Period details management
+
 }
