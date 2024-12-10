@@ -107,7 +107,7 @@ public class CourseCardController {
         if (courseSchedules != null && !courseSchedules.isEmpty()) {
             // Loop through the schedules and add each to the student's schedule
             for (CourseSchedule schedule : courseSchedules) {
-                studentRegisterController.addCourseToSchedule(schedule);
+               // studentRegisterController.addCourseToSchedule(schedule);
             }
 
             // Remove the course card from the FlowPane

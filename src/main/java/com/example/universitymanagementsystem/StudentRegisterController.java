@@ -18,8 +18,7 @@ public class StudentRegisterController {
     @FXML
     private FlowPane coursesContainer; // VBox to hold the course cards
 
-    @FXML
-    private TableView<CourseSchedule> scheduleTable; // The schedule table where courses will be added
+
 
     public StudentRegisterController() {
         try {
@@ -85,10 +84,7 @@ public class StudentRegisterController {
     /**
      * Adds the selected course to the schedule table.
      */
-    public void addCourseToSchedule(CourseSchedule courseSchedule) {
-        // Add the course to the schedule (you can define the schedule logic)
-        scheduleTable.getItems().add(courseSchedule);
-    }
+
 
     /**
      * Removes the course card from the FlowPane after it is added to the schedule.

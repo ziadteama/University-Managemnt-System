@@ -65,6 +65,7 @@ public class StudentRegisterController {
         for (CanEnroll course : canEnroll) {
             // Create a card dynamically
             Node courseCard = CourseCardController.createCard(
+                    course.getSectionId(),
                     course.getCourseName(),
                     course.getCourseCode(),
                     course.getCreditHours(),
