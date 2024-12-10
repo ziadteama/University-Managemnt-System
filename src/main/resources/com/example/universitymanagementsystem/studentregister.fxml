@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 
@@ -15,6 +13,6 @@
             </FlowPane>
         </content>
     </ScrollPane>
-    <fx:include source="registertableview.fxml" />
+    <fx:include source="registertableview.fxml" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="50.0" />
 
 </AnchorPane>

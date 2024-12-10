@@ -1,0 +1,82 @@
+package com.example.universitymanagementsystem;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+public class RegisterTableViewController {
+
+    @FXML
+    private TableView<ScheduleItem> scheduleTable;
+    @FXML
+    private TableColumn<ScheduleItem, String> dayColumn;
+    @FXML
+    private TableColumn<ScheduleItem, String> period1Column;
+    @FXML
+    private TableColumn<ScheduleItem, String> period2Column;
+    @FXML
+    private TableColumn<ScheduleItem, String> period3Column;
+    @FXML
+    private TableColumn<ScheduleItem, String> period4Column;
+    @FXML
+    private TableColumn<ScheduleItem, String> period5Column;
+    @FXML
+    private TableColumn<ScheduleItem, String> period6Column;
+
+    private ObservableList<ScheduleItem> scheduleData = FXCollections.observableArrayList();
+
+    @FXML
+    private void initialize() {
+        dayColumn.setCellValueFactory(new PropertyValueFactory<>("day"));
+        period1Column.setCellValueFactory(new PropertyValueFactory<>("period1"));
+        period2Column.setCellValueFactory(new PropertyValueFactory<>("period2"));
+        period3Column.setCellValueFactory(new PropertyValueFactory<>("period3"));
+        period4Column.setCellValueFactory(new PropertyValueFactory<>("period4"));
+        period5Column.setCellValueFactory(new PropertyValueFactory<>("period5"));
+        period6Column.setCellValueFactory(new PropertyValueFactory<>("period6"));
+
+        scheduleTable.setItems(scheduleData);
+
+        scheduleData.addAll(
+                new ScheduleItem("Saturday", "", "", "", "", "", ""),
+                new ScheduleItem("Sunday", "", "", "", "", "", ""),
+                new ScheduleItem("Monday", "", "", "", "", "", ""),
+                new ScheduleItem("Tuesday", "", "", "", "", "", ""),
+                new ScheduleItem("Wednesday", "", "", "", "", "", ""),
+                new ScheduleItem("Thursday", "", "", "", "", "", ""),
+                new ScheduleItem("Friday", "", "", "", "", "", "")
+        );
+    }
+
+    public void addSchedule(CourseSchedule schedule) {
+        for (ScheduleItem item : scheduleData) {
+            if (item.getDay().equalsIgnoreCase(schedule.getDayOfWeek())) {
+                switch (schedule.getPeriod()) {
+                    case "1":
+                        item.setPeriod1(schedule.getLocation());
+                        break;
+                    case "2":
+                        item.setPeriod2(schedule.getLocation());
+                        break;
+                    case "3":
+                        item.setPeriod3(schedule.getLocation());
+                        break;
+                    case "4":
+                        item.setPeriod4(schedule.getLocation());
+                        break;
+                    case "5":
+                        item.setPeriod5(schedule.getLocation());
+                        break;
+                    case "6":
+                        item.setPeriod6(schedule.getLocation());
+                        break;
+                }
+                scheduleTable.refresh();
+                return;
+            }
+        }
+    }
+}

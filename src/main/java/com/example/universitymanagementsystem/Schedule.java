@@ -1,6 +1,6 @@
 package com.example.universitymanagementsystem;
 
-public class Schedule {
+public class Scddhedule {
     private String scheduleId;
     private String sectionId;
     private String dayOfWeek; // e.g., 'Monday', 'Tuesday'
@@ -19,5 +19,6 @@ public class Schedule {
         this.location = location;
         this.userId = userId;
     }
+
 }
 

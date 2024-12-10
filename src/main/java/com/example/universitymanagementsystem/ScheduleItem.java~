@@ -1,0 +1,61 @@
+package com.example.universitymanagementsystem;
+
+public class ScheduleItem {
+    private final String day;
+    private final String period1;
+    private final String period2;
+    private final String period3;
+    private final String period4;
+    private final String period5;
+    private final String period6;
+    private String classType;
+    private String teacherName;
+
+
+    public ScheduleItem(String day, String period1, String period2, String period3, String period4, String period5, String period6) {
+        this.day = day;
+        this.period1 = period1;
+        this.period2 = period2;
+        this.period3 = period3;
+        this.period4 = period4;
+        this.period5 = period5;
+        this.period6 = period6;
+    }
+
+    public void setClassType(String classType) {
+        this.classType = classType;
+    }
+
+    public void setTeacherName(String teacherName) {
+        if (this.classType == "Lecture") this.teacherName = "Lecturer: " + " " + teacherName;
+        else this.teacherName = "Tutor: " + " " + teacherName;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public String getPeriod1() {
+        return period1;
+    }
+
+    public String getPeriod2() {
+        return period2;
+    }
+
+    public String getPeriod3() {
+        return period3;
+    }
+
+    public String getPeriod4() {
+        return period4;
+    }
+
+    public String getPeriod5() {
+        return period5;
+    }
+
+    public String getPeriod6() {
+        return period6;
+    }
+}

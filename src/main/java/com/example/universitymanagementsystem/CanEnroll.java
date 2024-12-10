@@ -1,10 +1,7 @@
 package com.example.universitymanagementsystem;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class CanEnroll {
-    private String dayOfWeek;
     private String sectionId;
     private String courseName;
     private String courseCode;
@@ -17,11 +14,6 @@ public class CanEnroll {
     private String tutorialTime;
     // Map of periods to course details (lecture and tutorial combined)
 
-
-
-    public String getDayOfWeek() {
-        return dayOfWeek;
-    }
     public String getLectureDay(){
         return this.lectureDay;
     }

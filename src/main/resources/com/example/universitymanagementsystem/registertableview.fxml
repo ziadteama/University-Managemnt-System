@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<TableView layoutX="210.0" layoutY="171.0" prefHeight="204.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="220.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.RegisterTableViewController">
+<TableView fx:id="scheduleTable" layoutX="210.0" layoutY="171.0" prefWidth="650.0" prefHeight="200.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="220.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.example.universitymanagementsystem.RegisterTableViewController">
     <columns>
-        <TableColumn prefWidth="75.0" text="Days" />
-        <TableColumn prefWidth="75.0" text="First" />
-        <TableColumn prefWidth="75.0" text="Second" />
-        <TableColumn prefWidth="75.0" text="Third" />
-        <TableColumn prefWidth="75.0" text="Fourth" />
-        <TableColumn prefWidth="75.0" text="Fifth" />
-        <TableColumn prefWidth="75.0" text="Sixth" />
+        <TableColumn fx:id="dayColumn" prefWidth="100.0" />
+
+        <TableColumn fx:id="period1Column" prefWidth="100.0" text="8:30 - 10:10" />
+
+        <TableColumn fx:id="period2Column" prefWidth="100.0" text="10:30 - 12:10" />
+
+        <TableColumn fx:id="period3Column" minWidth="0.0" prefWidth="100.0" text="12:30 - 2:10" />
+
+        <TableColumn fx:id="period4Column" prefWidth="120.0" text="2:30 - 410" />
+
+        <TableColumn fx:id="period5Column" prefWidth="100.0" text="4:30 - 610" />
+
+        <TableColumn fx:id="period6Column" prefWidth="100.0" text="6:30 - 8:10" />
     </columns>
 </TableView>

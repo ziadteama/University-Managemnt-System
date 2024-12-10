@@ -20,23 +20,27 @@ public class ScheduleDAO {
         List<CourseSchedule> schedules = new ArrayList<>();
 
         // SQL query to get schedule details based on section_id
-        String query = """
-            SELECT
-                s.schedule_id,
-                s.section_id,
-                s.day_of_week,
-                s.major,
-                s.period,
-                s.location,
-                s.user_id,
-                s.class_type
-            FROM 
-                schedules s
-            WHERE 
-                s.section_id = ? 
-            ORDER BY 
-                s.schedule_id;
-        """;
+        String query = "SELECT " +
+                "    s.schedule_id, " +
+                "    s.section_id, " +
+                "    s.day_of_week, " +
+                "    s.major, " +
+                "    s.period, " +
+                "    s.location, " +
+                "    s.user_id, " +
+                "    s.class_type, " +
+                "    u.name AS lecturer_or_tutor_name, " +
+                "    s.location " +
+                "FROM " +
+                "    schedules s " +
+                "JOIN " +
+                "    users u " +
+                "ON " +
+                "    s.user_id = u.user_id " +
+                "WHERE " +
+                "    s.section_id = ? " +
+                "ORDER BY " +
+                "    s.schedule_id;";
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, sectionId);  // Set the section_id parameter
