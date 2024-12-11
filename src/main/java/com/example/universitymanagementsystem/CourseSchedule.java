@@ -7,7 +7,7 @@ public class CourseSchedule {
     private String sectionId;  // section_id
     private String dayOfWeek;  // day_of_week
     private String major;      // major
-
+    private String courseName;
     // Change period to integer
     private int period;        // Updated type for period
 
@@ -26,7 +26,7 @@ public class CourseSchedule {
     );
 
     // Constructor to initialize all fields
-    public CourseSchedule(String scheduleId, String sectionId, String dayOfWeek, String major,
+    public CourseSchedule(String scheduleId,String courseName, String sectionId, String dayOfWeek, String major,
                           int period, String location, int userId, String classType) {
         this.scheduleId = scheduleId;
         this.sectionId = sectionId;
@@ -36,6 +36,7 @@ public class CourseSchedule {
         this.location = location;
         this.userId = userId;
         this.classType = classType;
+        this.courseName = courseName;
     }
 
     // Method to convert string period to integer
@@ -66,7 +67,9 @@ public class CourseSchedule {
     public void setScheduleId(String scheduleId) {
         this.scheduleId = scheduleId;
     }
-
+    public String getCourseName() {
+        return courseName;
+    }
     public String getSectionId() {
         return sectionId;
     }

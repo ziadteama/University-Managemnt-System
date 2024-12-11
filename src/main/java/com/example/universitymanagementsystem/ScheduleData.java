@@ -2,7 +2,6 @@ package com.example.universitymanagementsystem;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 public class ScheduleData {
     private static ScheduleData instance;
     private ObservableList<RowData> scheduleList;
@@ -31,5 +30,8 @@ public class ScheduleData {
 
     public ObservableList<RowData> getScheduleList() {
         return scheduleList;
+    }
+    public static void clearScheduleList(ObservableList<RowData> scheduleList) {
+        scheduleList.clear();
     }
 }

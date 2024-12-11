@@ -8,16 +8,16 @@
     <columns>
         <TableColumn fx:id="dayColumn" prefWidth="100.0" />
 
-        <TableColumn fx:id="period1Column" prefWidth="100.0" text="8:30 - 10:10" />
+        <TableColumn fx:id="period1Column" minWidth="100.0" prefWidth="-1.0" text="8:30 - 10:10" />
 
-        <TableColumn fx:id="period2Column" prefWidth="100.0" text="10:30 - 12:10" />
+        <TableColumn fx:id="period2Column" minWidth="100.0" prefWidth="-1.0" text="10:30 - 12:10" />
 
-        <TableColumn fx:id="period3Column" minWidth="0.0" prefWidth="100.0" text="12:30 - 2:10" />
+        <TableColumn fx:id="period3Column" minWidth="100.0" prefWidth="-1.0" text="12:30 - 2:10" />
 
-        <TableColumn fx:id="period4Column" prefWidth="120.0" text="2:30 - 410" />
+        <TableColumn fx:id="period4Column" minWidth="100.0" prefWidth="-1.0" text="2:30 - 410" />
 
-        <TableColumn fx:id="period5Column" prefWidth="100.0" text="4:30 - 610" />
+        <TableColumn fx:id="period5Column" minWidth="100.0" prefWidth="-1.0" text="4:30 - 610" />
 
-        <TableColumn fx:id="period6Column" prefWidth="100.0" text="6:30 - 8:10" />
+        <TableColumn fx:id="period6Column" minWidth="100.0" prefWidth="-1.0" text="6:30 - 8:10" />
     </columns>
 </TableView>

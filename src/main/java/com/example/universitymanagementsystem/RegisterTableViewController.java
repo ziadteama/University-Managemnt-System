@@ -108,7 +108,7 @@ public class RegisterTableViewController {
         for (CourseSchedule schedule : schedules) {
             String day = schedule.getDayOfWeek();
             int periodIndex = schedule.getPeriod() - 1; // Convert to 0-based index
-            String major = schedule.getMajor();
+            String cellData = schedule.getCourseName()+"\n"+schedule.getClassType();
 
             // Find the row for the specified day
             for (RowData row : tableData) {
@@ -116,12 +116,12 @@ public class RegisterTableViewController {
                     // Update the appropriate period cell for the row
                     if (periodIndex >= 0 && periodIndex < 6) {
                         switch (periodIndex) {
-                            case 0 -> row.setPeriod1(major);
-                            case 1 -> row.setPeriod2(major);
-                            case 2 -> row.setPeriod3(major);
-                            case 3 -> row.setPeriod4(major);
-                            case 4 -> row.setPeriod5(major);
-                            case 5 -> row.setPeriod6(major);
+                            case 0 -> row.setPeriod1(cellData);
+                            case 1 -> row.setPeriod2(cellData);
+                            case 2 -> row.setPeriod3(cellData);
+                            case 3 -> row.setPeriod4(cellData);
+                            case 4 -> row.setPeriod5(cellData);
+                            case 5 -> row.setPeriod6(cellData);
                         }
                     }
 
@@ -139,4 +139,5 @@ public class RegisterTableViewController {
         Platform.runLater(() -> scheduleTable.refresh());
 
         return updateSuccessful; // Return whether the update was successful
-    }}
+    }
+}

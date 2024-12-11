@@ -55,17 +55,19 @@ public class ScheduleDAO {
                 "    s.user_id, " +
                 "    s.class_type, " +
                 "    u.name AS lecturer_or_tutor_name, " +
-                "    s.location " +
+                "    c.course_name " +  // Added course_name from courses table
                 "FROM " +
                 "    schedules s " +
                 "JOIN " +
-                "    users u " +
-                "ON " +
-                "    s.user_id = u.user_id " +
+                "    users u ON s.user_id = u.user_id " +
+                "JOIN " +
+                "    sections sec ON s.section_id = sec.section_id " +  // Join with sections
+                "JOIN " +
+                "    courses c ON sec.course_id = c.course_id " +  // Join with courses
                 "WHERE " +
                 "    s.section_id = ? " +
                 "ORDER BY " +
-                "    s.schedule_id;";
+                "    s.schedule_id;";  // Assuming you want to order by schedule_id
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, sectionId);  // Set the section_id parameter
@@ -76,6 +78,7 @@ public class ScheduleDAO {
                 try {
                     CourseSchedule schedule = new CourseSchedule(
                             rs.getString("schedule_id"),
+                            rs.getString("course_name"),
                             rs.getString("section_id"),
                             rs.getString("day_of_week"),
                             rs.getString("major"),

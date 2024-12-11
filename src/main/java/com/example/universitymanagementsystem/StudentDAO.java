@@ -86,12 +86,11 @@ public class StudentDAO {
                         double cw = enrollmentsRs.getDouble("cw");
                         double finalExam = enrollmentsRs.getDouble("final_exam");
                         double totalMark = enrollmentsRs.getDouble("total_mark");
-                        String classType = enrollmentsRs.getString("class_type"); // Add classType here
 
                         // Create the Enrollment object and add it to the list
                         Enrollments enrollment = new Enrollments(
                                 userId, sectionId, grade, semesterTaken, pointsGained,
-                                seventhExam, twelfthExam, cw, finalExam, totalMark, classType
+                                seventhExam, twelfthExam, cw, finalExam, totalMark
                         );
                         enrollments.add(enrollment);
                     }
