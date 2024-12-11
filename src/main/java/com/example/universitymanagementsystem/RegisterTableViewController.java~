@@ -35,7 +35,6 @@ public class RegisterTableViewController {
     private void initialize() {
         ObservableList<RowData> scheduleList = ScheduleData.getInstance().getScheduleList();
         scheduleTable.setItems(scheduleList);
-        // scheduleTable.refresh();
         System.out.println("Initializing TableView...");
         System.out.println("scheduleTable: " + (scheduleTable != null ? "Loaded" : "Null"));
         System.out.println("dayColumn: " + (dayColumn != null ? "Loaded" : "Null"));

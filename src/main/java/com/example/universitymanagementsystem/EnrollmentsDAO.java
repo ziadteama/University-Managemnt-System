@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 public class EnrollmentsDAO {
@@ -71,5 +72,25 @@ public class EnrollmentsDAO {
         }
 
         return courses;
+    }
+
+    public void insertEnrollments(int userId, List<String> sectionIds, Date enrollmentDate,int semesterTaken) {
+        String insertQuery = "INSERT INTO enrollments (user_id, section_id, enrollment_date,semester_taken) " +
+                "VALUES (?, ?, ?,?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+            for (String sectionId : sectionIds) {
+                preparedStatement.setInt(1, userId);
+                preparedStatement.setString(2, sectionId);
+                preparedStatement.setDate(3, enrollmentDate);
+                preparedStatement.setInt(4,semesterTaken);
+
+                // Execute the insert for the current section ID
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exceptions (e.g., log the error, rethrow, etc.)
+        }
     }
 }

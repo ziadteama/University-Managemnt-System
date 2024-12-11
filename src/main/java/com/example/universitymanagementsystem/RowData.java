@@ -11,6 +11,7 @@ public class RowData {
     private final StringProperty period4;
     private final StringProperty period5;
     private final StringProperty period6;
+    private String SectionId;
 
     public RowData(String day, String[] periods) {
         this.day = new SimpleStringProperty(day);
@@ -60,6 +61,14 @@ public class RowData {
 
     public void setPeriod3(String value) {
         this.period3.set(value);
+    }
+
+    public String getSectionId() {
+        return SectionId;
+    }
+
+    public void setSectionId(String value) {
+        SectionId = value;
     }
 
     public StringProperty period3Property() {

@@ -10,9 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class StudentRegisterController {
     private Student student;
@@ -111,17 +109,12 @@ public class StudentRegisterController {
         List<String> selectedSectionIds = new ArrayList<>();
         ObservableList<RowData> rowData = ScheduleData.getInstance().getScheduleList();
         if (rowData != null && !rowData.isEmpty()) {
-            Set<String> uniqueSectionIds = new HashSet<>(); // Use a Set to prevent duplicates
-
             for (RowData row : rowData) {
                 String sectionId = row.getSectionId(); // Assuming rowData objects have a method to get section IDs
                 if (sectionId != null) {
-                    uniqueSectionIds.add(sectionId); // Duplicates will be automatically filtered
+                    selectedSectionIds.add(sectionId);
                 }
             }
-
-            // If you need it as a List
-            selectedSectionIds = new ArrayList<>(uniqueSectionIds);
         }
 
 

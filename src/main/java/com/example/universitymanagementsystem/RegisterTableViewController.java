@@ -73,6 +73,7 @@ public class RegisterTableViewController {
                 if (row.getDay().equalsIgnoreCase(day)) {
                     // Check if the period is already occupied
                     String existingCourse = null;
+                    row.setSectionId(schedule.getSectionId());
                     switch (periodIndex) {
                         case 0 -> existingCourse = row.getPeriod1();
                         case 1 -> existingCourse = row.getPeriod2();

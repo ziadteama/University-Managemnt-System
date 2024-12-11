@@ -12,6 +12,7 @@ public class CanEnroll {
     private String tutorialDay;
     private String lectureTime;
     private String tutorialTime;
+    // Map of periods to course details (lecture and tutorial combined)
 
     public String getLectureDay(){
         return this.lectureDay;
