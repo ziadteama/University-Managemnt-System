@@ -114,17 +114,19 @@ public class CourseCardController {
 
                 // Get the controller and update the schedule
                 RegisterTableViewController tableController = loader.getController();
-                tableController.updateCells(scheduleItems);
+                boolean updateSuccessful = tableController.updateCells(scheduleItems);
 
-                // Remove the course card from the FlowPane
-                studentRegisterController.removeCourseCard((Node) addCourseButton.getParent());
+                // Only remove the course card if the update was successful
+                if (updateSuccessful) {
+                    studentRegisterController.removeCourseCard((Node) addCourseButton.getParent());
 
-                // Show confirmation message
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Course Added");
-                alert.setHeaderText("Courses Added Successfully");
-                alert.setContentText("The course(s) have been added to your schedule.");
-                alert.showAndWait();
+                    // Show confirmation message
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Course Added");
+                    alert.setHeaderText("Courses Added Successfully");
+                    alert.setContentText("The course(s) have been added to your schedule.");
+                    alert.showAndWait();
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -142,8 +144,7 @@ public class CourseCardController {
             alert.setContentText("Unable to retrieve course schedule information.");
             alert.showAndWait();
         }
-    }
-}
+    }}
 
 
 

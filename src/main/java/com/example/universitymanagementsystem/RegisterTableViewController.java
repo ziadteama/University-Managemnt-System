@@ -4,10 +4,12 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RegisterTableViewController {
@@ -33,7 +35,6 @@ public class RegisterTableViewController {
     private void initialize() {
         ObservableList<RowData> scheduleList = ScheduleData.getInstance().getScheduleList();
         scheduleTable.setItems(scheduleList);
-       // scheduleTable.refresh();
         System.out.println("Initializing TableView...");
         System.out.println("scheduleTable: " + (scheduleTable != null ? "Loaded" : "Null"));
         System.out.println("dayColumn: " + (dayColumn != null ? "Loaded" : "Null"));
@@ -49,7 +50,7 @@ public class RegisterTableViewController {
     }
 
 
-    public void updateCells(List<CourseSchedule> schedules) {
+    public boolean updateCells(List<CourseSchedule> schedules) {
         // Get the current items in the TableView
         ObservableList<RowData> tableData = scheduleTable.getItems();
 
@@ -59,7 +60,50 @@ public class RegisterTableViewController {
             System.out.println("Day: " + schedule.getDayOfWeek() + ", Period: " + schedule.getPeriod() + ", Major: " + schedule.getMajor());
         }
 
-        // Iterate through each CourseSchedule object in the list
+        boolean updateSuccessful = true; // Flag to track if the update was successful
+        List<String> conflictMessages = new ArrayList<>(); // List to collect conflict messages
+
+        // First pass: Check for conflicts
+        for (CourseSchedule schedule : schedules) {
+            String day = schedule.getDayOfWeek();
+            int periodIndex = schedule.getPeriod() - 1; // Convert to 0-based index
+
+            // Find the row for the specified day
+            for (RowData row : tableData) {
+                if (row.getDay().equalsIgnoreCase(day)) {
+                    // Check if the period is already occupied
+                    String existingCourse = null;
+                    switch (periodIndex) {
+                        case 0 -> existingCourse = row.getPeriod1();
+                        case 1 -> existingCourse = row.getPeriod2();
+                        case 2 -> existingCourse = row.getPeriod3();
+                        case 3 -> existingCourse = row.getPeriod4();
+                        case 4 -> existingCourse = row.getPeriod5();
+                        case 5 -> existingCourse = row.getPeriod6();
+                    }
+
+                    // If the existing course is not empty, collect the conflict message
+                    if (existingCourse != null && !existingCourse.isEmpty()) {
+                        String conflictMessage = "The course for " + day + " during period " + (periodIndex + 1) + " is already occupied by " + existingCourse + ".";
+                        conflictMessages.add(conflictMessage);
+                        updateSuccessful = false; // Set the flag to false
+                    }
+                    break; // Exit the loop after checking
+                }
+            }
+        }
+
+        // Show a single alert if there are any conflict messages
+        if (!conflictMessages.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Conflict Detected");
+            alert.setHeaderText("Course Conflicts");
+            alert.setContentText(String.join("\n", conflictMessages));
+            alert.showAndWait();
+            return false; // Return false if there are conflicts
+        }
+
+        // Second pass: Update cells only if there are no conflicts
         for (CourseSchedule schedule : schedules) {
             String day = schedule.getDayOfWeek();
             int periodIndex = schedule.getPeriod() - 1; // Convert to 0-based index
@@ -67,12 +111,6 @@ public class RegisterTableViewController {
 
             // Find the row for the specified day
             for (RowData row : tableData) {
-                // Print the current row data for debugging
-                System.out.println("Current Row: " + row.getDay() + ", Periods: " +
-                        row.getPeriod1() + ", " + row.getPeriod2() + ", " +
-                        row.getPeriod3() + ", " + row.getPeriod4() + ", " +
-                        row.getPeriod5() + ", " + row.getPeriod6());
-
                 if (row.getDay().equalsIgnoreCase(day)) {
                     // Update the appropriate period cell for the row
                     if (periodIndex >= 0 && periodIndex < 6) {
@@ -98,4 +136,6 @@ public class RegisterTableViewController {
 
         // Refresh the TableView to show the updated data
         Platform.runLater(() -> scheduleTable.refresh());
+
+        return updateSuccessful; // Return whether the update was successful
     }}
