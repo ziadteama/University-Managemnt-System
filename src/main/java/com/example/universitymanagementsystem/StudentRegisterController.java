@@ -18,8 +18,6 @@ public class StudentRegisterController {
     @FXML
     private FlowPane coursesContainer; // VBox to hold the course cards
 
-
-
     public StudentRegisterController() {
         try {
             // Initialize the database connection
@@ -58,6 +56,11 @@ public class StudentRegisterController {
      * Renders course cards dynamically using the `createCard` function in `CourseCardController`.
      */
     private void renderCourseCards() {
+        // Check if coursesContainer is initialized
+        if (coursesContainer == null) {
+            throw new IllegalStateException("coursesContainer is not initialized. Please check the FXML file.");
+        }
+
         // Clear any existing cards
         coursesContainer.getChildren().clear();
 
@@ -71,7 +74,8 @@ public class StudentRegisterController {
                     course.getLecturerName(),
                     course.getTutorName(),
                     course.getLectureTime(),
-                    course.getTutorialTime()
+                    course.getTutorialTime(),
+                    this
             );
 
             // Add the card to the container
@@ -82,14 +86,13 @@ public class StudentRegisterController {
     }
 
     /**
-     * Adds the selected course to the schedule table.
-     */
-
-
-    /**
      * Removes the course card from the FlowPane after it is added to the schedule.
      */
     public void removeCourseCard(Node courseCard) {
-        coursesContainer.getChildren().remove(courseCard);
+        if (coursesContainer != null) {
+            coursesContainer.getChildren().remove(courseCard);
+        } else {
+            throw new IllegalStateException("coursesContainer is not initialized. Please check the FXML file and controller setup.");
+        }
     }
 }

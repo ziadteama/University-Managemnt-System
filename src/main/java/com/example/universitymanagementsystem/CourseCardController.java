@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
@@ -67,7 +68,7 @@ public class CourseCardController {
      * @param tutorialTime Tutorial Time
      * @return Node representing the course card
      */
-    public static Node createCard(String sectionId, String courseName, String courseCode, int creditHours, String lecturer, String tutor, String lectureTime, String tutorialTime) {
+    public static Node createCard(String sectionId, String courseName, String courseCode, int creditHours, String lecturer, String tutor, String lectureTime, String tutorialTime, StudentRegisterController parentController) {
         try {
             FXMLLoader loader = new FXMLLoader(CourseCardController.class.getResource("registerationcard.fxml"));
             Node cardNode = loader.load();
@@ -79,8 +80,8 @@ public class CourseCardController {
             Connection dbConnection = DataBaseConnection.getConnection(); // Get the DB connection
             controller.scheduleDAO = new ScheduleDAO(dbConnection); // Initialize ScheduleDAO
 
-            // Store reference to the parent controller (StudentRegisterController)
-            controller.studentRegisterController = new StudentRegisterController();
+            // Link the parent controller (StudentRegisterController)
+            controller.studentRegisterController = parentController;
 
             return cardNode;
 
@@ -101,32 +102,48 @@ public class CourseCardController {
         String sectionId = this.sectionId;
 
         // Get course schedules from ScheduleDAO using the sectionId
-        List<ScheduleItem> scheduleItems = scheduleDAO.getScheduleBySectionId(sectionId);
+        List<CourseSchedule> scheduleItems = scheduleDAO.getScheduleBySectionId(sectionId);
 
         // If schedules are found
+        System.out.println("Retrieved Schedule Items: " + scheduleItems);
         if (scheduleItems != null && !scheduleItems.isEmpty()) {
-            // Pass the schedule items to the RegisterTableViewController
-            RegisterTableViewController tableController = new RegisterTableViewController();
-            tableController.updateSchedule(scheduleItems);
+            try {
+                // Load the RegisterTableViewController using its FXML
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("registertableview.fxml")); // Make sure the FXML file name is correct
+                loader.load();
 
-            // Remove the course card from the FlowPane
-            studentRegisterController.removeCourseCard((Node) addCourseButton.getParent());
+                // Get the controller and update the schedule
+                RegisterTableViewController tableController = loader.getController();
+                tableController.updateSchedule(scheduleItems);
 
-            // Show confirmation message
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Course Added");
-            alert.setHeaderText("Courses Added Successfully");
-            alert.setContentText("The course(s) have been added to your schedule.");
-            alert.showAndWait();
+                // Remove the course card from the FlowPane
+                studentRegisterController.removeCourseCard((Node) addCourseButton.getParent());
+
+                // Show confirmation message
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Course Added");
+                alert.setHeaderText("Courses Added Successfully");
+                alert.setContentText("The course(s) have been added to your schedule.");
+                alert.showAndWait();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Controller Loading Failed");
+                alert.setContentText("Failed to load the course schedule controller. Please try again.");
+                alert.showAndWait();
+            }
         } else {
             // Show error if no course schedule found
-            Alert alert = new Alert(AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Course Not Found");
             alert.setContentText("Unable to retrieve course schedule information.");
             alert.showAndWait();
         }
     }
-
-
 }
+
+
+

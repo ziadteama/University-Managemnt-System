@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ScheduleDAO {
     private Connection connection;
@@ -14,30 +13,6 @@ public class ScheduleDAO {
     // Constructor to initialize the connection
     public ScheduleDAO(Connection connection) {
         this.connection = connection;
-    }
-
-    // Map enum strings to integers
-    private static final Map<String, Integer> PERIOD_MAPPING = Map.of(
-            "first", 1,
-            "second", 2,
-            "third", 3,
-            "fourth", 4,
-            "fifth", 5,
-            "sixth", 6
-    );
-
-    /**
-     * Converts a period enum string to its corresponding integer value.
-     * @param period The enum string value of the period (e.g., "first")
-     * @return The corresponding integer value (e.g., 1 for "first")
-     * @throws IllegalArgumentException if the period is invalid
-     */
-    private int periodStringToInt(String period) {
-        if (PERIOD_MAPPING.containsKey(period.toLowerCase())) {
-            return PERIOD_MAPPING.get(period.toLowerCase());
-        } else {
-            throw new IllegalArgumentException("Invalid period value from database: " + period);
-        }
     }
 
     // Method to get schedule details by section_id
@@ -73,23 +48,18 @@ public class ScheduleDAO {
 
             // Process the result set
             while (rs.next()) {
-                try {
-                    CourseSchedule schedule = new CourseSchedule(
-                            rs.getString("schedule_id"),
-                            rs.getString("section_id"),
-                            rs.getString("day_of_week"),
-                            rs.getString("major"),
-                            periodStringToInt(rs.getString("period")), // Convert period to integer
-                            rs.getString("location"),
-                            rs.getInt("user_id"),
-                            rs.getString("class_type")
-                    );
+                CourseSchedule schedule = new CourseSchedule(
+                        rs.getString("schedule_id"),
+                        rs.getString("section_id"),
+                        rs.getString("day_of_week"),
+                        rs.getString("major"),
+                        rs.getString("period"),
+                        rs.getString("location"),
+                        rs.getInt("user_id"),
+                        rs.getString("class_type")
+                );
 
-                    schedules.add(schedule);
-                } catch (IllegalArgumentException e) {
-                    System.err.println("Failed to map period for schedule_id "
-                            + rs.getString("schedule_id") + ": " + e.getMessage());
-                }
+                schedules.add(schedule);
             }
         } catch (SQLException e) {
             System.err.println("Database error: " + e.getMessage());

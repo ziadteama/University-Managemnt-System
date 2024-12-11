@@ -7,30 +7,36 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RegisterTableViewController {
 
     @FXML
-    private TableView<ScheduleItem> scheduleTable;
+    private TableView<RowData> scheduleTable;
     @FXML
-    private TableColumn<ScheduleItem, String> dayColumn;
+    private TableColumn<RowData, String> dayColumn;
     @FXML
-    private TableColumn<ScheduleItem, String> period1Column;
+    private TableColumn<RowData, String> period1Column;
     @FXML
-    private TableColumn<ScheduleItem, String> period2Column;
+    private TableColumn<RowData, String> period2Column;
     @FXML
-    private TableColumn<ScheduleItem, String> period3Column;
+    private TableColumn<RowData, String> period3Column;
     @FXML
-    private TableColumn<ScheduleItem, String> period4Column;
+    private TableColumn<RowData, String> period4Column;
     @FXML
-    private TableColumn<ScheduleItem, String> period5Column;
+    private TableColumn<RowData, String> period5Column;
     @FXML
-    private TableColumn<ScheduleItem, String> period6Column;
+    private TableColumn<RowData, String> period6Column;
 
     @FXML
     private void initialize() {
-        // Initialize columns
+        System.out.println("Initializing TableView...");
+        System.out.println("scheduleTable: " + (scheduleTable != null ? "Loaded" : "Null"));
+        System.out.println("dayColumn: " + (dayColumn != null ? "Loaded" : "Null"));
+
+        // Ensure correct column bindings
         dayColumn.setCellValueFactory(new PropertyValueFactory<>("day"));
         period1Column.setCellValueFactory(new PropertyValueFactory<>("period1"));
         period2Column.setCellValueFactory(new PropertyValueFactory<>("period2"));
@@ -42,10 +48,45 @@ public class RegisterTableViewController {
 
     /**
      * Updates the TableView with the provided schedule data.
-     * @param scheduleItems the list of ScheduleItem objects
+     *
+     * @param sectionSchedule the list of ScheduleItem objects
      */
-    public void updateSchedule(List<ScheduleItem> scheduleItems) {
-        ObservableList<ScheduleItem> observableSchedule = FXCollections.observableArrayList(scheduleItems);
-        scheduleTable.setItems(observableSchedule);
+    public void updateSchedule(List<CourseSchedule> sectionSchedule) {
+        // Prepare data for the TableView
+        ObservableList<RowData> tableData = FXCollections.observableArrayList();
+
+        // Days of the week to iterate over
+        List<String> daysOfWeek = List.of("Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
+
+        // Iterate through the days and populate table rows
+        for (String day : daysOfWeek) {
+            String[] periods = new String[6];
+            for (int i = 0; i < periods.length; i++) {
+                periods[i] = "";
+            }
+
+            sectionSchedule.stream()
+                    .filter(schedule -> schedule.getDayOfWeek().equalsIgnoreCase(day))
+                    .forEach(schedule -> {
+                        int periodIndex = schedule.getPeriod() - 1;
+                        if (periodIndex >= 0 && periodIndex < 6) {
+                            periods[periodIndex] = schedule.getMajor();
+                        }
+                    });
+
+            tableData.add(new RowData(day, periods));
+        }
+
+        // Set the data into TableView
+        scheduleTable.setItems(tableData);
+        scheduleTable.requestLayout();
+        scheduleTable.refresh();
+        // Debugging: Print items in TableView
+        System.out.println("Data in scheduleTable:");
+        scheduleTable.getItems().forEach(item ->
+                System.out.println(item.getDay() + ": " +
+                        item.getPeriod1() + ", " + item.getPeriod2() + ", " +
+                        item.getPeriod3() + ", " + item.getPeriod4() + ", " +
+                        item.getPeriod5() + ", " + item.getPeriod6()));
     }
 }

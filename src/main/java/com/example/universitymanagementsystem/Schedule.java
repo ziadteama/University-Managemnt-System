@@ -1,6 +1,6 @@
 package com.example.universitymanagementsystem;
 
-public class Scddhedule {
+public class Schedule {
     private String scheduleId;
     private String sectionId;
     private String dayOfWeek; // e.g., 'Monday', 'Tuesday'
