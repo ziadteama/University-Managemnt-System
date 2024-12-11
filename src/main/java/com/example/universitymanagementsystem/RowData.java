@@ -1,5 +1,8 @@
 package com.example.universitymanagementsystem;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class RowData {
     private String day;
     private String period1;
@@ -47,5 +50,8 @@ public class RowData {
 
     public String getPeriod6() {
         return period6;
+    }
+    public List<String> getPeriods() {
+        return Arrays.asList(period1, period2, period3, period4, period5, period6);
     }
 }

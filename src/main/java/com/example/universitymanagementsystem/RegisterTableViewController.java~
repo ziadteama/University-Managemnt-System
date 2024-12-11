@@ -1,5 +1,6 @@
 package com.example.universitymanagementsystem;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -7,9 +8,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class RegisterTableViewController {
 
@@ -32,6 +31,17 @@ public class RegisterTableViewController {
 
     @FXML
     private void initialize() {
+        ObservableList<RowData> sampleData = FXCollections.observableArrayList(
+                new RowData("Saturday", new String[]{"", "", "", "", "", ""}),
+                new RowData("Sunday", new String[]{"", "", "", "", "", ""}),
+                new RowData("Monday", new String[]{"", "", "", "", "", ""}),
+                new RowData("Tuesday", new String[]{"", "", "", "", "", ""}),
+                new RowData("Wednesday", new String[]{"", "", "", "", "", ""}),
+                new RowData("Thursday", new String[]{"", "", "", "", "", ""}),
+                new RowData("Friday", new String[]{"", "", "", "", "", ""})
+        );
+        scheduleTable.setItems(sampleData);
+        scheduleTable.refresh();
         System.out.println("Initializing TableView...");
         System.out.println("scheduleTable: " + (scheduleTable != null ? "Loaded" : "Null"));
         System.out.println("dayColumn: " + (dayColumn != null ? "Loaded" : "Null"));
@@ -78,15 +88,19 @@ public class RegisterTableViewController {
         }
 
         // Set the data into TableView
-        javafx.application.Platform.runLater(() -> scheduleTable.setItems(tableData));
-        scheduleTable.requestLayout();
-        scheduleTable.refresh();
+        Platform.runLater(() -> {
+            scheduleTable.getItems().clear();
+            System.out.println("Data in scheduleTable:");
+            scheduleTable.setItems(tableData);
+            scheduleTable.getItems().forEach(item ->
+                    System.out.println(item.getDay() + ": " +
+                            item.getPeriod1() + ", " + item.getPeriod2() + ", " +
+                            item.getPeriod3() + ", " + item.getPeriod4() + ", " +
+                            item.getPeriod5() + ", " + item.getPeriod6()));
+            scheduleTable.layout();
+            scheduleTable.refresh();
+        });
         // Debugging: Print items in TableView
-        System.out.println("Data in scheduleTable:");
-        scheduleTable.getItems().forEach(item ->
-                System.out.println(item.getDay() + ": " +
-                        item.getPeriod1() + ", " + item.getPeriod2() + ", " +
-                        item.getPeriod3() + ", " + item.getPeriod4() + ", " +
-                        item.getPeriod5() + ", " + item.getPeriod6()));
+
     }
 }
