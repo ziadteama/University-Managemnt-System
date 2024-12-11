@@ -31,17 +31,9 @@ public class RegisterTableViewController {
 
     @FXML
     private void initialize() {
-        ObservableList<RowData> sampleData = FXCollections.observableArrayList(
-                new RowData("Saturday", new String[]{"", "", "", "", "", ""}),
-                new RowData("Sunday", new String[]{"", "", "", "", "", ""}),
-                new RowData("Monday", new String[]{"", "", "", "", "", ""}),
-                new RowData("Tuesday", new String[]{"", "", "", "", "", ""}),
-                new RowData("Wednesday", new String[]{"", "", "", "", "", ""}),
-                new RowData("Thursday", new String[]{"", "", "", "", "", ""}),
-                new RowData("Friday", new String[]{"", "", "", "", "", ""})
-        );
-        scheduleTable.setItems(sampleData);
-        scheduleTable.refresh();
+        ObservableList<RowData> scheduleList = ScheduleData.getInstance().getScheduleList();
+        scheduleTable.setItems(scheduleList);
+       // scheduleTable.refresh();
         System.out.println("Initializing TableView...");
         System.out.println("scheduleTable: " + (scheduleTable != null ? "Loaded" : "Null"));
         System.out.println("dayColumn: " + (dayColumn != null ? "Loaded" : "Null"));
@@ -56,49 +48,54 @@ public class RegisterTableViewController {
         period6Column.setCellValueFactory(new PropertyValueFactory<>("period6"));
     }
 
-    /**
-     * Updates the TableView with the provided schedule data.
-     *
-     * @param sectionSchedule the list of ScheduleItem objects
-     */
-    public void updateSchedule(List<CourseSchedule> sectionSchedule) {
-        // Get existing items from the table
+
+    public void updateCells(List<CourseSchedule> schedules) {
+        // Get the current items in the TableView
         ObservableList<RowData> tableData = scheduleTable.getItems();
 
-        // Iterate through the schedule and update only necessary fields
-        for (CourseSchedule schedule : sectionSchedule) {
+        // Print the incoming schedules for debugging
+        System.out.println("Updating schedules:");
+        for (CourseSchedule schedule : schedules) {
+            System.out.println("Day: " + schedule.getDayOfWeek() + ", Period: " + schedule.getPeriod() + ", Major: " + schedule.getMajor());
+        }
+
+        // Iterate through each CourseSchedule object in the list
+        for (CourseSchedule schedule : schedules) {
             String day = schedule.getDayOfWeek();
-            int periodIndex = schedule.getPeriod() - 1; // Get the period index (0-based)
+            int periodIndex = schedule.getPeriod() - 1; // Convert to 0-based index
             String major = schedule.getMajor();
 
-            // Find the matching RowData for the day
+            // Find the row for the specified day
             for (RowData row : tableData) {
-                if (row.getDay().equalsIgnoreCase(day) && periodIndex >= 0 && periodIndex < 6) {
+                // Print the current row data for debugging
+                System.out.println("Current Row: " + row.getDay() + ", Periods: " +
+                        row.getPeriod1() + ", " + row.getPeriod2() + ", " +
+                        row.getPeriod3() + ", " + row.getPeriod4() + ", " +
+                        row.getPeriod5() + ", " + row.getPeriod6());
+
+                if (row.getDay().equalsIgnoreCase(day)) {
                     // Update the appropriate period cell for the row
-                    switch (periodIndex) {
-                        case 0 -> row.setPeriod1(major);
-                        case 1 -> row.setPeriod2(major);
-                        case 2 -> row.setPeriod3(major);
-                        case 3 -> row.setPeriod4(major);
-                        case 4 -> row.setPeriod5(major);
-                        case 5 -> row.setPeriod6(major);
+                    if (periodIndex >= 0 && periodIndex < 6) {
+                        switch (periodIndex) {
+                            case 0 -> row.setPeriod1(major);
+                            case 1 -> row.setPeriod2(major);
+                            case 2 -> row.setPeriod3(major);
+                            case 3 -> row.setPeriod4(major);
+                            case 4 -> row.setPeriod5(major);
+                            case 5 -> row.setPeriod6(major);
+                        }
                     }
-                    break; // Break out of loop once the matching day is found
+
+                    // Print the updated row data for debugging
+                    System.out.println("Updated Row: " + row.getDay() + ", Periods: " +
+                            row.getPeriod1() + ", " + row.getPeriod2() + ", " +
+                            row.getPeriod3() + ", " + row.getPeriod4() + ", " +
+                            row.getPeriod5() + ", " + row.getPeriod6());
+                    break; // Exit the loop after updating
                 }
             }
         }
-        Platform.runLater(() -> {
-            scheduleTable.refresh();
-        });
 
-        // No need to refresh or reset anything; updates are automatically reflected
-        Platform.runLater(() -> {
-            System.out.println("Updated cells in scheduleTable:");
-            tableData.forEach(item -> System.out.println(
-                    item.getDay() + ": " +
-                            item.getPeriod1() + ", " + item.getPeriod2() + ", " +
-                            item.getPeriod3() + ", " + item.getPeriod4() + ", " +
-                            item.getPeriod5() + ", " + item.getPeriod6()));
-        });
-    }
-}
+        // Refresh the TableView to show the updated data
+        Platform.runLater(() -> scheduleTable.refresh());
+    }}

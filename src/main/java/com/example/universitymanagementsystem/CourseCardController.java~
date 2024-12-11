@@ -105,6 +105,7 @@ public class CourseCardController {
         List<CourseSchedule> scheduleItems = scheduleDAO.getScheduleBySectionId(sectionId);
 
         // If schedules are found
+        System.out.println("Retrieved Schedule Items: " + scheduleItems);
         if (scheduleItems != null && !scheduleItems.isEmpty()) {
             try {
                 // Load the RegisterTableViewController using its FXML
@@ -113,7 +114,7 @@ public class CourseCardController {
 
                 // Get the controller and update the schedule
                 RegisterTableViewController tableController = loader.getController();
-                tableController.updateSchedule(scheduleItems);
+                tableController.updateCell(scheduleItems);
 
                 // Remove the course card from the FlowPane
                 studentRegisterController.removeCourseCard((Node) addCourseButton.getParent());

@@ -114,7 +114,7 @@ public class CourseCardController {
 
                 // Get the controller and update the schedule
                 RegisterTableViewController tableController = loader.getController();
-                tableController.updateSchedule(scheduleItems);
+                tableController.updateCells(scheduleItems);
 
                 // Remove the course card from the FlowPane
                 studentRegisterController.removeCourseCard((Node) addCourseButton.getParent());
