@@ -173,13 +173,11 @@ public class StudentRegisterController {
             row.setPeriod6("");
         }
 
-        // Re-render the course cards
-        renderCourseCards();
-
         // Show an alert for successful clear
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Schedule Cleared");
         alert.setHeaderText("Schedule Cleared");
         alert.setContentText("Your schedule has been cleared.");
         alert.showAndWait();
-    }}
+    }
+}
