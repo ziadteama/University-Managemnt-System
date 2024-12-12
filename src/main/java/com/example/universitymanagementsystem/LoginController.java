@@ -55,6 +55,9 @@ public class LoginController {
             Student student = studentDAO.getStudentById(userIdInt);
             List<Semester> semesters = studentDAO.getSemestersTaken(userIdInt);
             student.setSemesters(semesters);
+            for(Semester s : student.getSemesters()) {
+                System.out.println("current semesters: "+s);
+            }
             if (student != null) {
                 // Set the student in the session
                 StudentSession.setCurrentStudent(student);

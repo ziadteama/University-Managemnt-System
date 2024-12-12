@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public class LoginController {
 
@@ -52,6 +53,11 @@ public class LoginController {
 
         if (isAuthentic) {
             Student student = studentDAO.getStudentById(userIdInt);
+            List<Semester> semesters = studentDAO.getSemestersTaken(userIdInt);
+            student.setSemesters(semesters);
+            for(Semester s : student.getSemesters()) {
+                System.out.println(s);
+            }
             if (student != null) {
                 // Set the student in the session
                 StudentSession.setCurrentStudent(student);

@@ -34,6 +34,7 @@ public class StudentMenuController {
         } else {
             System.out.println("Student object is null!"); // Debugging log
         }
+
     }
 
     public void setStudent(Student student) {
