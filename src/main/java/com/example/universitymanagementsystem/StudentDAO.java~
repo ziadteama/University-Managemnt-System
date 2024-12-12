@@ -124,7 +124,7 @@ public class StudentDAO {
                 "FROM enrollments e " +
                 "JOIN sections s ON e.section_id = s.section_id " +
                 "JOIN courses c ON s.course_id = c.course_id " +
-                "WHERE e.user_id = ? AND e.section_id = s.section_id";
+                "WHERE e.user_id = ? AND e.section_id = s.section_id  AND s.period = ? AND s.year = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, userId);
@@ -158,5 +158,37 @@ public class StudentDAO {
         }
 
         return null;  // Return null if no student marks are found
+    }
+
+    public List<Semester> getSemestersTaken(int userId) {
+        String query = "SELECT DISTINCT " +
+                "s.year, " +
+                "s.period " +
+                "FROM enrollments e " +
+                "JOIN sections s ON e.section_id = s.section_id " +
+                "WHERE e.user_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            List<Semester> semesters = new ArrayList<>();
+
+            while (rs.next()) {
+                // Retrieve semester details from the result set
+                int year = rs.getInt("year");
+                String period = rs.getString("period");
+
+                // Create the Semester object and add it to the list
+                Semester semester = new Semester(year, period);
+                semesters.add(semester);
+            }
+
+            return semesters; // Return the list of semesters
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;  // Return null if no semesters are found
     }
 }

@@ -110,7 +110,7 @@ public class StudentDAO {
 
     // ... existing methods ...
 
-    public List<StudentMarks> getStudentMarks(int userId) {
+    public List<StudentMarks> getStudentMarks(int userId, String period, int year) {
         String query = "SELECT " +
                 "e.grade, " +
                 "e.seventh_exam, " +
@@ -124,10 +124,12 @@ public class StudentDAO {
                 "FROM enrollments e " +
                 "JOIN sections s ON e.section_id = s.section_id " +
                 "JOIN courses c ON s.course_id = c.course_id " +
-                "WHERE e.user_id = ? AND e.section_id = s.section_id";
+                "WHERE e.user_id = ? AND s.period = ? AND s.year = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, userId);
+            stmt.setString(2, period);
+            stmt.setInt(3, year);
             ResultSet rs = stmt.executeQuery();
 
             List<StudentMarks> studentMarks = new ArrayList<>();
@@ -139,8 +141,6 @@ public class StudentDAO {
                 double twelfthExam = rs.getDouble("twelfth_exam");
                 double cw = rs.getDouble("cw");
                 double finalExam = rs.getDouble("final_exam");
-                String period = rs.getString("period");
-                int year = rs.getInt("year");
                 String courseName = rs.getString("course_name");
                 String courseId = rs.getString("course_id");
 
@@ -159,7 +159,6 @@ public class StudentDAO {
 
         return null;  // Return null if no student marks are found
     }
-
     public List<Semester> getSemestersTaken(int userId) {
         String query = "SELECT DISTINCT " +
                 "s.year, " +

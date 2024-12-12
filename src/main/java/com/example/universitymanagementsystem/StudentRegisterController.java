@@ -103,13 +103,20 @@ public class StudentRegisterController {
      * Removes other cards with the same course name.
      */
     public void removeOtherCardsWithSameCourseName(String courseName) {
-        // Iterate over all course cards
+        // Temporary list to store cards to be removed
+        List<Node> toRemove = new ArrayList<>();
+
+        // First, find all the cards to be removed
         for (Node card : courseCards) {
             CourseCardController cardController = (CourseCardController) card.getUserData();
             if (cardController != null && cardController.getCourseName().equals(courseName)) {
-                // Remove the card from the parent container
-                removeCourseCard(card);
+                toRemove.add(card); // Add to the removal list
             }
+        }
+
+        // Then, remove the cards outside the iteration loop
+        for (Node card : toRemove) {
+            removeCourseCard(card);
         }
     }
 
