@@ -5,48 +5,45 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" spacing="10.0"
-      xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.StudentMarkCardController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" spacing="15.0" style="-fx-background-color: #F7F8FA; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0.5, 0, 3); -fx-padding: 20;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.StudentMarkCardController">
    <children>
-      <Label fx:id="courseIdLabel" text="CourseID goes here" textAlignment="CENTER" />
-      <Label fx:id="courseNameLabel" text="CourseName goes here" textAlignment="CENTER" />
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <Label fx:id="courseIdLabel" style="-fx-font-weight: bold; -fx-font-size: 16px;" text="Course ID" textAlignment="CENTER" />
+      <Label fx:id="courseNameLabel" style="-fx-font-weight: bold; -fx-font-size: 16px;" text="Course Name" textAlignment="CENTER" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="seventhWeekMarkLabel" prefHeight="37.0" prefWidth="38.0" text="Mark" textAlignment="CENTER" />
-                  <Label text="7th Week" />
+                  <Label fx:id="seventhWeekMarkLabel" alignment="CENTER" prefHeight="30.0" prefWidth="50.0" style="-fx-text-fill: #4CAF50; -fx-font-weight: bold;" text="7th Week: 85" textAlignment="CENTER" />
+                  <Label alignment="CENTER" style="-fx-text-fill: #6c757d;" text="7th mark" />
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="twelfthWeekMarkLabel" prefHeight="37.0" prefWidth="38.0" text="Mark" textAlignment="CENTER" />
-                  <Label text="12th Week" />
+                  <Label fx:id="twelfthWeekMarkLabel" alignment="CENTER" prefHeight="30.0" prefWidth="50.0" style="-fx-text-fill: #4CAF50; -fx-font-weight: bold;" text="12th Week: 90" textAlignment="CENTER" />
+                  <Label alignment="CENTER" style="-fx-text-fill: #6c757d;" text="12th mark" />
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="courseWorkMarkLabel" prefHeight="37.0" prefWidth="38.0" text="Mark" textAlignment="CENTER" />
-                  <Label text="Course Work" />
+                  <Label fx:id="courseWorkMarkLabel" alignment="CENTER" prefHeight="30.0" prefWidth="50.0" style="-fx-text-fill: #FFC107; -fx-font-weight: bold;" text="Course Work: 92" textAlignment="CENTER" />
+                  <Label alignment="CENTER" style="-fx-text-fill: #6c757d;" text="Course Work" />
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="finalMarkLabel" prefHeight="37.0" prefWidth="38.0" text="Mark" textAlignment="CENTER" />
-                  <Label text="Final" />
+                  <Label fx:id="finalMarkLabel" alignment="CENTER" prefHeight="30.0" prefWidth="50.0" style="-fx-text-fill: #4CAF50; -fx-font-weight: bold;" text="Final: 89" textAlignment="CENTER" />
+                  <Label alignment="CENTER" style="-fx-text-fill: #6c757d;" text="Final Exam" />
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="gradeLabel" prefHeight="37.0" prefWidth="38.0" text="Grade" textAlignment="CENTER" />
+                  <Label fx:id="gradeLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="50.0" style="-fx-font-size: 18px; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 10;" text="A" textAlignment="CENTER" />
                </children>
             </VBox>
          </children>
       </HBox>
    </children>
    <padding>
-      <Insets bottom="20.0" top="20.0" />
+      <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
    </padding>
 </VBox>
-
