@@ -108,5 +108,87 @@ public class StudentDAO {
         return null;  // Return null if no student is found
     }
 
-    // Other methods like addStudent, updateStudent, deleteStudent...
+    // ... existing methods ...
+
+    public List<StudentMarks> getStudentMarks(int userId) {
+        String query = "SELECT " +
+                "e.grade, " +
+                "e.seventh_exam, " +
+                "e.twelfth_exam, " +
+                "e.cw, " +
+                "e.final_exam, " +
+                "s.period, " +
+                "s.year, " +
+                "c.course_name, " +
+                "c.course_id " +
+                "FROM enrollments e " +
+                "JOIN sections s ON e.section_id = s.section_id " +
+                "JOIN courses c ON s.course_id = c.course_id " +
+                "WHERE e.user_id = ? AND e.section_id = s.section_id";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            List<StudentMarks> studentMarks = new ArrayList<>();
+
+            while (rs.next()) {
+                // Retrieve marks details from the result set
+                String grade = rs.getString("grade");
+                double seventhExam = rs.getDouble("seventh_exam");
+                double twelfthExam = rs.getDouble("twelfth_exam");
+                double cw = rs.getDouble("cw");
+                double finalExam = rs.getDouble("final_exam");
+                String period = rs.getString("period");
+                int year = rs.getInt("year");
+                String courseName = rs.getString("course_name");
+                String courseId = rs.getString("course_id");
+
+                // Create the StudentMarks object and add it to the list
+                StudentMarks studentMark = new StudentMarks(
+                        grade, seventhExam, twelfthExam, cw, finalExam,
+                        period, year, courseName, courseId
+                );
+                studentMarks.add(studentMark);
+            }
+
+            return studentMarks; // Return the list of student marks
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;  // Return null if no student marks are found
+    }
+
+    public List<Semester> getSemestersTaken(int userId) {
+        String query = "SELECT DISTINCT " +
+                "s.year, " +
+                "s.period " +
+                "FROM enrollments e " +
+                "JOIN sections s ON e.section_id = s.section_id " +
+                "WHERE e.user_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            List<Semester> semesters = new ArrayList<>();
+
+            while (rs.next()) {
+                // Retrieve semester details from the result set
+                int year = rs.getInt("year");
+                String period = rs.getString("period");
+
+                // Create the Semester object and add it to the list
+                Semester semester = new Semester(year, period);
+                semesters.add(semester);
+            }
+
+            return semesters; // Return the list of semesters
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;  // Return null if no semesters are found
+    }
 }

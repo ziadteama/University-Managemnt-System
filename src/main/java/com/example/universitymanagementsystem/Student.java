@@ -10,7 +10,7 @@ public class Student extends User {
     private int currentSemester;      // current_semester (int)
     private String yearEntry;         // year_entry (varchar(4))
     private List<Enrollments> enrollments;
-    private List<Enrollments> completedEnrollments;
+    private List<Semester> semesters;
 
     // Constructor
     public Student(int userId, String name, String email, String role, String major, String gender,
@@ -23,7 +23,7 @@ public class Student extends User {
         this.currentSemester = currentSemester;
         this.yearEntry = yearEntry;
         this.enrollments = new ArrayList<>();
-        this.completedEnrollments = new ArrayList<>();
+        this.semesters = new ArrayList<>();
     }
 
     // Getters and Setters
@@ -84,6 +84,13 @@ public class Student extends User {
                 ", yearEntry='" + yearEntry + '\'' +
                 ", user=" + super.toString() + // Include User information
                 '}';
+    }
+    public List<Semester> getSemesters() {
+        return semesters;
+    }
+
+    public void setSemesters(List<Semester> semesters) {
+        this.semesters = semesters;
     }
 }
 

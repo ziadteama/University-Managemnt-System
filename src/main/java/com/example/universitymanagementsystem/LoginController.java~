@@ -39,6 +39,7 @@ public class LoginController {
         }
     }
 
+    @FXML
     private void handleLogin() {
         String userId = userIdField.getText();
         String password = passwordField.getText();

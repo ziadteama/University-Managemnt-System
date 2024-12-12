@@ -28,7 +28,6 @@ public class ScheduleDAO {
 
     /**
      * Converts a period enum string to its corresponding integer value.
-     *
      * @param period The enum string value of the period (e.g., "first")
      * @return The corresponding integer value (e.g., 1 for "first")
      * @throws IllegalArgumentException if the period is invalid
@@ -108,32 +107,20 @@ public class ScheduleDAO {
         List<CourseSchedule> schedules = new ArrayList<>();
 
         // SQL query to get schedule details based on user_id
-        String query = """
-                SELECT 
-                    s.schedule_id, 
-                    s.section_id, 
-                    s.day_of_week, 
-                    s.major, 
-                    s.period, 
-                    s.location, 
-                    s.class_type, 
-                    e.user_id, 
-                    c.course_name 
-                FROM 
-                    enrollments e 
-                JOIN 
-                    schedules s ON e.section_id = s.section_id 
-                JOIN 
-                    sections sec ON s.section_id = sec.section_id 
-                JOIN 
-                    courses c ON sec.course_id = c.course_id 
-                JOIN 
-                    students st ON e.user_id = st.student_id 
-                WHERE 
-                    e.user_id = ?
-                    AND e.semester_taken = st.current_semester;
-                """;
-
+        String query = "SELECT s.schedule_id, " +
+                "       s.section_id, " +
+                "       s.day_of_week, " +
+                "       s.major, " +
+                "       s.period, " +
+                "       s.location, " +
+                "       s.class_type, " +
+                "       e.user_id, " +
+                "       c.course_name " +
+                "FROM enrollments e " +
+                "JOIN schedules s ON e.section_id = s.section_id " +
+                "JOIN sections sec ON s.section_id = sec.section_id " +
+                "JOIN courses c ON sec.course_id = c.course_id " +
+                "WHERE e.user_id = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, userId);  // Set the user_id parameter
