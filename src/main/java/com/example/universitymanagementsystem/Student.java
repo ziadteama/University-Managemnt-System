@@ -88,6 +88,13 @@ public class Student extends User {
     public List<Semester> getSemesters() {
         return semesters;
     }
+    public List<String> getSemestersString() {
+        List<String> semestersString = new ArrayList<>();
+        for (Semester s : semesters) {
+            semestersString.add(s.getYear() + " " + s.getPeriod());
+        }
+        return semestersString;
+    }
 
     public void setSemesters(List<Semester> semesters) {
         this.semesters = semesters;

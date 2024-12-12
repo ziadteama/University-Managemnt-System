@@ -16,6 +16,9 @@ public class MenuController {
     @FXML
     private Button registerButton;
 
+    @FXML
+    private Button marksButton;
+
     public void initialize() {
     }
 
@@ -55,6 +58,25 @@ public class MenuController {
             Scene registerScene = new Scene(root);
             stage.setScene(registerScene);
             stage.setTitle("Register");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void handleMarks() {
+        try {
+            // Load the register scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("studentsmarks.fxml"));
+            Parent root = loader.load();
+
+            // Get the StudentRegisterController
+            StudentRegisterController registerController = loader.getController();
+
+            // Get the current stage and set the new scene (register screen)
+            Stage stage = (Stage) marksButton.getScene().getWindow();
+            Scene registerScene = new Scene(root);
+            stage.setScene(registerScene);
+            stage.setTitle("Marks");
         } catch (Exception e) {
             e.printStackTrace();
         }
