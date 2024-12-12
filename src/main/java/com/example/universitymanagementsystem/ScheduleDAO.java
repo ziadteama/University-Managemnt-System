@@ -101,6 +101,56 @@ public class ScheduleDAO {
         return schedules;
     }
 
+    // New method to get schedules by user_id
+// New method to get schedules by user_id
+    public List<CourseSchedule> getSchedulesByUserId(int userId) {
+        List<CourseSchedule> schedules = new ArrayList<>();
 
+        // SQL query to get schedule details based on user_id
+        String query = "SELECT s.schedule_id, " +
+                "       s.section_id, " +
+                "       s.day_of_week, " +
+                "       s.major, " +
+                "       s.period, " +
+                "       s.location, " +
+                "       s.class_type, " +
+                "       e.user_id, " +
+                "       c.course_name " +
+                "FROM enrollments e " +
+                "JOIN schedules s ON e.section_id = s.section_id " +
+                "JOIN sections sec ON s.section_id = sec.section_id " +
+                "JOIN courses c ON sec.course_id = c.course_id " +
+                "WHERE e.user_id = ?";
 
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, userId);  // Set the user_id parameter
+            ResultSet rs = stmt.executeQuery();
+
+            // Process the result set
+            while (rs.next()) {
+                try {
+                    CourseSchedule schedule = new CourseSchedule(
+                            rs.getString("schedule_id"),
+                            rs.getString("course_name"),
+                            rs.getString("section_id"),
+                            rs.getString("day_of_week"),
+                            rs.getString("major"),
+                            periodStringToInt(rs.getString("period")), // Convert period to integer
+                            rs.getString("location"),
+                            rs.getInt("user_id"),
+                            rs.getString("class_type")
+                    );
+
+                    schedules.add(schedule);
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Failed to map period for schedule_id "
+                            + rs.getString("schedule_id") + ": " + e.getMessage());
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Database error: " + e.getMessage());
+        }
+
+        return schedules;
+    }
 }

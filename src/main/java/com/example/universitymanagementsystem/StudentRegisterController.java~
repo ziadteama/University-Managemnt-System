@@ -10,12 +10,15 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class StudentRegisterController {
     private Student student;
     private EnrollmentsDAO enrollmentsDAO;
     private List<CanEnroll> canEnroll;
+    private List<Node> courseCards;
 
     @FXML
     private FlowPane coursesContainer; // FlowPane to hold the course cards
@@ -69,6 +72,8 @@ public class StudentRegisterController {
         // Clear any existing cards
         coursesContainer.getChildren().clear();
 
+        courseCards = new ArrayList<>();
+
         for (CanEnroll course : canEnroll) {
             // Create a card dynamically
             Node courseCard = CourseCardController.createCard(
@@ -86,6 +91,7 @@ public class StudentRegisterController {
             // Add the card to the container
             if (courseCard != null) {
                 coursesContainer.getChildren().add(courseCard);
+                courseCards.add(courseCard);
             }
         }
     }
@@ -96,8 +102,23 @@ public class StudentRegisterController {
     public void removeCourseCard(Node courseCard) {
         if (coursesContainer != null) {
             coursesContainer.getChildren().remove(courseCard);
+            courseCards.remove(courseCard);
         } else {
             throw new IllegalStateException("coursesContainer is not initialized. Please check the FXML file and controller setup.");
+        }
+    }
+
+    /**
+     * Removes other cards with the same course name.
+     */
+    public void removeOtherCardsWithSameCourseName(String courseName) {
+        // Iterate over all course cards
+        for (Node card : courseCards) {
+            CourseCardController cardController = (CourseCardController) card.getUserData();
+            if (cardController != null && cardController.getCourseName().equals(courseName)) {
+                // Remove the card from the parent container
+                removeCourseCard(card);
+            }
         }
     }
 
@@ -106,23 +127,4 @@ public class StudentRegisterController {
      */
     @FXML
     private void handleSubmitButtonClick() {
-        List<String> selectedSectionIds = new ArrayList<>();
-        ObservableList<RowData> rowData = ScheduleData.getInstance().getScheduleList();
-        if (rowData != null && !rowData.isEmpty()) {
-            for (RowData row : rowData) {
-                String sectionId = row.getSectionId(); // Assuming rowData objects have a method to get section IDs
-                if (sectionId != null) {
-                    selectedSectionIds.add(sectionId);
-                }
-            }
-        }
-
-
-        if (!selectedSectionIds.isEmpty()) {
-            System.out.println("Selected Section IDs for enrollment: " + selectedSectionIds);
-            enrollmentsDAO.insertEnrollments(student.getUserId(), selectedSectionIds, java.sql.Date.valueOf(java.time.LocalDate.now()), student.getCurrentSemester());
-        } else {
-            System.out.println("No courses selected for enrollment.");
-        }
-    }
-}
+        List<String> selected

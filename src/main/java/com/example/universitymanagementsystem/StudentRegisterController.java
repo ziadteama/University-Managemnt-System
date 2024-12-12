@@ -18,6 +18,7 @@ public class StudentRegisterController {
     private Student student;
     private EnrollmentsDAO enrollmentsDAO;
     private List<CanEnroll> canEnroll;
+    private List<Node> courseCards;
 
     @FXML
     private FlowPane coursesContainer; // FlowPane to hold the course cards
@@ -71,6 +72,8 @@ public class StudentRegisterController {
         // Clear any existing cards
         coursesContainer.getChildren().clear();
 
+        courseCards = new ArrayList<>();
+
         for (CanEnroll course : canEnroll) {
             // Create a card dynamically
             Node courseCard = CourseCardController.createCard(
@@ -88,6 +91,7 @@ public class StudentRegisterController {
             // Add the card to the container
             if (courseCard != null) {
                 coursesContainer.getChildren().add(courseCard);
+                courseCards.add(courseCard);
             }
         }
     }
@@ -98,8 +102,23 @@ public class StudentRegisterController {
     public void removeCourseCard(Node courseCard) {
         if (coursesContainer != null) {
             coursesContainer.getChildren().remove(courseCard);
+            courseCards.remove(courseCard);
         } else {
             throw new IllegalStateException("coursesContainer is not initialized. Please check the FXML file and controller setup.");
+        }
+    }
+
+    /**
+     * Removes other cards with the same course name.
+     */
+    public void removeOtherCardsWithSameCourseName(String courseName) {
+        // Iterate over all course cards
+        for (Node card : courseCards) {
+            CourseCardController cardController = (CourseCardController) card.getUserData();
+            if (cardController != null && cardController.getCourseName().equals(courseName)) {
+                // Remove the card from the parent container
+                removeCourseCard(card);
+            }
         }
     }
 
@@ -123,7 +142,6 @@ public class StudentRegisterController {
             // If you need it as a List
             selectedSectionIds = new ArrayList<>(uniqueSectionIds);
         }
-
 
         if (!selectedSectionIds.isEmpty()) {
             System.out.println("Selected Section IDs for enrollment: " + selectedSectionIds);
