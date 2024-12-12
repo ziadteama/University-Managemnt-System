@@ -74,7 +74,7 @@ public class EnrollmentsDAO {
         return courses;
     }
 
-    public void insertEnrollments(int userId, List<String> sectionIds, Date enrollmentDate,int semesterTaken) {
+    public boolean insertEnrollments(int userId, List<String> sectionIds, Date enrollmentDate, int semesterTaken) {
         String insertQuery = "INSERT INTO enrollments (user_id, section_id, enrollment_date,semester_taken) " +
                 "VALUES (?, ?, ?,?)";
 
@@ -83,14 +83,28 @@ public class EnrollmentsDAO {
                 preparedStatement.setInt(1, userId);
                 preparedStatement.setString(2, sectionId);
                 preparedStatement.setDate(3, enrollmentDate);
-                preparedStatement.setInt(4,semesterTaken);
+                preparedStatement.setInt(4, semesterTaken);
 
                 // Execute the insert for the current section ID
                 preparedStatement.executeUpdate();
             }
+            return true; // Enrollment successful
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle exceptions (e.g., log the error, rethrow, etc.)
+            return false; // Enrollment failed
+        }
+    }
+    public boolean isAlreadyEnrolled(int userId) {
+        String query = "SELECT * FROM enrollments WHERE user_id = ? ;";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            return rs.next(); // Returns true if a row is found, indicating the student is already enrolled
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Returns false if an error occurs
         }
     }
 }

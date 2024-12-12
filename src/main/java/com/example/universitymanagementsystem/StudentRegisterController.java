@@ -2,6 +2,7 @@ package com.example.universitymanagementsystem;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.Node;
@@ -76,17 +77,7 @@ public class StudentRegisterController {
 
         for (CanEnroll course : canEnroll) {
             // Create a card dynamically
-            Node courseCard = CourseCardController.createCard(
-                    course.getSectionId(),
-                    course.getCourseName(),
-                    course.getCourseCode(),
-                    course.getCreditHours(),
-                    course.getLecturerName(),
-                    course.getTutorName(),
-                    course.getLectureTime(),
-                    course.getTutorialTime(),
-                    this
-            );
+            Node courseCard = CourseCardController.createCard(course.getSectionId(), course.getCourseName(), course.getCourseCode(), course.getCreditHours(), course.getLecturerName(), course.getTutorName(), course.getLectureTime(), course.getTutorialTime(), this);
 
             // Add the card to the container
             if (courseCard != null) {
@@ -127,6 +118,17 @@ public class StudentRegisterController {
      */
     @FXML
     private void handleSubmitButtonClick() {
+        // Check if the student is already enrolled in a course
+        if (enrollmentsDAO.isAlreadyEnrolled(student.getUserId())) {
+            // Show an alert to the student
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Already Enrolled");
+            alert.setHeaderText("Already Enrolled");
+            alert.setContentText("You are already enrolled in a course. Please head to your TA to discuss further enrollment options.");
+            alert.showAndWait();
+            return;
+        }
+
         List<String> selectedSectionIds = new ArrayList<>();
         ObservableList<RowData> rowData = ScheduleData.getInstance().getScheduleList();
         if (rowData != null && !rowData.isEmpty()) {
@@ -146,8 +148,13 @@ public class StudentRegisterController {
         if (!selectedSectionIds.isEmpty()) {
             System.out.println("Selected Section IDs for enrollment: " + selectedSectionIds);
             enrollmentsDAO.insertEnrollments(student.getUserId(), selectedSectionIds, java.sql.Date.valueOf(java.time.LocalDate.now()), student.getCurrentSemester());
+            // Show an alert for successful enrollment
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Enrollment Successful");
+            alert.setHeaderText("Enrolled Successfully");
+            alert.setContentText("You have been enrolled in the selected courses.");
+            alert.showAndWait();
         } else {
             System.out.println("No courses selected for enrollment.");
         }
-    }
-}
+    }}

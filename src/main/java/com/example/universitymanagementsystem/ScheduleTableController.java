@@ -89,7 +89,18 @@ public class ScheduleTableController {
             String cellData = schedule.getCourseName() + "\n" + schedule.getClassType();
 
             // Get the row for the specified day
+            if (!rows.containsKey(day)) {
+                System.err.println("Warning: Unrecognized day '" + day + "'. Skipping entry.");
+                continue; // Skip this schedule entry if the day is invalid
+            }
+
             RowData row = rows.get(day);
+
+            // Double-check row is not null (redundant but safe)
+            if (row == null) {
+                System.err.println("Error: Row for day '" + day + "' is null. Skipping entry.");
+                continue;
+            }
 
             // Set the appropriate period cell for the row
             switch (periodIndex) {
@@ -111,6 +122,9 @@ public class ScheduleTableController {
                 case 5:
                     row.setPeriod6(cellData);
                     break;
+                default:
+                    System.err.println("Warning: Invalid period index " + periodIndex + " for day " + day + ". Skipping entry.");
+                    break;
             }
         }
 
@@ -122,5 +136,4 @@ public class ScheduleTableController {
 
         // Refresh the TableView to show the populated data
         Platform.runLater(() -> scheduleTable.refresh());
-    }
-}
+    }}
