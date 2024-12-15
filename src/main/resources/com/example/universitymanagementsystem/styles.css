@@ -1,0 +1,125 @@
+/* General Card Styling */
+.card {
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-pref-width: 220;
+    -fx-pref-height: 140;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0.5, 0, 3);
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+/* Animated Gradient Background for Cards */
+.card-blue {
+    -fx-background-color: linear-gradient(to right, #3498db, #8e44ad); /* Blue to Purple Gradient */
+}
+
+.card-teal {
+    -fx-background-color: linear-gradient(to right, #1abc9c, #16a085); /* Teal to Dark Teal Gradient */
+}
+
+.card-yellow {
+    -fx-background-color: linear-gradient(to right, #f39c12, #e67e22); /* Yellow to Orange Gradient */
+}
+
+.card-purple {
+    -fx-background-color: linear-gradient(to right, #9b59b6, #8e44ad); /* Purple to Dark Purple Gradient */
+}
+
+/* Hover Effects: Scale and Shadow */
+.card:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.8, 0, 4);
+    -fx-background-color: linear-gradient(to right, #34495e, #2c3e50); /* Darker Hover Gradient */
+}
+
+/* Text Styling */
+.card-text {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+}
+
+/* Secondary Text Styling (Course ID, Section ID) */
+.card-secondary-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: #ecf0f1;
+    -fx-text-alignment: center;
+}
+
+/* Optional Animated Card Border */
+.card {
+    -fx-border-color: transparent;
+    -fx-border-width: 2;
+    -fx-border-radius: 12;
+}
+
+.card:hover {
+    -fx-border-color: #ffffff; /* White border on hover */
+}
+
+/* Optional Hover Transition */
+.card {
+    -fx-transition: all 0.2s ease-in-out;
+}
+/* Modern Logout Button Styling */
+/* General Styling */
+
+
+.top-bar {
+    -fx-padding: 15;
+    -fx-background-color: #f4f4f4; /* Light gray background */
+    -fx-border-color: #cccccc; /* Subtle bottom border */
+    -fx-border-width: 0 0 1 0; /* Bottom border only */
+    -fx-alignment: center; /* Center elements inside the Top Bar */
+}
+
+.hello-text {
+    -fx-font-size: 24px;         /* Larger text size */
+    -fx-font-weight: bold;       /* Bold text */
+    -fx-text-fill: #333333;      /* Dark gray color */
+}
+
+/* Center Course Grid */
+.course-grid {
+    -fx-padding: 20;             /* Padding around the course grid */
+    -fx-hgap: 20;                /* Horizontal spacing between grid items */
+    -fx-vgap: 20;                /* Vertical spacing between grid items */
+}
+
+/* Bottom Bar */
+.bottom-bar {
+    -fx-padding: 15;
+    -fx-background-color: #f4f4f4; /* Light gray background */
+    -fx-border-color: #cccccc;     /* Top border for separation */
+    -fx-border-width: 1 0 0 0;     /* Top border only */
+    -fx-alignment: bottom-right;   /* Align the Logout button to bottom-right */
+}
+
+/* Modern Logout Button */
+.modern-logout-button {
+    -fx-background-color: linear-gradient(to right, #36d1dc, #5b86e5); /* Gradient blue button */
+    -fx-text-fill: white;              /* White text */
+    -fx-font-size: 14px;               /* Text size */
+    -fx-font-weight: bold;             /* Bold font */
+    -fx-padding: 10 20;                /* Padding for clickable size */
+    -fx-border-radius: 20;             /* Rounded corners */
+    -fx-background-radius: 20;         /* Consistent rounding */
+    -fx-cursor: hand;                  /* Pointer cursor on hover */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 1); /* Subtle shadow */
+}
+
+/* Hover Effect */
+.modern-logout-button:hover {
+    -fx-background-color: linear-gradient(to right, #5b86e5, #36d1dc); /* Reverse gradient */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 8, 0, 0, 2);   /* Stronger shadow */
+}
+
+/* Pressed Button Effect */
+.modern-logout-button:pressed {
+    -fx-background-color: #2a7bbd; /* Solid blue when pressed */
+    -fx-effect: none;
+}

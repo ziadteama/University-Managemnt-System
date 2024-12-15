@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.universitymanagementsystem.AttendanceController"
+      spacing="20"
+      alignment="CENTER"
+      prefHeight="600"
+      prefWidth="400">
+
+    <!-- Title -->
+    <Label text="Attendance Tracker"
+           style="-fx-font-size: 24; -fx-font-weight: bold;"
+           textAlignment="CENTER"/>
+
+    <!-- Week Dropdown -->
+    <HBox spacing="10" alignment="CENTER_LEFT" prefWidth="350">
+        <Label text="Select Week:"/>
+        <ComboBox fx:id="weekDropdown" promptText="Choose a Week" prefWidth="200"/>
+    </HBox>
+
+    <!-- Student List Container -->
+    <ScrollPane fitToWidth="true" prefHeight="400" prefWidth="350" vbarPolicy="ALWAYS">
+        <content>
+            <VBox fx:id="studentListContainer" spacing="5" alignment="TOP_LEFT"
+                  style="-fx-padding: 10;"/>
+        </content>
+    </ScrollPane>
+
+    <!-- Save and Back Buttons -->
+    <HBox spacing="15" alignment="CENTER">
+        <Button fx:id="saveAttendanceButton" text="Save Attendance" onAction="#saveAttendance"
+                style="-fx-font-size: 14; -fx-font-weight: bold;"/>
+        <Button fx:id="backButton" text="Back" onAction="#handleBack"
+                style="-fx-font-size: 14;"/>
+    </HBox>
+
+</VBox>

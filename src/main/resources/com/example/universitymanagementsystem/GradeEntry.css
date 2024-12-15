@@ -1,0 +1,116 @@
+/* GradeEntry.css */
+
+/* Root style for the whole scene */
+.root {
+    -fx-background-color: #F5F5F5;
+    -fx-font-family: "Arial", sans-serif;
+    -fx-font-size: 14px;
+    -fx-padding: 20px;
+}
+
+/* Style for Section Name Label */
+.section-name-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+
+/* Style for the student name labels inside the student rows */
+.student-name-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-font-size: 14px;
+    -fx-alignment: center-left;
+    -fx-pref-width: 200px; /* Fixed width for alignment */
+}
+
+/* Styling for student rows */
+.student-row {
+    -fx-padding: 10px;
+    -fx-background-color: #fff;
+    -fx-border-radius: 5px;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1px;
+    -fx-margin: 5px;
+    -fx-pref-height: 40px;
+    -fx-alignment: center;
+    -fx-spacing: 10px;
+}
+
+.student-row:hover {
+    -fx-background-color: #E8E8E8;
+}
+
+/* Text field style */
+.text-field {
+    -fx-padding: 8px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #ccc;
+    -fx-background-color: #fff;
+    -fx-pref-width: 80px; /* Consistent width for alignment */
+    -fx-alignment: center;
+}
+
+.text-field:focused {
+    -fx-border-color: #4C90F6;
+}
+
+/* Label style for grades */
+.grade-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-alignment: center;
+    -fx-pref-width: 60px; /* Consistent width for grades */
+}
+
+/* Button styling */
+.button {
+    -fx-background-color: #4C90F6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+    -fx-font-size: 14px;
+    -fx-border-radius: 5px;
+    -fx-pref-width: 100px; /* Consistent button width */
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #3571B7;
+}
+
+.button:pressed {
+    -fx-background-color: #2C5F9D;
+}
+
+/* HBox and VBox spacing and alignment */
+.hbox, .vbox {
+    -fx-alignment: center;
+    -fx-spacing: 10px;
+}
+
+/* Adjust the layout of the VBox container to align rows like a table */
+.student-list-container {
+    -fx-spacing: 5px;
+    -fx-padding: 10px;
+}
+
+/* Alignment and consistent size for row items */
+.student-row GridPane {
+    -fx-alignment: center-left;
+}
+
+GridPane > .label, GridPane > .text-field, GridPane > .button {
+    -fx-alignment: center;
+    -fx-pref-height: 30px;
+}
+
+/* Adjustments for spacing between elements */
+.grid-pane {
+    -fx-hgap: 10px;
+    -fx-vgap: 10px;
+}

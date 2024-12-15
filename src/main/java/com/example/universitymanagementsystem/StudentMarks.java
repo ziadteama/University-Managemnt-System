@@ -1,6 +1,7 @@
 package com.example.universitymanagementsystem;
 
 public class StudentMarks {
+
     private String grade;
     private double seventhExam;
     private double twelfthExam;
@@ -23,7 +24,16 @@ public class StudentMarks {
         this.courseName = courseName;
         this.courseId = courseId;
     }
+    // Constructor to initialize marks and grade
+    public StudentMarks(Integer seventhExam, Integer twelfthExam, Integer coursework, Integer finalExam, String grade) {
+        this.seventhExam = seventhExam;
+        this.twelfthExam = twelfthExam;
+        this.cw = coursework;
+        this.finalExam = finalExam;
+        this.grade = grade;
+    }
 
+    // Getters a
     // Getters and setters for the fields
     public String getGrade() {
         return grade;

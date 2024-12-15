@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.GradeEntryController" stylesheets="@GradeEntry.css">
+    <columnConstraints>
+        <ColumnConstraints halignment="CENTER"/>
+        <ColumnConstraints halignment="CENTER"/>
+        <ColumnConstraints halignment="CENTER"/>
+        <ColumnConstraints halignment="CENTER"/>
+        <ColumnConstraints halignment="CENTER"/>
+        <ColumnConstraints halignment="CENTER"/>
+    </columnConstraints>
+
+    <!-- Main Container (VBox) -->
+    <VBox spacing="20" alignment="TOP_CENTER" GridPane.columnSpan="6">
+
+        <!-- Section Name -->
+        <Label fx:id="sectionNameLabel" styleClass="section-name-label" text="Section Name"/>
+
+        <!-- Student List Container -->
+        <VBox fx:id="studentListContainer" spacing="10"/>
+
+        <!-- Buttons -->
+        <HBox spacing="10" alignment="CENTER">
+            <Button fx:id="attendanceButton" text="Attendance" onAction="#handleAttendance"/>
+            <Button fx:id="saveButton" text="Save Marks" onAction="#saveMarks"/>
+        </HBox>
+    </VBox>
+</GridPane>
