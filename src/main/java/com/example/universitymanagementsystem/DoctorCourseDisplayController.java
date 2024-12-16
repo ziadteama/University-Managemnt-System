@@ -12,7 +12,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -117,9 +116,8 @@ public class DoctorCourseDisplayController {
             GradeEntryController controller = loader.getController();
             controller.setSectionId(sectionId);
 
-            // Make the window resize to fit the content
-            stage.sizeToScene();  // Adjust the size based on the content
-            stage.setResizable(true);  // Allow resizing if needed
+
+
 
             stage.show();
         } catch (Exception e) {
@@ -137,7 +135,7 @@ public class DoctorCourseDisplayController {
             // Get the current stage and set the new scene
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(loginScene);
-            stage.setResizable(false);
+
 
             stage.setTitle("Login");
             stage.show();

@@ -41,14 +41,37 @@ public class EnrollmentsDAO {
                 "JOIN courses c ON sec.course_id = c.course_id " +
                 "JOIN users dr ON sec.dr_id = dr.user_id AND dr.role = 'dr' " +
                 "JOIN users ta ON sec.ta_id = ta.user_id AND ta.role = 'ta' " +
-                "WHERE s.major = (SELECT major FROM users WHERE user_id = ?) " + // Student's major
+                "LEFT JOIN enrollments e ON e.section_id = s.section_id AND e.user_id = ? " +
+                "LEFT JOIN courseprerequisites cp ON c.course_id = cp.course_id " +
+                "LEFT JOIN enrollments ep ON ep.section_id IN ( " +
+                "SELECT sec_prereq.section_id " +
+                "FROM sections sec_prereq " +
+                "JOIN courses prereq_course ON sec_prereq.course_id = cp.prerequisite_course_id " +
+                "WHERE sec_prereq.section_id = ep.section_id " +
+                "AND ep.user_id = ? " +
+                ") " +
+                "WHERE s.major = ( " +
+                "SELECT major " +
+                "FROM users " +
+                "WHERE user_id = ? " +
+                ") " +
                 "AND sec.period = 'Fall' " +
-                "AND sec.year = 2023"+
+                "AND sec.year = '2023' " +
+                "AND ( " +
+                "cp.prerequisite_course_id IS NULL OR " +
+                "(ep.grade NOT IN ('U', 'W', 'F') AND ep.grade IS NOT NULL) " +
+                ") " +
+                "AND ( " +
+                "e.section_id IS NULL OR " +
+                "e.grade IN ('W', 'F', 'U') " +
+                ") " +
                 "GROUP BY c.course_name, c.course_id, c.credit_hours, dr.name, ta.name, s.section_id " +
                 "ORDER BY c.course_id;";
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, userId);
+            stmt.setInt(2, userId);
+            stmt.setInt(3, userId);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -73,6 +96,7 @@ public class EnrollmentsDAO {
 
         return courses;
     }
+
 
     public boolean insertEnrollments(int userId, List<String> sectionIds, Date enrollmentDate, int semesterTaken) {
         String insertQuery = "INSERT INTO enrollments (user_id, section_id, enrollment_date,semester_taken) " +
