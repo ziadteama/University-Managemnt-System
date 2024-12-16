@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class ScheduleDAO {
     private Connection connection;
@@ -106,33 +107,60 @@ public class ScheduleDAO {
 // New method to get schedules by user_id
     public List<CourseSchedule> getSchedulesByUserId(int userId) {
         List<CourseSchedule> schedules = new ArrayList<>();
-
-        // SQL query to get schedule details based on user_id
-        String query = """
-                SELECT 
-                    s.schedule_id, 
-                    s.section_id, 
-                    s.day_of_week, 
-                    s.major, 
-                    s.period, 
-                    s.location, 
-                    s.class_type, 
-                    e.user_id, 
-                    c.course_name 
-                FROM 
-                    enrollments e 
-                JOIN 
-                    schedules s ON e.section_id = s.section_id 
-                JOIN 
-                    sections sec ON s.section_id = sec.section_id 
-                JOIN 
-                    courses c ON sec.course_id = c.course_id 
-                JOIN 
-                    students st ON e.user_id = st.student_id 
-                WHERE 
-                    e.user_id = ?
-                    AND e.semester_taken = st.current_semester;
-                """;
+        String query;
+        if (Objects.equals(UserSession.getInstance().getLoggedInUser().getRole(), "student")) {
+             query = """
+                    SELECT 
+                        s.schedule_id, 
+                        s.section_id, 
+                        s.day_of_week, 
+                        s.major, 
+                        s.period, 
+                        s.location, 
+                        s.class_type, 
+                        e.user_id, 
+                        c.course_name 
+                    FROM 
+                        enrollments e 
+                    JOIN 
+                        schedules s ON e.section_id = s.section_id 
+                    JOIN 
+                        sections sec ON s.section_id = sec.section_id 
+                    JOIN 
+                        courses c ON sec.course_id = c.course_id 
+                    JOIN 
+                        students st ON e.user_id = st.student_id 
+                    WHERE 
+                        e.user_id = ?
+                        AND e.semester_taken = st.current_semester;
+                    """;
+        } else {
+            query = """
+                    SELECT 
+                        s.schedule_id, 
+                        s.section_id, 
+                        s.day_of_week, 
+                        s.major, 
+                        s.period, 
+                        s.location, 
+                        s.class_type, 
+                        e.user_id, 
+                        c.course_name 
+                    FROM 
+                        enrollments e 
+                    JOIN 
+                        schedules s ON e.section_id = s.section_id 
+                    JOIN 
+                        sections sec ON s.section_id = sec.section_id 
+                    JOIN 
+                        courses c ON sec.course_id = c.course_id 
+                    JOIN 
+                        users st ON e.user_id = st.user_id 
+                    WHERE 
+                        e.user_id = ?
+                        ;
+                    """;
+        }
 
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {

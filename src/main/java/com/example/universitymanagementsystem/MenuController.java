@@ -30,7 +30,7 @@ public class MenuController {
         // Step 2: Redirect the user back to the login scene
         try {
             // Load the login scene
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
             Parent root = loader.load();
 
             // Get the current stage and set the new scene (login screen)

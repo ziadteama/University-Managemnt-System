@@ -1,5 +1,7 @@
 package com.example.universitymanagementsystem;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -93,53 +95,63 @@ public class GradeEntryController {
 
     // Load students with attendance and grades
     private void loadStudents() {
-        // Clear existing student rows in the VBox to prevent duplicates
-        studentListContainer.getChildren().clear();
+        studentListContainer.getChildren().clear(); // Clear UI before loading
 
-        String query = "SELECT users.user_id, users.name, enrollments.seventh_exam, " +
-                "enrollments.twelfth_exam, enrollments.cw, enrollments.final_exam, enrollments.grade, " +
-                "(SELECT COUNT(*) FROM attendance " +
-                "WHERE attendance.user_id = users.user_id AND attendance.schedule_id = ? " +
-                "AND attendance.present = 0) AS absence_count " +
-                "FROM users " +
-                "JOIN enrollments ON users.user_id = enrollments.user_id " +
-                "WHERE enrollments.section_id = ? ORDER BY users.name";
+        Task<Void> loadStudentsTask = new Task<>() {
+            @Override
+            protected Void call() {
+                String query = "SELECT users.user_id, users.name, enrollments.seventh_exam, " +
+                        "enrollments.twelfth_exam, enrollments.cw, enrollments.final_exam, enrollments.grade, " +
+                        "(SELECT COUNT(*) FROM attendance " +
+                        "WHERE attendance.user_id = users.user_id AND attendance.schedule_id = ? " +
+                        "AND attendance.present = 0) AS absence_count " +
+                        "FROM users " +
+                        "JOIN enrollments ON users.user_id = enrollments.user_id " +
+                        "WHERE enrollments.section_id = ? ORDER BY users.name";
 
-        try (Connection connection = databaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            // Use getScheduleIdFromSectionId to resolve schedule_id dynamically
-            String scheduleId = getScheduleIdFromSectionId(currentSectionId);
-            if (scheduleId == null) {
-                System.out.println("Error: No schedule ID found for section ID: " + currentSectionId);
-                return; // Exit if no valid schedule ID is found
+                try (Connection connection = databaseConnection.getConnection();
+                     PreparedStatement statement = connection.prepareStatement(query)) {
+                    String scheduleId = getScheduleIdFromSectionId(currentSectionId);
+                    if (scheduleId == null) {
+                        throw new RuntimeException("No schedule ID found for section ID: " + currentSectionId);
+                    }
+
+                    statement.setString(1, scheduleId);
+                    statement.setString(2, currentSectionId);
+                    ResultSet resultSet = statement.executeQuery();
+
+                    while (resultSet.next()) {
+                        String userId = resultSet.getString("user_id");
+                        String userName = resultSet.getString("name");
+
+                        Double marks7th = resultSet.getObject("seventh_exam") != null ? resultSet.getDouble("seventh_exam") : Double.NaN;
+                        Double marks12th = resultSet.getObject("twelfth_exam") != null ? resultSet.getDouble("twelfth_exam") : Double.NaN;
+                        Double courseworkMarks = resultSet.getObject("cw") != null ? resultSet.getDouble("cw") : Double.NaN;
+                        Double finalExamMarks = resultSet.getObject("final_exam") != null ? resultSet.getDouble("final_exam") : Double.NaN;
+                        String grade = resultSet.getString("grade");
+                        int absenceCount = resultSet.getInt("absence_count");
+
+                        // Store the student marks in the map
+                        studentMarksMap.put(userId, new StudentMarks(marks7th, marks12th, courseworkMarks, finalExamMarks, grade));
+
+                        // Add the row in the UI thread
+                        String finalUserId = userId; // Effectively final variables for lambda
+                        String finalUserName = userName;
+                        Platform.runLater(() -> addStudentRow(finalUserId, finalUserName, marks7th, marks12th, courseworkMarks, finalExamMarks, grade, absenceCount));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
             }
+        };
 
-            statement.setString(1, scheduleId); // Use the scheduleId here
-            statement.setString(2, currentSectionId);  // Section ID
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                String userId = resultSet.getString("user_id");
-                String userName = resultSet.getString("name");
-
-                // Retrieve marks as Doubles, handle null values gracefully
-                Double marks7th = resultSet.getObject("seventh_exam") != null ? resultSet.getDouble("seventh_exam") : Double.NaN;
-                Double marks12th = resultSet.getObject("twelfth_exam") != null ? resultSet.getDouble("twelfth_exam") : Double.NaN;
-                Double courseworkMarks = resultSet.getObject("cw") != null ? resultSet.getDouble("cw") : Double.NaN;
-                Double finalExamMarks = resultSet.getObject("final_exam") != null ? resultSet.getDouble("final_exam") : Double.NaN;
-                String grade = resultSet.getString("grade");
-                int absenceCount = resultSet.getInt("absence_count");
-
-                // Store the student marks in the map
-                studentMarksMap.put(userId, new StudentMarks(marks7th, marks12th, courseworkMarks, finalExamMarks, grade));
-
-                // Add student row to the UI
-                addStudentRow(userId, userName, marks7th, marks12th, courseworkMarks, finalExamMarks, grade, absenceCount);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // Run the task in a background thread
+        Thread thread = new Thread(loadStudentsTask);
+        thread.setDaemon(true); // Mark the thread as a daemon, so it exits when the application exits
+        thread.start();
     }
+
 
 
     private void addStudentRow(String userId, String userName, Double marks7th, Double marks12th, Double courseworkMarks,
@@ -258,32 +270,65 @@ public class GradeEntryController {
 
     @FXML
     private void saveMarks() {
-        try (Connection connection = databaseConnection.getConnection()) {
-            String query = "UPDATE enrollments SET seventh_exam = ?, twelfth_exam = ?, cw = ?, final_exam = ?, grade = ? WHERE user_id = ? AND section_id = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        Task<Void> saveTask = new Task<>() {
+            @Override
+            protected Void call() {
+                try (Connection connection = databaseConnection.getConnection()) {
+                    String query = "UPDATE enrollments SET seventh_exam = ?, twelfth_exam = ?, cw = ?, final_exam = ?, grade = ? WHERE user_id = ? AND section_id = ?";
+                    PreparedStatement statement = connection.prepareStatement(query);
 
-            for (Map.Entry<String, StudentMarks> entry : studentMarksMap.entrySet()) {
-                String userId = entry.getKey();
-                StudentMarks marks = entry.getValue();
+                    for (Map.Entry<String, StudentMarks> entry : studentMarksMap.entrySet()) {
+                        String userId = entry.getKey();
+                        StudentMarks marks = entry.getValue();
 
-                // Check if the mark is NaN, and convert it to null
-                statement.setObject(1, (Double.isNaN(marks.getSeventhExam())) ? null : marks.getSeventhExam());
-                statement.setObject(2, (Double.isNaN(marks.getTwelfthExam())) ? null : marks.getTwelfthExam());
-                statement.setObject(3, (Double.isNaN(marks.getCw())) ? null : marks.getCw());
-                statement.setObject(4, (Double.isNaN(marks.getFinalExam())) ? null : marks.getFinalExam());
-                statement.setString(5, marks.getGrade());
-                statement.setString(6, userId);
-                statement.setString(7, currentSectionId);
+                        statement.setObject(1, Double.isNaN(marks.getSeventhExam()) ? null : marks.getSeventhExam());
+                        statement.setObject(2, Double.isNaN(marks.getTwelfthExam()) ? null : marks.getTwelfthExam());
+                        statement.setObject(3, Double.isNaN(marks.getCw()) ? null : marks.getCw());
+                        statement.setObject(4, Double.isNaN(marks.getFinalExam()) ? null : marks.getFinalExam());
+                        statement.setString(5, marks.getGrade());
+                        statement.setString(6, userId);
+                        statement.setString(7, currentSectionId);
 
-                statement.addBatch();
+                        statement.addBatch();
+                    }
+
+                    int[] updateCounts = statement.executeBatch();
+                    System.out.println("Marks successfully saved for " + updateCounts.length + " students!");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
             }
 
-            int[] updateCounts = statement.executeBatch();
-            System.out.println("Marks successfully saved for " + updateCounts.length + " students!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+            @Override
+            protected void succeeded() {
+                // Show a confirmation dialog or message on the UI thread
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Save Success");
+                    alert.setHeaderText("Marks Saved");
+                    alert.setContentText("All marks were successfully saved!");
+                    alert.showAndWait();
+                });
+            }
+
+            @Override
+            protected void failed() {
+                // Show an error dialog or message on the UI thread
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Save Failed");
+                    alert.setHeaderText("Error Saving Marks");
+                    alert.setContentText("An error occurred while saving the marks. Please try again.");
+                    alert.showAndWait();
+                });
+            }
+        };
+
+        // Run the task in a background thread
+        Thread thread = new Thread(saveTask);
+        thread.setDaemon(true);
+        thread.start();
     }
+
 }
