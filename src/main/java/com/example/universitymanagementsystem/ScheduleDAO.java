@@ -109,7 +109,7 @@ public class ScheduleDAO {
         List<CourseSchedule> schedules = new ArrayList<>();
         String query;
         if (Objects.equals(UserSession.getInstance().getLoggedInUser().getRole(), "student")) {
-             query = """
+            query = """
                     SELECT 
                         s.schedule_id, 
                         s.section_id, 
@@ -136,29 +136,25 @@ public class ScheduleDAO {
                     """;
         } else {
             query = """
-                    SELECT 
-                        s.schedule_id, 
-                        s.section_id, 
-                        s.day_of_week, 
-                        s.major, 
-                        s.period, 
-                        s.location, 
-                        s.class_type, 
-                        e.user_id, 
-                        c.course_name 
-                    FROM 
-                        enrollments e 
-                    JOIN 
-                        schedules s ON e.section_id = s.section_id 
-                    JOIN 
-                        sections sec ON s.section_id = sec.section_id 
-                    JOIN 
-                        courses c ON sec.course_id = c.course_id 
-                    JOIN 
-                        users st ON e.user_id = st.user_id 
-                    WHERE 
-                        e.user_id = ?
-                        ;
+                    SELECT\s
+                              s.schedule_id,\s
+                              s.section_id,\s
+                              s.day_of_week,\s
+                              s.major,\s
+                              s.period,\s
+                              s.location,\s
+                              s.class_type,\s
+                              c.course_name,
+                              s.user_id
+                          FROM\s
+                              schedules s
+                          JOIN\s
+                              sections sec ON s.section_id = sec.section_id
+                          JOIN\s
+                              courses c ON sec.course_id = c.course_id
+                          WHERE\s
+                              s.user_id = ? and sec.period="fall" and sec.year=2023;
+                    
                     """;
         }
 
