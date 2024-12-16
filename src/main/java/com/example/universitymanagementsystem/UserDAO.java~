@@ -6,11 +6,10 @@ import java.util.Date;
 public class UserDAO {
 
     private Connection connection;
-    public StudentDAO studentDAO ;
+    public StudentDAO studentDAO = new StudentDAO(connection);
 
     public UserDAO(Connection connection) {
         this.connection = connection;
-        this.studentDAO = new StudentDAO(connection);
     }
 
     public User checkCredentials(int userId, String password) throws SQLException {

@@ -68,7 +68,7 @@ public class MenuController {
     private void handleResults() {
         try {
             // Load the Marks scene
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("MarksScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("studentsmarksscene.fxml"));
             Parent root = loader.load();
 
             // Get the current stage and set the new scene (Marks screen)

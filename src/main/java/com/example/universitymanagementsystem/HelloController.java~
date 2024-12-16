@@ -76,11 +76,11 @@ public class HelloController {
 
     @FXML
     private void handleLogin() throws SQLException {
-        int userId = Integer.parseInt(usernameField.getText().trim());
+        String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
-        if (isValidInput(userId, password)) {
-            User loggedInUser = userDAO.checkCredentials(userId, password);
+        if (isValidInput(username, password)) {
+            User loggedInUser = userDAO.checkCredentials(username, password);
 
             if (loggedInUser != null) {
                 // Set the logged-in user in the session
@@ -111,8 +111,8 @@ public class HelloController {
     }
 
 
-    private boolean isValidInput(int userId, String password) {
-        return userId != 0 && !password.isEmpty();
+    private boolean isValidInput(String username, String password) {
+        return !username.isEmpty() && !password.isEmpty();
     }
 
     private void showStudentDashboard() {

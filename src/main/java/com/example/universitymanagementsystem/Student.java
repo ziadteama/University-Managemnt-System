@@ -1,4 +1,5 @@
 package com.example.universitymanagementsystem;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,9 +15,9 @@ public class Student extends User {
 
     // Constructor
     public Student(int userId, String name, String email, String role, String major, String gender,
-                   Date dateOfEntry, String phoneNumber, String password, double gpa,
+                   Date dateOfEntry, String phoneNumber, double gpa,
                    int advisorId, String status, int currentSemester, String yearEntry) {
-        super(userId, name, email, role, major, gender, dateOfEntry, phoneNumber, password);
+        super(userId, name, role, major, email, gender, dateOfEntry, phoneNumber);
         this.gpa = gpa;
         this.advisorId = advisorId;
         this.status = status;
@@ -66,9 +67,11 @@ public class Student extends User {
     public void setYearEntry(String yearEntry) {
         this.yearEntry = yearEntry;
     }
+
     public void setEnrollments(List<Enrollments> enrollments) {
         this.enrollments = enrollments;
     }
+
     public List<Enrollments> getEnrollments() {
         return enrollments;
     }
@@ -85,12 +88,18 @@ public class Student extends User {
                 ", user=" + super.toString() + // Include User information
                 '}';
     }
+
     public List<Semester> getSemesters() {
         return semesters;
     }
 
     public void setSemesters(List<Semester> semesters) {
         this.semesters = semesters;
+    }
+
+    @Override
+    public void displayRole() {
+        System.out.println("Role: Student");
     }
 }
 

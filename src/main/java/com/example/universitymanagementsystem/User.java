@@ -2,117 +2,56 @@ package com.example.universitymanagementsystem;
 
 import java.util.Date;
 
-public class User {
+public abstract class User {
     private int userId;
-    private String name;           // name
-    private String email;          // email
-    private String role;           // role (enum: 'student', 'ta', 'dr')
-    private String major;          // major
-    private String gender;         // gender (enum: 'male', 'female', 'other')
-    private Date dateOfEntry; // dot (date of transaction)
-    private String phoneNumber;    // phone_number
-    private String password;       // pass
-
-    // Constructor
-    public User(int userId, String name, String email, String role, String major, String gender,
-                Date dateOfEntry, String phoneNumber, String password) {
+    private String name;
+    private String email;
+    private String gender;
+    private Date dot;
+    private String phoneNumber;
+    private String role;
+    private String major;
+    public User(int userId, String name,String role, String major, String email, String gender, Date dot, String phoneNumber) {
         this.userId = userId;
         this.name = name;
         this.email = email;
-        this.role = role;
-        this.major = major;
         this.gender = gender;
-        this.dateOfEntry = dateOfEntry;
+        this.dot = dot;
         this.phoneNumber = phoneNumber;
-        this.password = password;
+        this.major = major;
+        this.role = role;
     }
 
-    // Getters and Setters
     public int getUserId() {
         return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getMajor() {
-        return major;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
     }
 
     public String getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public String getMajor() {
+        return major;
     }
 
-    public Date getDateOfTransaction() {
-        return dateOfEntry;
-    }
-
-    public void setDateOfTransaction(Date dateOfTransaction) {
-        this.dateOfEntry = dateOfTransaction;
+    public Date getDot() {
+        return dot;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public String getRole() {
+        return role;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
-                ", major='" + major + '\'' +
-                ", gender='" + gender + '\'' +
-                ", dateOfTransaction=" + dateOfEntry +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+    public abstract void displayRole();
 }
-

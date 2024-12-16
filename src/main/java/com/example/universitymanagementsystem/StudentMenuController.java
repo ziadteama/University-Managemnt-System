@@ -28,7 +28,7 @@ public class StudentMenuController {
 
     @FXML
     public void initialize() {
-        student = StudentSession.getCurrentStudent();
+        student =  (Student) UserSession.getInstance().getLoggedInUser();
         if (student != null) {
             helloUser.setText("Hello, " + student.getName());
         } else {

@@ -11,11 +11,10 @@ public class Enrollments {
     private double cw;            // Continuous work score (e.g., assignments)
     private double finalExam;     // Final exam score
     private double totalMark;     // Total mark (computed from the scores)
-    private String classType;     // Type of class (lecture or tutorial)
 
     // Constructor
     public Enrollments(int userId, String sectionId, String grade, int semesterTaken, int pointsGained,
-                       double seventhExam, double twelfthExam, double cw, double finalExam, double totalMark, String classType) {
+                       double seventhExam, double twelfthExam, double cw, double finalExam, double totalMark) {
         this.userId = userId;
         this.sectionId = sectionId;
         this.grade = grade;
@@ -26,7 +25,6 @@ public class Enrollments {
         this.cw = cw;
         this.finalExam = finalExam;
         this.totalMark = totalMark;
-        this.classType = classType;
     }
 
     // Getters and Setters
@@ -97,7 +95,7 @@ public class Enrollments {
     public double getFinalExam() {
         return finalExam;
     }
-
+    
     public void setFinalExam(double finalExam) {
         this.finalExam = finalExam;
     }
@@ -110,11 +108,5 @@ public class Enrollments {
         this.totalMark = totalMark;
     }
 
-    public String getClassType() {
-        return classType;
-    }
 
-    public void setClassType(String classType) {
-        this.classType = classType;
-    }
 }

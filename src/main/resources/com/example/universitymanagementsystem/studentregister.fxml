@@ -14,8 +14,8 @@
             </FlowPane>
         </content>
     </ScrollPane>
-    <fx:include source="registertableview.fxml" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="50.0" />
-   <Button fx:id="submitButton" layoutX="734.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleSubmitButtonClick" text="Enroll" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="19.6" />
-   <Button layoutX="731.0" layoutY="299.0" mnemonicParsing="false" onAction="#handleClearSchedule" text="Clear Schedule" />
+    <fx:include maxWidth="600.0" prefWidth="600.0" source="registertableview.fxml" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="50.0" />
+   <Button fx:id="submitButton" layoutX="734.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleSubmitButtonClick" text="Enroll" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="20.0" />
+   <Button layoutX="731.0" layoutY="299.0" mnemonicParsing="false" onAction="#handleClearSchedule" text="Clear Schedule" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="20.0" />
 
 </AnchorPane>

@@ -49,7 +49,7 @@
             </VBox>
 
             <!-- Grade with a unique, larger font and distinct background shade -->
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #90CAF9; -fx-background-radius: 10;">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #1976D2; -fx-background-radius: 10;">
                <children>
                   <Label fx:id="gradeLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="50.0" style="-fx-font-size: 22px; -fx-background-color: #1976D2; -fx-text-fill: white; -fx-background-radius: 10;" text="A" textAlignment="CENTER" />
                </children>

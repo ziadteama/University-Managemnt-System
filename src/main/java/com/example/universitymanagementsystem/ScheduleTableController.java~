@@ -58,8 +58,8 @@ public class ScheduleTableController {
         period6Column.setCellValueFactory(new PropertyValueFactory<>("period6"));
 
         // Populate the table with data
-        List<CourseSchedule> schedules = scheduleDAO.getSchedulesByUserId(UserSession.getInstance().getLoggedInUser().getUserId());
-        populateCells(schedules);
+        List<CourseSchedule> schedules = scheduleDAO.getSchedulesByUserId((Student) UserSession.loggedInUser());
+                populateCells(schedules);
     }
 
     public void populateCells(List<CourseSchedule> schedules) {
@@ -136,5 +136,4 @@ public class ScheduleTableController {
 
         // Refresh the TableView to show the populated data
         Platform.runLater(() -> scheduleTable.refresh());
-    }
-}
+    }}

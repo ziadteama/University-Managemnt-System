@@ -24,7 +24,7 @@ public class MenuController {
     @FXML
     private void handleLogout() {
         // Step 1: Destruct (clear) the student object
-        StudentSession.setCurrentStudent(null);
+        UserSession.getInstance().clearSession();
         ScheduleData.clearScheduleList(ScheduleData.getInstance().getScheduleList());
 
         // Step 2: Redirect the user back to the login scene

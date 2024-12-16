@@ -44,7 +44,7 @@ public class StudentRegisterController {
      */
     @FXML
     public void initialize() {
-        student = StudentSession.getCurrentStudent();
+        student = (Student) UserSession.getInstance().getLoggedInUser();
         canEnroll = enrollmentsDAO.getCanEnroll(student.getUserId());
 
         // Print the canEnroll list to check if data is being retrieved

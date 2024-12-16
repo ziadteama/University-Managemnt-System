@@ -50,7 +50,6 @@ public class StudentDAO {
                 String gender = userRs.getString("gender");
                 Date dob = userRs.getDate("dob");
                 String phoneNumber = userRs.getString("phone_number");
-                String password = userRs.getString("pass");
 
                 // Now, set the user_id for the students table query
                 studentStmt.setInt(1, userId);
@@ -66,7 +65,7 @@ public class StudentDAO {
 
                     // Create the Student object
                     Student student = new Student(
-                            userId, name, email, role, major, gender, dob, phoneNumber, password,
+                            userId, name, email, role, major, gender, dob, phoneNumber,
                             gpa, advisorId, status, currentSemester, yearEntry
                     );
 

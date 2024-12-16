@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -8,5 +9,6 @@
     <fx:include source="menu.fxml" />
    <ComboBox fx:id="semesterComboBox" layoutX="206.0" layoutY="42.0" prefWidth="150.0" AnchorPane.leftAnchor="220.0" />
    <VBox fx:id="studentMarksContainer" layoutX="220.0" layoutY="98.0" prefHeight="267.0" prefWidth="150.0" spacing="20.0" />
+   <Label layoutX="220.0" layoutY="17.0" prefHeight="26.0" prefWidth="64.0" text="Semesters" textAlignment="CENTER" textOverrun="CLIP" />
 
 </AnchorPane>

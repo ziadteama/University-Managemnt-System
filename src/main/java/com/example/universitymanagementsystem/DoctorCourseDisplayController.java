@@ -27,7 +27,8 @@ public class DoctorCourseDisplayController {
 
     private DataBaseConnection databaseConnection = new DataBaseConnection();
 
-    public void initialize(int drId) {
+    public void initialize() {
+        Doctor dr = (Doctor) UserSession.getInstance().getLoggedInUser();
         String doctorName = "Doctor";
 
         String query = "SELECT sections.course_id, sections.section_id, users.name AS doctor_name, courses.course_name " +
@@ -39,7 +40,7 @@ public class DoctorCourseDisplayController {
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setInt(1, drId);
+            statement.setInt(1, dr.getUserId());
             ResultSet resultSet = statement.executeQuery();
 
             int column = 0;
@@ -134,6 +135,7 @@ public class DoctorCourseDisplayController {
             e.printStackTrace();
         }
     }
+
     public void handleLogout(ActionEvent event) {
         try {
             // Load hello-view.fxml

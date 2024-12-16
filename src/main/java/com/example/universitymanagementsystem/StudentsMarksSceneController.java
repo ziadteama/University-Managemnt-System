@@ -27,7 +27,7 @@ public class StudentsMarksSceneController {
         StudentDAO studentDAO = new StudentDAO(databaseConnection);
 
         // Fetch the semesters taken by the user (replace `userId` with the actual user ID)
-        List<Semester> semesters = studentDAO.getSemestersTaken(StudentSession.getCurrentStudent().getUserId());
+        List<Semester> semesters = studentDAO.getSemestersTaken(UserSession.getInstance().getLoggedInUser().getUserId());
 
         // Populate the ComboBox with semesters
         if (semesters != null && !semesters.isEmpty()) {
@@ -51,7 +51,7 @@ public class StudentsMarksSceneController {
         try {
             studentMarksContainer.getChildren().clear(); // Clear previous marks
 
-            int userId = StudentSession.getCurrentStudent().getUserId();
+            int userId = UserSession.getInstance().getLoggedInUser().getUserId();
             List<StudentMarks> marks = studentDAO.getStudentMarks(userId, selectedSemester.getPeriod(), selectedSemester.getYear());
 
             if (marks != null && !marks.isEmpty()) {

@@ -16,8 +16,8 @@ public class HelloApplication extends Application {
             primaryStage.setScene(scene);
             primaryStage.setTitle("Login Form");
             primaryStage.show();
-            // Disable the maximize button
-            primaryStage.setResizable(false);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
