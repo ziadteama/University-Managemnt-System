@@ -2,18 +2,18 @@
 
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.ScrollPane?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.StudentsMarksSceneController">
     <fx:include source="menu.fxml" />
 
-    <!-- Semester ComboBox -->
+    <!-- Semester ComboBox -->231010016
     <ComboBox fx:id="semesterComboBox" layoutX="206.0" layoutY="42.0" prefWidth="150.0" AnchorPane.leftAnchor="220.0" />
 
     <!-- Scrollable VBox with vertical scrolling only -->
-    <ScrollPane layoutX="220.0" layoutY="98.0" prefHeight="267.0" prefWidth="700.0" fitToWidth="true" vbarPolicy="ALWAYS" hbarPolicy="NEVER">
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="220.0" layoutY="98.0" prefHeight="267.0" prefWidth="700.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="50.0" AnchorPane.topAnchor="100.0">
         <content>
             <VBox fx:id="studentMarksContainer" spacing="20.0">
                 <!-- Add your items dynamically in the controller -->

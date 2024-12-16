@@ -114,3 +114,21 @@ GridPane > .label, GridPane > .text-field, GridPane > .button {
     -fx-hgap: 10px;
     -fx-vgap: 10px;
 }
+.button {
+    -fx-background-color: #4C90F6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+    -fx-font-size: 14px;
+    -fx-border-radius: 5px;
+    -fx-pref-width: 100px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #3571B7;
+}
+
+.button:pressed {
+    -fx-background-color: #2C5F9D;
+}
