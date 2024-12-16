@@ -52,7 +52,7 @@ public class DataBaseConnection {
 
     // Get the security question by User ID
     public String getSecurityQuestionByUserId(String userId) {
-        String query = "SELECT SecurityQuestion FROM users WHERE user_id = ?";
+        String query = "SELECT SecurityQuestions FROM users WHERE user_id = ?";
         try (Connection conn = getConnection()  ;
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -60,7 +60,7 @@ public class DataBaseConnection {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                return rs.getString("SecurityQuestion");
+                return rs.getString("SecurityQuestions");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,7 +72,7 @@ public class DataBaseConnection {
 
     // Verify the answer to the security question
     public boolean verifySecurityAnswer(String userId, String securityAnswer) {
-        String query = "SELECT SecurityAnswer FROM users WHERE user_id = ?";
+        String query = "SELECT SecurityAnswers FROM users WHERE user_id = ?";
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -80,7 +80,7 @@ public class DataBaseConnection {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                return securityAnswer.equalsIgnoreCase(rs.getString("SecurityAnswer"));
+                return securityAnswer.equalsIgnoreCase(rs.getString("SecurityAnswers"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,6 +88,22 @@ public class DataBaseConnection {
             throw new RuntimeException(e);
         }
         return false; // Return false if the answer is incorrect
+    }
+    public boolean updatePasswordByUserId(String userId, String newPassword) {
+        String updateQuery = "UPDATE users SET pass = ? WHERE user_id = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+
+            preparedStatement.setString(1, newPassword);
+            preparedStatement.setString(2, userId);
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+            return rowsUpdated > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }
