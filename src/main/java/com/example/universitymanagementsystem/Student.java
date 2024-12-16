@@ -16,13 +16,12 @@ public class Student extends User {
     // Constructor
     public Student(int userId, String name, String email, String role, String major, String gender,
                    Date dateOfEntry, String phoneNumber, double gpa,
-                   int advisorId, String status, int currentSemester, String yearEntry) {
+                   int advisorId, String status, int currentSemester) {
         super(userId, name, role, major, email, gender, dateOfEntry, phoneNumber);
         this.gpa = gpa;
         this.advisorId = advisorId;
         this.status = status;
         this.currentSemester = currentSemester;
-        this.yearEntry = yearEntry;
         this.enrollments = new ArrayList<>();
         this.semesters = new ArrayList<>();
     }
@@ -58,14 +57,6 @@ public class Student extends User {
 
     public void setCurrentSemester(int currentSemester) {
         this.currentSemester = currentSemester;
-    }
-
-    public String getYearEntry() {
-        return yearEntry;
-    }
-
-    public void setYearEntry(String yearEntry) {
-        this.yearEntry = yearEntry;
     }
 
     public void setEnrollments(List<Enrollments> enrollments) {

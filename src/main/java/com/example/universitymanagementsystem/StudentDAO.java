@@ -61,13 +61,11 @@ public class StudentDAO {
                     int advisorId = studentRs.getInt("advisor_id");
                     String status = studentRs.getString("status");
                     int currentSemester = studentRs.getInt("current_semester");
-                    String yearEntry = studentRs.getString("year_entry");
 
                     // Create the Student object
                     Student student = new Student(
                             userId, name, email, role, major, gender, dob, phoneNumber,
-                            gpa, advisorId, status, currentSemester, yearEntry
-                    );
+                            gpa, advisorId, status, currentSemester);
 
                     // Fetch the enrollments and set them to the student object
                     enrollmentsStmt.setInt(1, userId);

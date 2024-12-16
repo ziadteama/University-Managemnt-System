@@ -8,14 +8,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.util.List;
 
 public class DoctorCourseDisplayController {
 
@@ -25,56 +23,38 @@ public class DoctorCourseDisplayController {
     @FXML
     private GridPane courseGrid;
 
-    private DataBaseConnection databaseConnection = new DataBaseConnection();
+    private DoctorDAO doctorDAO = new DoctorDAO();
 
     public void initialize() {
         Doctor dr = (Doctor) UserSession.getInstance().getLoggedInUser();
-        String doctorName = "Doctor";
 
-        String query = "SELECT sections.course_id, sections.section_id, users.name AS doctor_name, courses.course_name " +
-                "FROM sections " +
-                "JOIN users ON sections.dr_id = users.user_id " +
-                "JOIN courses ON sections.course_id = courses.course_id " +
-                "WHERE sections.dr_id = ? AND sections.year = '2023' AND sections.period = 'Fall'";
+        // Get the courses for the doctor using the DAO
+        List<Course> courses = doctorDAO.getCoursesForDoctor(dr.getUserId());
 
-        try (Connection connection = databaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+        int column = 0;
+        int row = 0;
+        int index = 0;
 
-            statement.setInt(1, dr.getUserId());
-            ResultSet resultSet = statement.executeQuery();
+        for (Course course : courses) {
+            String courseName = course.getCourseName();
+            String courseId = course.getCourseId();
+            String sectionId = course.getSectionId();
 
-            int column = 0;
-            int row = 0;
-            int index = 0;
+            StackPane card = createCourseCard(courseName, courseId, sectionId, index);
 
-            while (resultSet.next()) {
-                if (doctorName.equals("Doctor")) {
-                    doctorName = resultSet.getString("doctor_name");
-                }
+            courseGrid.add(card, column, row);
+            column++;
 
-                String courseName = resultSet.getString("course_name");
-                String courseId = resultSet.getString("course_id");
-                String sectionId = resultSet.getString("section_id");
-
-                StackPane card = createCourseCard(courseName, courseId, sectionId, index);
-
-                courseGrid.add(card, column, row);
-                column++;
-
-                // Move to next row after 3 columns
-                if (column == 3) {
-                    column = 0;
-                    row++;
-                }
-
-                index++; // Increment index for the next color switch
+            // Move to next row after 3 columns
+            if (column == 3) {
+                column = 0;
+                row++;
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            index++; // Increment index for the next color switch
         }
 
-        nameLabel.setText("Hello Dr. " + doctorName + "!");
+        nameLabel.setText("Hello Dr. " + courses.get(0).getDoctorName() + "!");
     }
 
     private StackPane createCourseCard(String courseName, String courseId, String sectionId, int index) {

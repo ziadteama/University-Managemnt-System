@@ -24,17 +24,23 @@ public class StudentMarks {
         this.courseName = courseName;
         this.courseId = courseId;
     }
-    // Constructor to initialize marks and grade
-    public StudentMarks(Integer seventhExam, Integer twelfthExam, Integer coursework, Integer finalExam, String grade) {
-        this.seventhExam = seventhExam;
-        this.twelfthExam = twelfthExam;
-        this.cw = coursework;
-        this.finalExam = finalExam;
-        this.grade = grade;
+
+    // Constructor to initialize marks and grade, using NaN instead of null for Double values
+    public StudentMarks(Double seventhExam, Double twelfthExam, Double cw, Double finalExam, String grade) {
+        this.seventhExam = (seventhExam != null) ? seventhExam : Double.NaN; // Use NaN instead of null
+        this.twelfthExam = (twelfthExam != null) ? twelfthExam : Double.NaN;
+        this.cw = (cw != null) ? cw : Double.NaN;
+        this.finalExam = (finalExam != null) ? finalExam : Double.NaN;
+        this.grade = (grade != null) ? grade : "U"; // Default grade as "U" if null
     }
 
-    // Getters a
-    // Getters and setters for the fields
+    // Constructor for database interaction with courseId
+    public StudentMarks(Double seventhExam, Double twelfthExam, Double cw, Double finalExam, String grade, String courseId) {
+        this(seventhExam, twelfthExam, cw, finalExam, grade); // Calls the previous constructor
+        this.courseId = courseId; // Initialize courseId
+    }
+
+    // Getter and setter methods for all fields
     public String getGrade() {
         return grade;
     }
@@ -105,5 +111,10 @@ public class StudentMarks {
 
     public void setCourseId(String courseId) {
         this.courseId = courseId;
+    }
+
+    // Optional method to calculate total score
+    public double calculateTotalScore() {
+        return this.seventhExam + this.twelfthExam + this.cw + this.finalExam;
     }
 }

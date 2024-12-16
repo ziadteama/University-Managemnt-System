@@ -121,27 +121,29 @@ public class GradeEntryController {
             while (resultSet.next()) {
                 String userId = resultSet.getString("user_id");
                 String userName = resultSet.getString("name");
-                Integer marks7th = resultSet.getObject("seventh_exam") != null ? resultSet.getInt("seventh_exam") : null;
-                Integer marks12th = resultSet.getObject("twelfth_exam") != null ? resultSet.getInt("twelfth_exam") : null;
-                Integer courseworkMarks = resultSet.getObject("cw") != null ? resultSet.getInt("cw") : null;
-                Integer finalExamMarks = resultSet.getObject("final_exam") != null ? resultSet.getInt("final_exam") : null;
+
+                // Retrieve marks as Doubles, handle null values gracefully
+                Double marks7th = resultSet.getObject("seventh_exam") != null ? resultSet.getDouble("seventh_exam") : Double.NaN;
+                Double marks12th = resultSet.getObject("twelfth_exam") != null ? resultSet.getDouble("twelfth_exam") : Double.NaN;
+                Double courseworkMarks = resultSet.getObject("cw") != null ? resultSet.getDouble("cw") : Double.NaN;
+                Double finalExamMarks = resultSet.getObject("final_exam") != null ? resultSet.getDouble("final_exam") : Double.NaN;
                 String grade = resultSet.getString("grade");
                 int absenceCount = resultSet.getInt("absence_count");
 
+                // Store the student marks in the map
                 studentMarksMap.put(userId, new StudentMarks(marks7th, marks12th, courseworkMarks, finalExamMarks, grade));
 
                 // Add student row to the UI
                 addStudentRow(userId, userName, marks7th, marks12th, courseworkMarks, finalExamMarks, grade, absenceCount);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
-    private void addStudentRow(String userId, String userName, Integer marks7th, Integer marks12th, Integer courseworkMarks,
-                               Integer finalExamMarks, String grade, int absenceCount) {
+
+    private void addStudentRow(String userId, String userName, Double marks7th, Double marks12th, Double courseworkMarks,
+                               Double finalExamMarks, String grade, int absenceCount) {
         GridPane studentRow = new GridPane();
         studentRow.setHgap(10);
         studentRow.setVgap(10);
@@ -149,17 +151,17 @@ public class GradeEntryController {
         Label nameLabel = new Label(userName);
         nameLabel.getStyleClass().add("student-name-label");
 
-        TextField marks7thField = new TextField(marks7th != null ? marks7th.toString() : "");
+        // Update to check if the marks are NaN and set appropriate text in the TextField
+        TextField marks7thField = new TextField(Double.isNaN(marks7th) ? "" : marks7th.toString());
         marks7thField.setPromptText("7th");
 
-
-        TextField marks12thField = new TextField(marks12th != null ? marks12th.toString() : "");
+        TextField marks12thField = new TextField(Double.isNaN(marks12th) ? "" : marks12th.toString());
         marks12thField.setPromptText("12th");
 
-        TextField cwField = new TextField(courseworkMarks != null ? courseworkMarks.toString() : "");
+        TextField cwField = new TextField(Double.isNaN(courseworkMarks) ? "" : courseworkMarks.toString());
         cwField.setPromptText("CW");
 
-        TextField finalField = new TextField(finalExamMarks != null ? finalExamMarks.toString() : "");
+        TextField finalField = new TextField(Double.isNaN(finalExamMarks) ? "" : finalExamMarks.toString());
         finalField.setPromptText("Final");
 
         Label gradeLabel = new Label(grade != null ? grade : "U "); // Display saved grade if available
