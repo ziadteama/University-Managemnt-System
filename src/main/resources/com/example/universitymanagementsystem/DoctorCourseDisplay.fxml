@@ -5,16 +5,14 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.universitymanagementsystem.DoctorCourseDisplayController"
-            stylesheets="@styles.css">
+<BorderPane stylesheets="@styles.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.example.universitymanagementsystem.DoctorCourseDisplayController">
 
     <!-- Top Section -->
     <top>
         <StackPane styleClass="top-bar">
             <!-- Doctor's Name Label Centered -->
-            <Label fx:id="nameLabel" text="Hello Dr. !" styleClass="hello-text" />
+            <Label fx:id="nameLabel" styleClass="hello-text" text="Hello Dr. !" />
         </StackPane>
     </top>
 
@@ -27,7 +25,8 @@
     <bottom>
         <StackPane styleClass="bottom-bar">
             <!-- Logout Button -->
-            <Button fx:id="logoutButton" text="Logout" styleClass="modern-logout-button" onAction="#handleLogout" />
+            <Button fx:id="logoutButton" onAction="#handleLogout" styleClass="modern-logout-button" text="Logout" />
+         <Button fx:id="viewScheduleButton" mnemonicParsing="false" onAction="#handleViewSchedule" text="Button" />
 
         </StackPane>
     </bottom>

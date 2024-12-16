@@ -19,6 +19,14 @@ public class HelloController {
 
     @FXML
     private TextField usernameField;
+    @FXML
+    private PasswordField newPasswordField;
+
+    @FXML
+    private PasswordField confirmPasswordField;
+
+    @FXML
+    private Button submitPasswordButton;
 
     @FXML
     private PasswordField passwordField;
@@ -213,14 +221,16 @@ public class HelloController {
             boolean isAnswerCorrect = databaseConnection.verifySecurityAnswer(userId, securityAnswer);
 
             if (isAnswerCorrect) {
-                String password = databaseConnection.getPasswordByUserId(userId);
-                if (password != null) {
-                    forgotPasswordResultLabel.setText("Your password is: " + password);
-                    forgotPasswordResultLabel.setVisible(true);
-                } else {
-                    forgotPasswordResultLabel.setText("Password could not be retrieved.");
-                    forgotPasswordResultLabel.setVisible(true);
-                }
+                // Show fields to change the password
+                newPasswordField.setVisible(true);
+                confirmPasswordField.setVisible(true);
+                submitPasswordButton.setVisible(true);
+
+                forgotPasswordResultLabel.setText("Security answer correct! Enter your new password.");
+                forgotPasswordResultLabel.setVisible(true);
+
+                // Add an event handler for the Submit button
+                submitPasswordButton.setOnAction(event -> handleChangePassword(userId));
             } else {
                 forgotPasswordResultLabel.setText("Incorrect answer. Please try again.");
                 forgotPasswordResultLabel.setVisible(true);
@@ -230,4 +240,33 @@ public class HelloController {
             forgotPasswordResultLabel.setVisible(true);
         }
     }
+    private void handleChangePassword(String userId) {
+        String newPassword = newPasswordField.getText().trim();
+        String confirmPassword = confirmPasswordField.getText().trim();
+
+        if (!newPassword.isEmpty() && !confirmPassword.isEmpty()) {
+            if (newPassword.equals(confirmPassword)) {
+                boolean updateSuccess = databaseConnection.updatePasswordByUserId(userId, newPassword);
+                if (updateSuccess) {
+                    forgotPasswordResultLabel.setText("Password updated successfully! Please log in with your new password.");
+                    forgotPasswordResultLabel.setVisible(true);
+
+                    // Optionally hide the password change fields
+                    newPasswordField.setVisible(false);
+                    confirmPasswordField.setVisible(false);
+                    submitPasswordButton.setVisible(false);
+                } else {
+                    forgotPasswordResultLabel.setText("Error updating password. Please try again.");
+                    forgotPasswordResultLabel.setVisible(true);
+                }
+            } else {
+                forgotPasswordResultLabel.setText("Passwords do not match. Please try again.");
+                forgotPasswordResultLabel.setVisible(true);
+            }
+        } else {
+            forgotPasswordResultLabel.setText("Both fields are required.");
+            forgotPasswordResultLabel.setVisible(true);
+        }
+    }
+
 }
