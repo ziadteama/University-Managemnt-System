@@ -126,7 +126,7 @@ public class TaRegistrationController {
     @FXML
     private void handleSubmitButtonClick() {
         // Check if the student is already enrolled in a course
-        if (enrollmentsDAO.isAlreadyEnrolled(studentid)) {
+        if (enrollmentsDAO.isAlreadyEnrolled(student.getUserId())) {
             // Show an alert to the student
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Already Enrolled");
@@ -154,7 +154,7 @@ public class TaRegistrationController {
 
         if (!selectedSectionIds.isEmpty()) {
             System.out.println("Selected Section IDs for enrollment: " + selectedSectionIds);
-            enrollmentsDAO.insertEnrollments(studentid, selectedSectionIds, java.sql.Date.valueOf(java.time.LocalDate.now()), student.getCurrentSemester());
+            enrollmentsDAO.insertEnrollments(student.getUserId(), selectedSectionIds, java.sql.Date.valueOf(java.time.LocalDate.now()), student.getCurrentSemester());
             // Show an alert for successful enrollment
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Enrollment Successful");
