@@ -12,7 +12,7 @@ import java.sql.Connection;
 import java.util.List; // Ensure any unused imports removed
 import java.util.List;
 
-public class CourseCardController {
+public class TACourseCardController {
 
     @FXML
     private Label courseNameLabel2;
@@ -41,6 +41,7 @@ public class CourseCardController {
     private StudentRegisterController studentRegisterController; // Reference to the controller
     private ScheduleDAO scheduleDAO;  // Reference to ScheduleDAO
     private String sectionId;
+    private    TaRegistrationController taRegistrationController;
 
     /**
      * Initializes the course details for this card.
@@ -71,9 +72,10 @@ public class CourseCardController {
      * @param parentController Parent controller reference
      * @return Node representing the course card
      */
+
     public static Node createCard(String sectionId, String courseName, String courseCode, int creditHours,
                                   String lecturer, String tutor, String lectureTime, String tutorialTime,
-                                  StudentRegisterController parentController) {
+                                  TaRegistrationController parentController) {
         try {
             FXMLLoader loader = new FXMLLoader(CourseCardController.class.getResource("/com/example/universitymanagementsystem/registerationcard.fxml"));
             Node cardNode = loader.load();
@@ -86,7 +88,7 @@ public class CourseCardController {
             controller.scheduleDAO = new ScheduleDAO(dbConnection); // Initialize ScheduleDAO
 
             // Link the parent controller (StudentRegisterController)
-            controller.studentRegisterController = parentController;
+            controller.taRegistrationController = parentController;
             cardNode.setUserData(controller);
             return cardNode;
 
@@ -132,4 +134,44 @@ public class CourseCardController {
 
                 // Only remove the course card if the update was successful
                 if (updateSuccessful) {
-                        // Remove the course card from
+// Remove the course card from the parent container
+                    studentRegisterController.removeCourseCard((Node) addCourseButton.getParent());
+
+// Remove other cards with the same course name
+                    String courseName = courseNameLabel2.getText();
+                    studentRegisterController.removeOtherCardsWithSameCourseName(courseName);
+
+// Show confirmation message
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Course Added");
+                    alert.setHeaderText("Courses Added Successfully");
+                    alert.setContentText("The course(s) have been added to your schedule.");
+                    alert.showAndWait();
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Controller Loading Failed");
+                alert.setContentText("Failed to load the course schedule controller. Please try again.");
+                alert.showAndWait();
+            }
+        } else {
+// Show error if no course schedule found
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Course Not Found");
+            alert.setContentText("Unable to retrieve course schedule information.");
+            alert.showAndWait();
+        }
+    }
+
+    public String getSectionId() {
+        return this.sectionId;
+    }
+
+    public String getCourseName() {
+        return courseNameLabel2.getText();
+    }
+}

@@ -12,7 +12,7 @@ import java.sql.Connection;
 import java.util.List; // Ensure any unused imports removed
 import java.util.List;
 
-public class CourseCardController {
+public class TACourseCardController {
 
     @FXML
     private Label courseNameLabel2;
@@ -38,10 +38,9 @@ public class CourseCardController {
     @FXML
     private Button addCourseButton; // Ensure fx:id="addCourseButton" in registerationcard.fxml
 
-    StudentRegisterController studentRegisterController; // Reference to the controller
-    ScheduleDAO scheduleDAO;  // Reference to ScheduleDAO
+    private ScheduleDAO scheduleDAO;  // Reference to ScheduleDAO
     private String sectionId;
-    TaRegistrationController taRegistrationController;
+    private TaRegistrationController taRegistrationController;
 
     /**
      * Initializes the course details for this card.
@@ -74,9 +73,9 @@ public class CourseCardController {
      */
     public static Node createCard(String sectionId, String courseName, String courseCode, int creditHours,
                                   String lecturer, String tutor, String lectureTime, String tutorialTime,
-                                  StudentRegisterController parentController) {
+                                  TaRegistrationController parentController) {
         try {
-            FXMLLoader loader = new FXMLLoader(CourseCardController.class.getResource("/com/example/universitymanagementsystem/registerationcard.fxml"));
+            FXMLLoader loader = new FXMLLoader(CourseCardController.class.getResource("/com/example/universitymanagementsystem/tacoursecard.fxml"));
             Node cardNode = loader.load();
 
             CourseCardController controller = loader.getController();
@@ -86,8 +85,7 @@ public class CourseCardController {
             Connection dbConnection = DataBaseConnection.getConnection(); // Get the DB connection
             controller.scheduleDAO = new ScheduleDAO(dbConnection); // Initialize ScheduleDAO
 
-            // Link the parent controller (StudentRegisterController)
-            controller.studentRegisterController = parentController;
+            controller.taRegistrationController = parentController;
             cardNode.setUserData(controller);
             return cardNode;
 
@@ -135,11 +133,11 @@ public class CourseCardController {
                 // Only remove the course card if the update was successful
                 if (updateSuccessful) {
 // Remove the course card from the parent container
-                    studentRegisterController.removeCourseCard((Node) addCourseButton.getParent());
+                    taRegistrationController.removeCourseCard((Node) addCourseButton.getParent());
 
 // Remove other cards with the same course name
                     String courseName = courseNameLabel2.getText();
-                    studentRegisterController.removeOtherCardsWithSameCourseName(courseName);
+                    taRegistrationController.removeOtherCardsWithSameCourseName(courseName);
 
 // Show confirmation message
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);

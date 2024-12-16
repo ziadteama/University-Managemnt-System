@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+
+<AnchorPane prefHeight="455.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.TaRegistrationController">
+   <children>
+      <Label fx:id="studentName" layoutX="47.0" layoutY="31.0" prefHeight="49.0" prefWidth="94.0" text="Student Name" />
+      <Label fx:id="studentId" layoutX="47.0" layoutY="81.0" text="Student ID" />
+   </children>
+    <fx:include source="registertableview.fxml" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" />
+   <FlowPane fx:id="coursesContainer" layoutX="200.0" layoutY="20.0" prefHeight="200.0" prefWidth="260.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="20.0" />
+
+</AnchorPane>
