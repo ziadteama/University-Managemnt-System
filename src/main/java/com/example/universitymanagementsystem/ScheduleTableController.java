@@ -73,7 +73,7 @@ public class ScheduleTableController {
         Map<String, RowData> rows = new HashMap<>();
 
         // Create rows for each day of the week
-        String[] days = {"Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"};
+        String[] days = {"Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday","Friday"};
         for (String day : days) {
             String[] periods = new String[6];
             for (int i = 0; i < 6; i++) {
@@ -129,7 +129,7 @@ public class ScheduleTableController {
         }
 
         // Add the rows to the table in the correct order
-        String[] daysInOrder = {"Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"};
+        String[] daysInOrder = {"Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday","Friday"};
         for (String day : daysInOrder) {
             tableData.add(rows.get(day));
         }
