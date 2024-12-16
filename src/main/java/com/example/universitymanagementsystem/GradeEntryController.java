@@ -151,42 +151,50 @@ public class GradeEntryController {
         Label nameLabel = new Label(userName);
         nameLabel.getStyleClass().add("student-name-label");
 
-        // Update to check if the marks are NaN and set appropriate text in the TextField
+        // Create TextFields for marks and check if the grade is "W"
         TextField marks7thField = new TextField(Double.isNaN(marks7th) ? "" : marks7th.toString());
         marks7thField.setPromptText("7th");
+        marks7thField.setDisable("W".equals(grade)); // Disable if grade is "W"
 
         TextField marks12thField = new TextField(Double.isNaN(marks12th) ? "" : marks12th.toString());
         marks12thField.setPromptText("12th");
+        marks12thField.setDisable("W".equals(grade)); // Disable if grade is "W"
 
         TextField cwField = new TextField(Double.isNaN(courseworkMarks) ? "" : courseworkMarks.toString());
         cwField.setPromptText("CW");
+        cwField.setDisable("W".equals(grade)); // Disable if grade is "W"
 
         TextField finalField = new TextField(Double.isNaN(finalExamMarks) ? "" : finalExamMarks.toString());
         finalField.setPromptText("Final");
+        finalField.setDisable("W".equals(grade)); // Disable if grade is "W"
 
-        Label gradeLabel = new Label(grade != null ? grade : "U "); // Display saved grade if available
+        // Create the grade label
+        Label gradeLabel = new Label(grade != null ? grade : "U");
 
-        // Capture changes in marks fields in the studentMarks map
-        marks7thField.textProperty().addListener((obs, oldVal, newVal) -> {
-            studentMarksMap.get(userId).setSeventhExam(parseMarks(newVal));
-            updateGradeAndLabel(userId, gradeLabel);
-        });
+        // Add listeners only if the grade is not "W"
+        if (!"W".equals(grade)) {
+            marks7thField.textProperty().addListener((obs, oldVal, newVal) -> {
+                studentMarksMap.get(userId).setSeventhExam(parseMarks(newVal));
+                updateGradeAndLabel(userId, gradeLabel);
+            });
 
-        marks12thField.textProperty().addListener((obs, oldVal, newVal) -> {
-            studentMarksMap.get(userId).setTwelfthExam(parseMarks(newVal));
-            updateGradeAndLabel(userId, gradeLabel);
-        });
+            marks12thField.textProperty().addListener((obs, oldVal, newVal) -> {
+                studentMarksMap.get(userId).setTwelfthExam(parseMarks(newVal));
+                updateGradeAndLabel(userId, gradeLabel);
+            });
 
-        cwField.textProperty().addListener((obs, oldVal, newVal) -> {
-            studentMarksMap.get(userId).setCw(parseMarks(newVal));
-            updateGradeAndLabel(userId, gradeLabel);
-        });
+            cwField.textProperty().addListener((obs, oldVal, newVal) -> {
+                studentMarksMap.get(userId).setCw(parseMarks(newVal));
+                updateGradeAndLabel(userId, gradeLabel);
+            });
 
-        finalField.textProperty().addListener((obs, oldVal, newVal) -> {
-            studentMarksMap.get(userId).setFinalExam(parseMarks(newVal));
-            updateGradeAndLabel(userId, gradeLabel);
-        });
+            finalField.textProperty().addListener((obs, oldVal, newVal) -> {
+                studentMarksMap.get(userId).setFinalExam(parseMarks(newVal));
+                updateGradeAndLabel(userId, gradeLabel);
+            });
+        }
 
+        // Add components to the GridPane
         studentRow.add(nameLabel, 0, 0);
         studentRow.add(marks7thField, 1, 0);
         studentRow.add(marks12thField, 2, 0);

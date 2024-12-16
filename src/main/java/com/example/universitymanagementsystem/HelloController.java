@@ -153,7 +153,7 @@ public class HelloController {
             stage.setTitle("Doctor Course Display");
             stage.setScene(new Scene(root, 1250, 400));
             // Disable the maximize button
-            stage.setResizable(false);
+
             stage.show();
 
             Stage currentStage = (Stage) loginButton.getScene().getWindow();
