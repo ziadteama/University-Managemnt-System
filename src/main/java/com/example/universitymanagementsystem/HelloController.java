@@ -22,6 +22,7 @@ public class HelloController {
 
     @FXML
     private PasswordField passwordField;
+
     @FXML
     private TextField forgotPasswordUserIdField;
 

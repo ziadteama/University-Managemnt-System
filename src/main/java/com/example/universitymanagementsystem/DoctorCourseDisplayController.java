@@ -58,7 +58,7 @@ public class DoctorCourseDisplayController {
             index++; // Increment index for the next color switch
         }
 
-        nameLabel.setText("Hello Dr. " + courses.get(0).getDoctorName() + "!");
+        nameLabel.setText("Hello Dr. " + courses.getFirst().getDoctorName() + "!");
 
         // Add action listener for the View Schedule button
 

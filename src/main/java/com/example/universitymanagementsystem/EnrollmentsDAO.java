@@ -42,8 +42,8 @@ public class EnrollmentsDAO {
                 "JOIN users dr ON sec.dr_id = dr.user_id AND dr.role = 'dr' " +
                 "JOIN users ta ON sec.ta_id = ta.user_id AND ta.role = 'ta' " +
                 "WHERE s.major = (SELECT major FROM users WHERE user_id = ?) " + // Student's major
-                "AND sec.period = 'Fall' " + // Filter by semester
-                "AND sec.year = 2022 " + // Filter by year
+                "AND sec.period = 'Fall' " +
+                "AND sec.year = 2023"+
                 "GROUP BY c.course_name, c.course_id, c.credit_hours, dr.name, ta.name, s.section_id " +
                 "ORDER BY c.course_id;";
 

@@ -7,7 +7,6 @@ import javafx.stage.Stage;
 
 public class HelloApplication extends Application {
 
-
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -17,7 +16,6 @@ public class HelloApplication extends Application {
             primaryStage.setScene(scene);
             primaryStage.setTitle("Login Form");
             primaryStage.show();
-
 
         } catch (Exception e) {
             e.printStackTrace();
