@@ -258,10 +258,11 @@ public class GradeEntryController {
                 String userId = entry.getKey();
                 StudentMarks marks = entry.getValue();
 
-                statement.setObject(1, marks.getSeventhExam());
-                statement.setObject(2, marks.getTwelfthExam());
-                statement.setObject(3, marks.getCw());
-                statement.setObject(4, marks.getFinalExam());
+                // Check if the mark is NaN, and convert it to null
+                statement.setObject(1, (Double.isNaN(marks.getSeventhExam())) ? null : marks.getSeventhExam());
+                statement.setObject(2, (Double.isNaN(marks.getTwelfthExam())) ? null : marks.getTwelfthExam());
+                statement.setObject(3, (Double.isNaN(marks.getCw())) ? null : marks.getCw());
+                statement.setObject(4, (Double.isNaN(marks.getFinalExam())) ? null : marks.getFinalExam());
                 statement.setString(5, marks.getGrade());
                 statement.setString(6, userId);
                 statement.setString(7, currentSectionId);
