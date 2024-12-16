@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -22,6 +23,9 @@ public class DoctorCourseDisplayController {
 
     @FXML
     private GridPane courseGrid;
+
+    @FXML
+    private Button viewScheduleButton;
 
     private DoctorDAO doctorDAO = new DoctorDAO();
 
@@ -55,6 +59,9 @@ public class DoctorCourseDisplayController {
         }
 
         nameLabel.setText("Hello Dr. " + courses.get(0).getDoctorName() + "!");
+
+        // Add action listener for the View Schedule button
+
     }
 
     private StackPane createCourseCard(String courseName, String courseId, String sectionId, int index) {
@@ -110,11 +117,16 @@ public class DoctorCourseDisplayController {
             GradeEntryController controller = loader.getController();
             controller.setSectionId(sectionId);
 
+            // Make the window resize to fit the content
+            stage.sizeToScene();  // Adjust the size based on the content
+            stage.setResizable(true);  // Allow resizing if needed
+
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     public void handleLogout(ActionEvent event) {
         try {
@@ -133,4 +145,7 @@ public class DoctorCourseDisplayController {
             e.printStackTrace();
         }
     }
-}
+
+
+    }
+

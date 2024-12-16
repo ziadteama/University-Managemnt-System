@@ -1007,7 +1007,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="292" parent="1" name="universitymanagementsystem">
-      <LastIntrospectionLocalTimestamp>2024-12-15.22:32:06</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-12-16.06:55:00</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="293" parent="1" name="mysql.infoschema">
@@ -1076,6 +1076,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <StoredType>int|0s</StoredType>
     </column>
     <column id="308" parent="297" name="present">
+      <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>tinyint(1)|0s</StoredType>
     </column>
@@ -1364,180 +1365,174 @@ user_id</ColNames>
     <key id="369" parent="302" name="unique_schedule_user">
       <UnderlyingIndexName>unique_schedule_user</UnderlyingIndexName>
     </key>
-    <trigger id="370" parent="302" name="before_insert_schedules">
-      <Definer>root@localhost</Definer>
-      <Events>I</Events>
-      <SourceTextLength>374</SourceTextLength>
-      <Turn>before-row</Turn>
-    </trigger>
-    <column id="371" parent="303" name="section_id">
+    <column id="370" parent="303" name="section_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(9)|0s</StoredType>
     </column>
-    <column id="372" parent="303" name="course_id">
+    <column id="371" parent="303" name="course_id">
       <Position>2</Position>
       <StoredType>varchar(5)|0s</StoredType>
     </column>
-    <column id="373" parent="303" name="year">
+    <column id="372" parent="303" name="year">
       <Position>3</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="374" parent="303" name="dr_id">
+    <column id="373" parent="303" name="dr_id">
       <Position>4</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="375" parent="303" name="ta_id">
+    <column id="374" parent="303" name="ta_id">
       <Position>5</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="376" parent="303" name="period">
+    <column id="375" parent="303" name="period">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StoredType>enum(&apos;fall&apos;, &apos;spring&apos;, &apos;summer&apos;)|0e</StoredType>
     </column>
-    <foreign-key id="377" parent="303" name="sections_ibfk_1">
+    <foreign-key id="376" parent="303" name="sections_ibfk_1">
       <ColNames>course_id</ColNames>
       <RefColNames>course_id</RefColNames>
       <RefTableName>courses</RefTableName>
     </foreign-key>
-    <foreign-key id="378" parent="303" name="dr_id">
+    <foreign-key id="377" parent="303" name="dr_id">
       <ColNames>dr_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>user_id</RefColNames>
       <RefTableName>users</RefTableName>
     </foreign-key>
-    <foreign-key id="379" parent="303" name="ta_id">
+    <foreign-key id="378" parent="303" name="ta_id">
       <ColNames>dr_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>user_id</RefColNames>
       <RefTableName>users</RefTableName>
     </foreign-key>
-    <foreign-key id="380" parent="303" name="fk_ta_id">
+    <foreign-key id="379" parent="303" name="fk_ta_id">
       <ColNames>ta_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>user_id</RefColNames>
       <RefTableName>users</RefTableName>
     </foreign-key>
-    <index id="381" parent="303" name="PRIMARY">
+    <index id="380" parent="303" name="PRIMARY">
       <ColNames>section_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="382" parent="303" name="course_id">
+    <index id="381" parent="303" name="course_id">
       <ColNames>course_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="383" parent="303" name="ta_id">
+    <index id="382" parent="303" name="ta_id">
       <ColNames>dr_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="384" parent="303" name="fk_ta_id">
+    <index id="383" parent="303" name="fk_ta_id">
       <ColNames>ta_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="385" parent="303" name="PRIMARY">
+    <key id="384" parent="303" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="386" parent="304" name="student_id">
+    <column id="385" parent="304" name="student_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="387" parent="304" name="gpa">
+    <column id="386" parent="304" name="gpa">
       <Position>2</Position>
       <StoredType>decimal(3,2 digit)|0s</StoredType>
     </column>
-    <column id="388" parent="304" name="advisor_id">
+    <column id="387" parent="304" name="advisor_id">
       <Position>3</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="389" parent="304" name="status">
+    <column id="388" parent="304" name="status">
       <DefaultExpression>&apos;active&apos;</DefaultExpression>
       <Position>4</Position>
       <StoredType>enum(&apos;active&apos;, &apos;suspended&apos;, &apos;withdrawn&apos;)|0e</StoredType>
     </column>
-    <column id="390" parent="304" name="current_semester">
+    <column id="389" parent="304" name="current_semester">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="391" parent="304" name="students_ibfk_1">
+    <foreign-key id="390" parent="304" name="students_ibfk_1">
       <ColNames>student_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>user_id</RefColNames>
       <RefTableName>users</RefTableName>
     </foreign-key>
-    <foreign-key id="392" parent="304" name="students_ibfk_2">
+    <foreign-key id="391" parent="304" name="students_ibfk_2">
       <ColNames>advisor_id</ColNames>
       <OnDelete>set-null</OnDelete>
       <RefColNames>user_id</RefColNames>
       <RefTableName>users</RefTableName>
     </foreign-key>
-    <index id="393" parent="304" name="PRIMARY">
+    <index id="392" parent="304" name="PRIMARY">
       <ColNames>student_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="394" parent="304" name="advisor_id">
+    <index id="393" parent="304" name="advisor_id">
       <ColNames>advisor_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="395" parent="304" name="PRIMARY">
+    <key id="394" parent="304" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="396" parent="305" name="user_id">
-      <AutoIncrement>241020055</AutoIncrement>
+    <column id="395" parent="305" name="user_id">
+      <AutoIncrement>241020056</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="397" parent="305" name="name">
+    <column id="396" parent="305" name="name">
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="398" parent="305" name="email">
+    <column id="397" parent="305" name="email">
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="399" parent="305" name="role">
+    <column id="398" parent="305" name="role">
       <Position>4</Position>
       <StoredType>enum(&apos;student&apos;, &apos;ta&apos;, &apos;dr&apos;)|0e</StoredType>
     </column>
-    <column id="400" parent="305" name="major">
+    <column id="399" parent="305" name="major">
       <Position>5</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <column id="401" parent="305" name="gender">
+    <column id="400" parent="305" name="gender">
       <DefaultExpression>&apos;other&apos;</DefaultExpression>
       <Position>6</Position>
       <StoredType>enum(&apos;male&apos;, &apos;female&apos;, &apos;other&apos;)|0e</StoredType>
     </column>
-    <column id="402" parent="305" name="dob">
+    <column id="401" parent="305" name="dob">
       <Position>7</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <column id="403" parent="305" name="phone_number">
+    <column id="402" parent="305" name="phone_number">
       <Position>8</Position>
       <StoredType>varchar(13)|0s</StoredType>
     </column>
-    <column id="404" parent="305" name="pass">
+    <column id="403" parent="305" name="pass">
       <Position>9</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <index id="405" parent="305" name="PRIMARY">
+    <index id="404" parent="305" name="PRIMARY">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="406" parent="305" name="PRIMARY">
+    <key id="405" parent="305" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>

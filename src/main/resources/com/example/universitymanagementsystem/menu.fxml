@@ -4,17 +4,37 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="400.0" prefWidth="199.0" spacing="10.0" style="-fx-background-color: #e2ddd9;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.MenuController">
+<VBox alignment="CENTER" prefHeight="400.0" prefWidth="199.0" spacing="15.0"
+      style="-fx-background-color: #1E3A8A; -fx-padding: 20;"
+      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"
+      xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.universitymanagementsystem.MenuController">
     <children>
         <!-- Invisible spacers for even distribution -->
         <AnchorPane VBox.vgrow="ALWAYS" />
-        <Button fx:id="registerButton" mnemonicParsing="false" onAction="#handleRegister" text="Registration" VBox.vgrow="NEVER" />
+
+        <!-- Register Button with styling, fills the width -->
+        <Button fx:id="registerButton" mnemonicParsing="false" onAction="#handleRegister" text="Registration"
+                VBox.vgrow="NEVER" maxWidth="Infinity" style="-fx-background-color: #4C6EF5; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5;" />
+
         <AnchorPane VBox.vgrow="ALWAYS" />
-        <Button fx:id="resultsButton" mnemonicParsing="false" onAction="#handleResults" text="Results" VBox.vgrow="NEVER" />
+
+        <!-- Results Button with styling, fills the width -->
+        <Button fx:id="resultsButton" mnemonicParsing="false" onAction="#handleResults" text="Results"
+                VBox.vgrow="NEVER" maxWidth="Infinity" style="-fx-background-color: #4C6EF5; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5;" />
+
         <AnchorPane VBox.vgrow="ALWAYS" />
-        <Button mnemonicParsing="false" text="Withdrawal Request" VBox.vgrow="NEVER" />
+
+        <!-- Withdrawal Request Button with styling, fills the width -->
+        <Button mnemonicParsing="false" text="Withdrawal Request"
+                VBox.vgrow="NEVER" maxWidth="Infinity" style="-fx-background-color: #4C6EF5; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5;" />
+
         <AnchorPane VBox.vgrow="ALWAYS" />
-        <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#handleLogout" text="Logout" VBox.vgrow="NEVER" />
+
+        <!-- Logout Button with styling, fills the width -->
+        <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#handleLogout" text="Logout"
+                VBox.vgrow="NEVER" maxWidth="Infinity" style="-fx-background-color: #4C6EF5; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5;" />
+
         <AnchorPane VBox.vgrow="ALWAYS" />
     </children>
 </VBox>

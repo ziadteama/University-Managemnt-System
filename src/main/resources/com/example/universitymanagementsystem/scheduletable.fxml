@@ -3,21 +3,55 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.beans.property.SimpleStringProperty?>
 
-<TableView fx:id="scheduleTable" layoutX="210.0" layoutY="171.0" prefHeight="200.0" prefWidth="650.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="220.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.ScheduleTableController">
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<TableView fx:id="scheduleTable" layoutX="210.0" layoutY="171.0" prefHeight="200.0" prefWidth="650.0"
+           AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="220.0" xmlns="http://javafx.com/javafx/23.0.1"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.ScheduleTableController">
     <columns>
-        <TableColumn fx:id="dayColumn" prefWidth="100.0" />
+        <!-- Day Column (Darkened) -->
+        <TableColumn fx:id="dayColumn" text="Day" prefWidth="100.0" style="-fx-background-color: #D0D0D0;">
+            <cellValueFactory>
+                <PropertyValueFactory property="day" />
+            </cellValueFactory>
+        </TableColumn>
 
-        <TableColumn fx:id="period1Column" minWidth="100.0" prefWidth="-1.0" text="8:30 - 10:10" />
+        <!-- Period Columns -->
+        <TableColumn fx:id="period1Column" text="8:30 - 10:10" minWidth="100.0" prefWidth="-1.0">
+            <cellValueFactory>
+                <PropertyValueFactory property="period1" />
+            </cellValueFactory>
+        </TableColumn>
 
-        <TableColumn fx:id="period2Column" minWidth="100.0" prefWidth="-1.0" text="10:30 - 12:10" />
+        <TableColumn fx:id="period2Column" text="10:30 - 12:10" minWidth="100.0" prefWidth="-1.0">
+            <cellValueFactory>
+                <PropertyValueFactory property="period2" />
+            </cellValueFactory>
+        </TableColumn>
 
-        <TableColumn fx:id="period3Column" minWidth="100.0" prefWidth="-1.0" text="12:30 - 2:10" />
+        <TableColumn fx:id="period3Column" text="12:30 - 2:10" minWidth="100.0" prefWidth="-1.0">
+            <cellValueFactory>
+                <PropertyValueFactory property="period3" />
+            </cellValueFactory>
+        </TableColumn>
 
-        <TableColumn fx:id="period4Column" minWidth="100.0" prefWidth="-1.0" text="2:30 - 410" />
+        <TableColumn fx:id="period4Column" text="2:30 - 4:10" minWidth="100.0" prefWidth="-1.0">
+            <cellValueFactory>
+                <PropertyValueFactory property="period4" />
+            </cellValueFactory>
+        </TableColumn>
 
-        <TableColumn fx:id="period5Column" minWidth="100.0" prefWidth="-1.0" text="4:30 - 610" />
+        <TableColumn fx:id="period5Column" text="4:30 - 6:10" minWidth="100.0" prefWidth="-1.0">
+            <cellValueFactory>
+                <PropertyValueFactory property="period5" />
+            </cellValueFactory>
+        </TableColumn>
 
-        <TableColumn fx:id="period6Column" minWidth="100.0" prefWidth="-1.0" text="6:30 - 8:10" />
+        <TableColumn fx:id="period6Column" text="6:30 - 8:10" minWidth="100.0" prefWidth="-1.0">
+            <cellValueFactory>
+                <PropertyValueFactory property="period6" />
+            </cellValueFactory>
+        </TableColumn>
     </columns>
 </TableView>

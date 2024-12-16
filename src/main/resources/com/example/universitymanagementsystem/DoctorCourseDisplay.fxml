@@ -28,6 +28,7 @@
         <StackPane styleClass="bottom-bar">
             <!-- Logout Button -->
             <Button fx:id="logoutButton" text="Logout" styleClass="modern-logout-button" onAction="#handleLogout" />
+
         </StackPane>
     </bottom>
 
