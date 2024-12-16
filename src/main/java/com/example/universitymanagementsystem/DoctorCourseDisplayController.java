@@ -143,6 +143,23 @@ public class DoctorCourseDisplayController {
             e.printStackTrace();
         }
     }
+    public void handleViewSchedule(ActionEvent event) {
+        try {
+            // Load hello-view.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TeacherScheduleView.fxml"));
+            Scene loginScene = new Scene(loader.load());
+
+            // Get the current stage and set the new scene
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(loginScene);
+
+
+            stage.setTitle("Login");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     }
