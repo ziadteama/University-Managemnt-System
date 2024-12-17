@@ -56,11 +56,11 @@ public class TaStudentListController {
         try {
             // Load the registration FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/universitymanagementsystem/taregisteration.fxml"));
-System.out.println("line 60 "+studentId);
             // Assuming you have a 'student' object already created and available
             Student student = studentDAO.getStudentById(studentId);  // Replace with your actual method to get the student
-
+UserSession.getInstance().getLoggedInUser().setCurrentStudent(student);
             // Check if the student was found
+System.out.println("line 60 "+student.getUserId());
             if (student == null) {
                 // Handle the case where the student could not be found (e.g., show an alert)
                 showErrorAlert("Student Not Found", "No student found with ID: " + studentId);
@@ -71,10 +71,10 @@ System.out.println("line 60 "+studentId);
             Parent root = loader.load();
 
             // Get the controller from the FXMLLoader
-            TaRegistrationController controller = loader.getController();
+
 
             // Pass the student object to the controller
-            controller.setStudent(student);
+
 
             // Get the current stage (window) and set the new scene
             Stage stage = (Stage) studentVBox.getScene().getWindow();

@@ -31,7 +31,7 @@ public class TaRegistrationController {
     private EnrollmentsDAO enrollmentsDAO;
     // Setter method for Student
     public void setStudent(Student student) {
-        UserSession.getInstance().getLoggedInUser().setCurrentStudent(student);
+
         this.currentSemester = student.getCurrentSemester();
         studentName.setText(student.getName());
         studentId.setText(String.valueOf(student.getUserId()));
@@ -51,7 +51,7 @@ public class TaRegistrationController {
                 throw new RuntimeException("Failed to initialize EnrollmentsDAO");
             }
         }
-System.out.println(userId);
+System.out.println(UserSession.getInstance().getLoggedInUser().getCurrentStudent().getUserId());
         canEnroll = enrollmentsDAO.getCanEnroll(UserSession.getInstance().getLoggedInUser().getCurrentStudent().getUserId());
 
 
