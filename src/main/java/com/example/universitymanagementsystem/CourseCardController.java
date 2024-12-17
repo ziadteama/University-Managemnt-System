@@ -105,7 +105,6 @@ public class CourseCardController {
     }
 
 
-
     /**
      * Handle "Add Course" button click.
      * Adds the course to the schedule and removes the card.
@@ -142,12 +141,12 @@ public class CourseCardController {
                 if (updateSuccessful) {
 // Remove the course card from the parent container
                     studentRegisterController.removeCourseCard((Node) addCourseButton.getParent());
-                    taRegistrationController.removeCourseCard((Node) addCourseButton.getParent());
+
 
 // Remove other cards with the same course name
                     String courseName = courseNameLabel2.getText();
                     studentRegisterController.removeOtherCardsWithSameCourseName(courseName);
-                    taRegistrationController.removeOtherCardsWithSameCourseName(courseName);
+
 // Show confirmation message
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Course Added");
@@ -173,6 +172,71 @@ public class CourseCardController {
             alert.showAndWait();
         }
     }
+
+    @FXML
+    private void taHandleAddCourse() {
+        // Get the section ID from the instance variable
+        String sectionId = this.sectionId;
+
+        // Get course schedules from ScheduleDAO using the sectionId
+        List<CourseSchedule> scheduleItems = scheduleDAO.getScheduleBySectionId(sectionId);
+        if (scheduleItems == null || scheduleItems.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Schedule Not Found");
+            alert.setHeaderText("No Schedule Data");
+            alert.setContentText("No schedule available for the selected course. Please try again.");
+            alert.showAndWait();
+            return;
+        }
+
+        // If schedules are found
+        System.out.println("Retrieved Schedule Items: " + scheduleItems);
+        if (scheduleItems != null && !scheduleItems.isEmpty()) {
+            try {
+                // Load the RegisterTableViewController using its FXML
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/universitymanagementsystem/registertableview.fxml"));
+                Node tableViewNode = loader.load();
+
+                // Get the controller and update the schedule
+                RegisterTableViewController tableController = loader.getController();
+                boolean updateSuccessful = tableController.updateCells(scheduleItems);
+
+                // Only remove the course card if the update was successful
+                if (updateSuccessful) {
+// Remove the course card from the parent container
+                    taRegistrationController.removeCourseCard((Node) addCourseButton.getParent());
+
+
+// Remove other cards with the same course name
+                    String courseName = courseNameLabel2.getText();
+                    taRegistrationController.removeOtherCardsWithSameCourseName(courseName);
+
+// Show confirmation message
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Course Added");
+                    alert.setHeaderText("Courses Added Successfully");
+                    alert.setContentText("The course(s) have been added to your schedule.");
+                    alert.showAndWait();
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Controller Loading Failed");
+                alert.setContentText("Failed to load the course schedule controller. Please try again.");
+                alert.showAndWait();
+            }
+        } else {
+// Show error if no course schedule found
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Course Not Found");
+            alert.setContentText("Unable to retrieve course schedule information.");
+            alert.showAndWait();
+        }
+    }
+
 
     public String getSectionId() {
         return this.sectionId;
