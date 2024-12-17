@@ -48,7 +48,7 @@ public class TaStudentListController {
         try {
             // Load the registration FXML and pass the studentId to the controller
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/universitymanagementsystem/taRegistration.fxml"));
-            loader.setController(new TaRegistrationController(student);
+            loader.setController(new TaRegistrationController(student));
 
             // Load the scene
             Node root = loader.load();

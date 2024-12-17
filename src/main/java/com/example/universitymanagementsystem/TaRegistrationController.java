@@ -24,18 +24,20 @@ public class TaRegistrationController {
     private Label studentName;
     @FXML
     private Label studentId;
-
+private int userId;
+private int currentSemester;
     private List<CanEnroll> canEnroll;
     private List<Node> courseCards;
     private EnrollmentsDAO enrollmentsDAO;
-    private Student student;
-    private int studentid;
+
+
 
 
     public TaRegistrationController(Student student) {
-        this.student = student;
+this.userId = student.getUserId();
+this.currentSemester = student.getCurrentSemester();
         studentName.setText(student.getName());
-        studentName.setText(String.valueOf(student.getUserId()));
+        studentId.setText(String.valueOf(student.getUserId()));
 
         try {
             // Initialize the database connection
@@ -53,7 +55,7 @@ public class TaRegistrationController {
      */
     @FXML
     public void initialize() {
-        canEnroll = enrollmentsDAO.getCanEnroll(studentid);
+        canEnroll = enrollmentsDAO.getCanEnroll(userId);
 
         // Print the canEnroll list to check if data is being retrieved
         System.out.println("Courses the student can enroll in:");
@@ -134,7 +136,7 @@ public class TaRegistrationController {
     @FXML
     private void handleSubmitButtonClick() {
         // Check if the student is already enrolled in a course
-        if (enrollmentsDAO.isAlreadyEnrolled(studentid)) {
+        if (enrollmentsDAO.isAlreadyEnrolled(userId)) {
             // Show an alert to the student
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Already Enrolled");
@@ -162,7 +164,8 @@ public class TaRegistrationController {
 
         if (!selectedSectionIds.isEmpty()) {
             System.out.println("Selected Section IDs for enrollment: " + selectedSectionIds);
-            enrollmentsDAO.insertEnrollments(studentid, selectedSectionIds, java.sql.Date.valueOf(java.time.LocalDate.now()), student.getCurrentSemester());
+
+            enrollmentsDAO.insertEnrollments(userId, selectedSectionIds, java.sql.Date.valueOf(java.time.LocalDate.now()), currentSemester);
             // Show an alert for successful enrollment
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Enrollment Successful");
