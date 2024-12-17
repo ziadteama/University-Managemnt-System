@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class DoctorCourseDisplayController {
@@ -27,13 +28,16 @@ public class DoctorCourseDisplayController {
     @FXML
     private Button viewScheduleButton;
 
-    private DoctorDAO doctorDAO = new DoctorDAO();
+    private UserDAO doctorDAO = new UserDAO(DataBaseConnection.getConnection());
 
-    public void initialize() {
+    public DoctorCourseDisplayController() throws Exception {
+    }
+
+    public void initialize() throws SQLException {
         Doctor dr = (Doctor) UserSession.getInstance().getLoggedInUser();
 
         // Get the courses for the doctor using the DAO
-        List<Course> courses = doctorDAO.getCoursesForDoctor(dr.getUserId());
+        List<Course> courses = doctorDAO.getCoursesForTeacher(dr.getUserId());
 
         int column = 0;
         int row = 0;
