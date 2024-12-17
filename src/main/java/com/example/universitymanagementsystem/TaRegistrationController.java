@@ -30,34 +30,31 @@ public class TaRegistrationController {
     private List<Node> courseCards;
     private EnrollmentsDAO enrollmentsDAO;
 
-
-    public TaRegistrationController(Student student) {
+    // Setter method for Student
+    public void setStudent(Student student) {
         this.userId = student.getUserId();
         this.currentSemester = student.getCurrentSemester();
-        if (student != null) {
-            studentName.setText(student.getName());
-        } else {
-            System.out.println("Student object is null.");
-        }
+        studentName.setText(student.getName());
         studentId.setText(String.valueOf(student.getUserId()));
 
-        try {
-            // Initialize the database connection
-            Connection dbConnection = DataBaseConnection.getConnection();
-            this.enrollmentsDAO = new EnrollmentsDAO(dbConnection); // Pass the connection to DAO
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
-    /**
-     * Initializes the `canEnroll` list and renders course cards dynamically.
-     */
     @FXML
     public void initialize() {
-        canEnroll = enrollmentsDAO.getCanEnroll(userId);
+        if (enrollmentsDAO == null) {
+            try {
+                // Initialize EnrollmentsDAO if it is not already initialized
+                Connection dbConnection = DataBaseConnection.getConnection();
+                enrollmentsDAO = new EnrollmentsDAO(dbConnection);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException("Failed to initialize EnrollmentsDAO");
+            }
+        }
+
+            canEnroll = enrollmentsDAO.getCanEnroll(userId);
+
 
         // Print the canEnroll list to check if data is being retrieved
         System.out.println("Courses the student can enroll in:");
