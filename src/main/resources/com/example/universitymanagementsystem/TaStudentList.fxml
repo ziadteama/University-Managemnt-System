@@ -11,4 +11,9 @@
             fx:controller="com.example.universitymanagementsystem.TaStudentListController"
             prefHeight="400.0" prefWidth="600.0">
 
+    <!-- VBox to hold the student list dynamically -->
+    <VBox fx:id="studentVBox" layoutX="20.0" layoutY="20.0" spacing="10.0">
+        <!-- The student list will be added here dynamically -->
+    </VBox>
+
 </AnchorPane>
