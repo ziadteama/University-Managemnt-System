@@ -9,42 +9,27 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.List; // Ensure any unused imports removed
 import java.util.List;
 
 public class CourseCardController {
 
     @FXML
-    private Label courseNameLabel2;
+    private Label courseNameLabel2, courseNameLabel21, courseNameLabel212, courseNameLabel211, courseNameLabel2111;
 
     @FXML
-    private Label courseNameLabel21;
+    private Label lectureTime, tutorialTime;
 
     @FXML
-    private Label courseNameLabel212;
+    private Button addCourseButton;
 
-    @FXML
-    private Label courseNameLabel211;
-
-    @FXML
-    private Label courseNameLabel2111;
-
-    @FXML
-    private Label lectureTime; // Ensure fx:id="lectureTime" in registerationcard.fxml
-
-    @FXML
-    private Label tutorialTime;
-
-    @FXML
-    private Button addCourseButton; // Ensure fx:id="addCourseButton" in registerationcard.fxml
-
-    StudentRegisterController studentRegisterController; // Reference to the controller
-    ScheduleDAO scheduleDAO;  // Reference to ScheduleDAO
     private String sectionId;
-    TaRegistrationController taRegistrationController;
+
+    private ScheduleDAO scheduleDAO;
+    private StudentRegisterController studentRegisterController;
+    private TaRegistrationController taRegistrationController;
 
     /**
-     * Initializes the course details for this card.
+     * Sets the course details on the card.
      */
     public void setCourseDetails(String sectionId, String courseName, String courseCode, int creditHours,
                                  String lecturer, String tutor, String lectureTimeText, String tutorialTimeText) {
@@ -60,17 +45,6 @@ public class CourseCardController {
 
     /**
      * Creates a new course card dynamically.
-     *
-     * @param sectionId        Section ID
-     * @param courseName       Course Name
-     * @param courseCode       Course Code
-     * @param creditHours      Credit Hours
-     * @param lecturer         Lecturer Name
-     * @param tutor            Tutor Name
-     * @param lectureTime      Lecture Time
-     * @param tutorialTime     Tutorial Time
-     * @param parentController Parent controller reference
-     * @return Node representing the course card
      */
     public static Node createCard(String sectionId, String courseName, String courseCode, int creditHours,
                                   String lecturer, String tutor, String lectureTime, String tutorialTime,
@@ -82,11 +56,9 @@ public class CourseCardController {
             CourseCardController controller = loader.getController();
             controller.setCourseDetails(sectionId, courseName, courseCode, creditHours, lecturer, tutor, lectureTime, tutorialTime);
 
-            // Initialize the database connection and ScheduleDAO here
-            Connection dbConnection = DataBaseConnection.getConnection(); // Get the DB connection
-            controller.scheduleDAO = new ScheduleDAO(dbConnection); // Initialize ScheduleDAO
+            Connection dbConnection = DataBaseConnection.getConnection();
+            controller.scheduleDAO = new ScheduleDAO(dbConnection);
 
-            // Check the type of the parentController and assign accordingly
             if (parentController instanceof StudentRegisterController) {
                 controller.studentRegisterController = (StudentRegisterController) parentController;
             } else if (parentController instanceof TaRegistrationController) {
@@ -96,155 +68,67 @@ public class CourseCardController {
             cardNode.setUserData(controller);
             return cardNode;
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 
-
     /**
-     * Handle "Add Course" button click.
-     * Adds the course to the schedule and removes the card.
+     * Handles the "Add Course" button click event.
      */
     @FXML
     private void handleAddCourse() {
         if (UserSession.getInstance().getLoggedInUser().getRole().equals("student")) {
-            String sectionId = this.sectionId;
-
-            // Get course schedules from ScheduleDAO using the sectionId
-            List<CourseSchedule> scheduleItems = scheduleDAO.getScheduleBySectionId(sectionId);
-            if (scheduleItems == null || scheduleItems.isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Schedule Not Found");
-                alert.setHeaderText("No Schedule Data");
-                alert.setContentText("No schedule available for the selected course. Please try again.");
-                alert.showAndWait();
-                return;
-            }
-
-            // If schedules are found
-            System.out.println("Retrieved Schedule Items: " + scheduleItems);
-            if (scheduleItems != null && !scheduleItems.isEmpty()) {
-                try {
-                    // Load the RegisterTableViewController using its FXML
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/universitymanagementsystem/registertableview.fxml"));
-                    Node tableViewNode = loader.load();
-
-                    // Get the controller and update the schedule
-                    RegisterTableViewController tableController = loader.getController();
-                    boolean updateSuccessful = tableController.updateCells(scheduleItems);
-
-                    // Only remove the course card if the update was successful
-                    if (updateSuccessful) {
-// Remove the course card from the parent container
-                        studentRegisterController.removeCourseCard((Node) addCourseButton.getParent());
-
-
-// Remove other cards with the same course name
-                        String courseName = courseNameLabel2.getText();
-                        studentRegisterController.removeOtherCardsWithSameCourseName(courseName);
-
-// Show confirmation message
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Course Added");
-                        alert.setHeaderText("Courses Added Successfully");
-                        alert.setContentText("The course(s) have been added to your schedule.");
-                        alert.showAndWait();
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Controller Loading Failed");
-                    alert.setContentText("Failed to load the course schedule controller. Please try again.");
-                    alert.showAndWait();
-                }
-            } else {
-// Show error if no course schedule found
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Course Not Found");
-                alert.setContentText("Unable to retrieve course schedule information.");
-                alert.showAndWait();
-            }
+            processCourseAddition(studentRegisterController);
+        } else {
+            processCourseAddition(taRegistrationController);
         }
-        else taHandleAddCourse();
     }
 
-
-    private void taHandleAddCourse() {
-        // Get the section ID from the instance variable
-        String sectionId = this.sectionId;
-
-        // Get course schedules from ScheduleDAO using the sectionId
+    /**
+     * Processes course addition and removes the card.
+     */
+    private void processCourseAddition(Object controller) {
         List<CourseSchedule> scheduleItems = scheduleDAO.getScheduleBySectionId(sectionId);
+
         if (scheduleItems == null || scheduleItems.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Schedule Not Found");
-            alert.setHeaderText("No Schedule Data");
-            alert.setContentText("No schedule available for the selected course. Please try again.");
-            alert.showAndWait();
+            showAlert(Alert.AlertType.ERROR, "Schedule Not Found", "No schedule available for this course.");
             return;
         }
 
-        // If schedules are found
-        System.out.println("Retrieved Schedule Items: " + scheduleItems);
-        if (scheduleItems != null && !scheduleItems.isEmpty()) {
-            try {
-                // Load the RegisterTableViewController using its FXML
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/universitymanagementsystem/registertableview.fxml"));
-                Node tableViewNode = loader.load();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/universitymanagementsystem/registertableview.fxml"));
+            Node tableViewNode = loader.load();
 
-                // Get the controller and update the schedule
-                RegisterTableViewController tableController = loader.getController();
-                boolean updateSuccessful = tableController.updateCells(scheduleItems);
+            RegisterTableViewController tableController = loader.getController();
+            boolean updateSuccessful = tableController.updateCells(scheduleItems);
 
-                // Only remove the course card if the update was successful
-                if (updateSuccessful) {
-// Remove the course card from the parent container
-                    taRegistrationController.removeCourseCard((Node) addCourseButton.getParent());
-
-
-// Remove other cards with the same course name
-                    String courseName = courseNameLabel2.getText();
-                    taRegistrationController.removeOtherCardsWithSameCourseName(courseName);
-
-// Show confirmation message
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Course Added");
-                    alert.setHeaderText("Courses Added Successfully");
-                    alert.setContentText("The course(s) have been added to your schedule.");
-                    alert.showAndWait();
+            if (updateSuccessful) {
+                if (controller instanceof StudentRegisterController) {
+                    ((StudentRegisterController) controller).removeCourseCard(addCourseButton.getParent());
+                    ((StudentRegisterController) controller).removeOtherCardsWithSameCourseName(courseNameLabel2.getText());
+                } else if (controller instanceof TaRegistrationController) {
+                    ((TaRegistrationController) controller).removeCourseCard(addCourseButton.getParent());
+                    ((TaRegistrationController) controller).removeOtherCardsWithSameCourseName(courseNameLabel2.getText());
                 }
 
-            } catch (IOException e) {
-                e.printStackTrace();
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Controller Loading Failed");
-                alert.setContentText("Failed to load the course schedule controller. Please try again.");
-                alert.showAndWait();
+                showAlert(Alert.AlertType.INFORMATION, "Course Added", "The course(s) have been added to your schedule.");
             }
-        } else {
-// Show error if no course schedule found
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Course Not Found");
-            alert.setContentText("Unable to retrieve course schedule information.");
-            alert.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load the table view.");
         }
     }
 
-
-    public String getSectionId() {
-        return this.sectionId;
-    }
-
-    public String getCourseName() {
-        return courseNameLabel2.getText();
+    /**
+     * Utility method to show alerts.
+     */
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }
