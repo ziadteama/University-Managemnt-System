@@ -24,19 +24,21 @@ public class TaRegistrationController {
     private Label studentName;
     @FXML
     private Label studentId;
-private int userId;
-private int currentSemester;
+    private int userId;
+    private int currentSemester;
     private List<CanEnroll> canEnroll;
     private List<Node> courseCards;
     private EnrollmentsDAO enrollmentsDAO;
 
 
-
-
     public TaRegistrationController(Student student) {
-this.userId = student.getUserId();
-this.currentSemester = student.getCurrentSemester();
-        studentName.setText(student.getName());
+        this.userId = student.getUserId();
+        this.currentSemester = student.getCurrentSemester();
+        if (student != null) {
+            studentName.setText(student.getName());
+        } else {
+            System.out.println("Student object is null.");
+        }
         studentId.setText(String.valueOf(student.getUserId()));
 
         try {

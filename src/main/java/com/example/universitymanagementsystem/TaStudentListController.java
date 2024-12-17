@@ -19,6 +19,13 @@ public class TaStudentListController {
     @FXML
     private VBox studentVBox; // VBox from FXML where the list will be added dynamically
 
+
+    private StudentDAO studentDAO = new StudentDAO(DataBaseConnection.getConnection());
+
+    public TaStudentListController() throws Exception {
+
+    }
+
     public void setStudentList(List<Student> students) {
         studentVBox.getChildren().clear(); // Clear existing items (if any)
 
@@ -31,7 +38,7 @@ public class TaStudentListController {
 
             // Set the action when the button is clicked
             registerButton.setOnAction(event -> {
-                handleRegisterClick(student);
+                handleRegisterClick(student.getUserId());
             });
 
             // Combine the label and button into an HBox
@@ -44,10 +51,11 @@ public class TaStudentListController {
     }
 
     // Method to handle register button click
-    private void handleRegisterClick(Student student) {
+    private void handleRegisterClick(int studentId) {
         try {
             // Load the registration FXML and pass the studentId to the controller
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/universitymanagementsystem/taRegistration.fxml"));
+            Student student= studentDAO.getStudentById(studentId);
             loader.setController(new TaRegistrationController(student));
 
             // Load the scene
