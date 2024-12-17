@@ -74,7 +74,7 @@ public class CourseCardController {
      */
     public static Node createCard(String sectionId, String courseName, String courseCode, int creditHours,
                                   String lecturer, String tutor, String lectureTime, String tutorialTime,
-                                  StudentRegisterController parentController) {
+                                  Object parentController) {
         try {
             FXMLLoader loader = new FXMLLoader(CourseCardController.class.getResource("/com/example/universitymanagementsystem/registerationcard.fxml"));
             Node cardNode = loader.load();
@@ -86,8 +86,13 @@ public class CourseCardController {
             Connection dbConnection = DataBaseConnection.getConnection(); // Get the DB connection
             controller.scheduleDAO = new ScheduleDAO(dbConnection); // Initialize ScheduleDAO
 
-            // Link the parent controller (StudentRegisterController)
-            controller.studentRegisterController = parentController;
+            // Check the type of the parentController and assign accordingly
+            if (parentController instanceof StudentRegisterController) {
+                controller.studentRegisterController = (StudentRegisterController) parentController;
+            } else if (parentController instanceof TaRegistrationController) {
+                controller.taRegistrationController = (TaRegistrationController) parentController;
+            }
+
             cardNode.setUserData(controller);
             return cardNode;
 
@@ -98,6 +103,7 @@ public class CourseCardController {
             throw new RuntimeException(e);
         }
     }
+
 
 
     /**
