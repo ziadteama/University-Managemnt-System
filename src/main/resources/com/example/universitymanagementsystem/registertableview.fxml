@@ -4,20 +4,19 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TableView fx:id="scheduleTable" layoutX="210.0" layoutY="171.0" prefHeight="400.0" prefWidth="700.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="220.0"  AnchorPane.rightAnchor="150.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.RegisterTableViewController">
+<TableView fx:id="scheduleTable" layoutX="210.0" layoutY="171.0" prefHeight="400.0" prefWidth="700.0"
+           AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="150.0"
+           style="-fx-font-size: 14px; -fx-background-color: #f4f4f4;"
+           xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.RegisterTableViewController">
     <columns>
-        <TableColumn fx:id="dayColumn" prefWidth="100.0" />
+        <!-- Highlighted dayColumn with background color and bold font -->
+        <TableColumn fx:id="dayColumn" prefWidth="80.0" style="-fx-font-size: 16px; -fx-text-fill: #ffffff; -fx-background-color: #007bff; -fx-font-weight: bold;" />
 
-        <TableColumn fx:id="period1Column" minWidth="100.0" prefWidth="-1.0" text="8:30 - 10:10" />
-
-        <TableColumn fx:id="period2Column" minWidth="100.0" prefWidth="-1.0" text="10:30 - 12:10" />
-
-        <TableColumn fx:id="period3Column" minWidth="100.0" prefWidth="-1.0" text="12:30 - 2:10" />
-
-        <TableColumn fx:id="period4Column" minWidth="100.0" prefWidth="-1.0" text="2:30 - 410" />
-
-        <TableColumn fx:id="period5Column" minWidth="100.0" prefWidth="-1.0" text="4:30 - 610" />
-
-        <TableColumn fx:id="period6Column" minWidth="100.0" prefWidth="-1.0" text="6:30 - 8:10" />
+        <TableColumn fx:id="period1Column" minWidth="250.0" prefWidth="100.0" text="8:30 - 10:10" style="-fx-font-size: 16px;" />
+        <TableColumn fx:id="period2Column" minWidth="250.0" prefWidth="100.0" text="10:30 - 12:10" style="-fx-font-size: 16px;" />
+        <TableColumn fx:id="period3Column" minWidth="250.0" prefWidth="100.0" text="12:30 - 2:10" style="-fx-font-size: 16px;" />
+        <TableColumn fx:id="period4Column" minWidth="250.0" prefWidth="100.0" text="2:30 - 4:10" style="-fx-font-size: 16px;" />
+        <TableColumn fx:id="period5Column" minWidth="250.0" prefWidth="100.0" text="4:30 - 6:10" style="-fx-font-size: 16px;" />
+        <TableColumn fx:id="period6Column" minWidth="250.0" prefWidth="100.0" text="6:30 - 8:10" style="-fx-font-size: 16px;" />
     </columns>
 </TableView>

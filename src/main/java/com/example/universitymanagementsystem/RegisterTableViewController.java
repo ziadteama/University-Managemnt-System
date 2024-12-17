@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -33,11 +34,21 @@ public class RegisterTableViewController {
 
     @FXML
     private void initialize() {
+        // Load the schedule data and set it to the TableView
         ObservableList<RowData> scheduleList = ScheduleData.getInstance().getScheduleList();
         scheduleTable.setItems(scheduleList);
+
+        // Log the initialization status
         System.out.println("Initializing TableView...");
         System.out.println("scheduleTable: " + (scheduleTable != null ? "Loaded" : "Null"));
         System.out.println("dayColumn: " + (dayColumn != null ? "Loaded" : "Null"));
+
+        // Set custom row height
+        scheduleTable.setRowFactory(tv -> {
+            TableRow<RowData> row = new TableRow<>();
+            row.setPrefHeight(330/6);  // Set row height to 40 pixels
+            return row;
+        });
 
         // Ensure correct column bindings
         dayColumn.setCellValueFactory(new PropertyValueFactory<>("day"));
@@ -48,7 +59,6 @@ public class RegisterTableViewController {
         period5Column.setCellValueFactory(new PropertyValueFactory<>("period5"));
         period6Column.setCellValueFactory(new PropertyValueFactory<>("period6"));
     }
-
 
     public boolean updateCells(List<CourseSchedule> schedules) {
         // Get the current items in the TableView
@@ -108,7 +118,7 @@ public class RegisterTableViewController {
         for (CourseSchedule schedule : schedules) {
             String day = schedule.getDayOfWeek();
             int periodIndex = schedule.getPeriod() - 1; // Convert to 0-based index
-            String cellData = schedule.getCourseName()+"\n"+schedule.getClassType();
+            String cellData = schedule.getCourseName()+"\n"+schedule.getClassType()+" at "+ schedule.getLocation();
 
             // Find the row for the specified day
             for (RowData row : tableData) {

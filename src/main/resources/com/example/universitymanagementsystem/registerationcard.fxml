@@ -5,58 +5,72 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="466.0" spacing="20.0" style="-fx-padding: 30; -fx-background-color: #f4f4f4; -fx-border-color: #cccccc; -fx-border-radius: 15; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.CourseCardController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="350" spacing="10.0"
+      style="-fx-padding: 20; -fx-background-color: #f4f4f4; -fx-border-color: #cccccc; -fx-border-radius: 15; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);"
+      xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.universitymanagementsystem.CourseCardController">
     <children>
-        <HBox spacing="20.0">
-            <Label fx:id="courseNameLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Course Name" HBox.hgrow="ALWAYS" />
 
-            <Label fx:id="courseNameLabel2" style="-fx-font-size: 16px; -fx-text-fill: #7a7a7a;" text="course name here!!" HBox.hgrow="ALWAYS" />
-        </HBox>
-        <HBox spacing="20.0">
-            <children>
-                <Label fx:id="courseNameLabel1" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Course Code" />
+        <!-- Course Name Section -->
+        <VBox spacing="5.0" style="-fx-padding: 10; -fx-background-color: white; -fx-border-color: #cccccc; -fx-border-radius: 10; -fx-pref-width: 300;">
+            <HBox spacing="10.0">
+                <Label fx:id="courseNameLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Course Name" HBox.hgrow="ALWAYS" />
+                <Label fx:id="courseNameLabel2" style="-fx-font-size: 14px; -fx-text-fill: #7a7a7a;" text="course name here!!" HBox.hgrow="ALWAYS" />
+            </HBox>
+        </VBox>
 
-                <Label fx:id="courseNameLabel21" style="-fx-font-size: 16px; -fx-text-fill: #7a7a7a;" text="course code here!!" />
-            </children>
-        </HBox>
-      <HBox spacing="20.0">
-         <children>
-            <Label fx:id="courseNameLabel12" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Credit Hours" />
+        <!-- Course Code Section -->
+        <VBox spacing="5.0" style="-fx-padding: 10; -fx-background-color: white; -fx-border-color: #cccccc; -fx-border-radius: 10; -fx-pref-width: 300;">
+            <HBox spacing="10.0">
+                <Label fx:id="courseNameLabel1" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Course Code" />
+                <Label fx:id="courseNameLabel21" style="-fx-font-size: 14px; -fx-text-fill: #7a7a7a;" text="course code here!!" />
+            </HBox>
+        </VBox>
 
-            <Label fx:id="courseNameLabel212" style="-fx-font-size: 16px; -fx-text-fill: #7a7a7a;" text="credit hours here!!" />
-         </children>
-      </HBox>
-        <HBox spacing="20.0">
-            <children>
-                <Label fx:id="courseNameLabel11" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Lecturer" />
+        <!-- Credit Hours Section -->
+        <VBox spacing="5.0" style="-fx-padding: 10; -fx-background-color: white; -fx-border-color: #cccccc; -fx-border-radius: 10; -fx-pref-width: 300;">
+            <HBox spacing="10.0">
+                <Label fx:id="courseNameLabel12" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Credit Hours" />
+                <Label fx:id="courseNameLabel212" style="-fx-font-size: 14px; -fx-text-fill: #7a7a7a;" text="credit hours here!!" />
+            </HBox>
+        </VBox>
 
-                <Label fx:id="courseNameLabel211" style="-fx-font-size: 16px; -fx-text-fill: #7a7a7a;" text="lecturer name here!!" />
-            </children>
-        </HBox>
-        <HBox spacing="20.0">
-            <children>
-                <Label fx:id="courseNameLabel111" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Tutor" />
+        <!-- Lecturer Section -->
+        <VBox spacing="5.0" style="-fx-padding: 10; -fx-background-color: white; -fx-border-color: #cccccc; -fx-border-radius: 10; -fx-pref-width: 300;">
+            <HBox spacing="10.0">
+                <Label fx:id="courseNameLabel11" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Lecturer" />
+                <Label fx:id="courseNameLabel211" style="-fx-font-size: 14px; -fx-text-fill: #7a7a7a;" text="lecturer name here!!" />
+            </HBox>
+        </VBox>
 
-                <Label fx:id="courseNameLabel2111" style="-fx-font-size: 16px; -fx-text-fill: #7a7a7a;" text="Tutor name here!!!" />
-            </children>
-        </HBox>
+        <!-- Tutor Section -->
+        <VBox spacing="5.0" style="-fx-padding: 10; -fx-background-color: white; -fx-border-color: #cccccc; -fx-border-radius: 10; -fx-pref-width: 300;">
+            <HBox spacing="10.0">
+                <Label fx:id="courseNameLabel111" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Tutor" />
+                <Label fx:id="courseNameLabel2111" style="-fx-font-size: 14px; -fx-text-fill: #7a7a7a;" text="Tutor name here!!!" />
+            </HBox>
+        </VBox>
 
-        <!-- New HBox for Lecture and Tutorial Times -->
-        <HBox spacing="20.0">
-            <children>
-                <Label fx:id="lectureTimeLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Lecture Time" />
+        <!-- Lecture Time Section -->
+        <VBox spacing="5.0" style="-fx-padding: 10; -fx-background-color: white; -fx-border-color: #cccccc; -fx-border-radius: 10; -fx-pref-width: 300;">
+            <HBox spacing="10.0">
+                <Label fx:id="lectureTimeLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Lecture Time" />
+                <Label fx:id="lectureTime" style="-fx-font-size: 14px; -fx-text-fill: #7a7a7a;" text="Lecture time here!!" />
+            </HBox>
+        </VBox>
 
-                <Label fx:id="lectureTime" style="-fx-font-size: 16px; -fx-text-fill: #7a7a7a;" text="Lecture time here!!" />
-            </children>
-        </HBox>
+        <!-- Tutorial Time Section -->
+        <VBox spacing="5.0" style="-fx-padding: 10; -fx-background-color: white; -fx-border-color: #cccccc; -fx-border-radius: 10; -fx-pref-width: 300;">
+            <HBox spacing="10.0">
+                <Label fx:id="tutorialTimeLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Tutorial Time" />
+                <Label fx:id="tutorialTime" style="-fx-font-size: 14px; -fx-text-fill: #7a7a7a;" text="Tutorial time here!!" />
+            </HBox>
+        </VBox>
 
-        <HBox spacing="20.0">
-            <children>
-                <Label fx:id="tutorialTimeLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Tutorial Time" />
+        <!-- Add Course Button -->
+        <Button fx:id="addCourseButton" alignment="CENTER" contentDisplay="RIGHT" onAction="#handleAddCourse"
+                prefHeight="40.0" prefWidth="120.0" text="Add Course"
+                style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-background-radius: 10; -fx-border-radius: 10;" />
 
-                <Label fx:id="tutorialTime" style="-fx-font-size: 16px; -fx-text-fill: #7a7a7a;" text="Tutorial time here!!" />
-            </children>
-        </HBox>
-        <Button fx:id="addCourseButton" alignment="CENTER" contentDisplay="RIGHT" onAction="#handleAddCourse" prefHeight="48.0" prefWidth="103.0" text="Add Course" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-background-radius: 10; -fx-border-radius: 10;" />
     </children>
 </VBox>
