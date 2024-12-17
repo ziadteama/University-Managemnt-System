@@ -29,10 +29,9 @@ public class TaRegistrationController {
     private List<CanEnroll> canEnroll;
     private List<Node> courseCards;
     private EnrollmentsDAO enrollmentsDAO;
-Tutor tutor=new Tutor()
     // Setter method for Student
     public void setStudent(Student student) {
-        (Tutor) UserSession.getInstance().getLoggedInUser() = student.getUserId();
+        UserSession.getInstance().getLoggedInUser().setCurrentStudent(student);
         this.currentSemester = student.getCurrentSemester();
         studentName.setText(student.getName());
         studentId.setText(String.valueOf(student.getUserId()));
@@ -53,7 +52,7 @@ Tutor tutor=new Tutor()
             }
         }
 System.out.println(userId);
-        canEnroll = enrollmentsDAO.getCanEnroll(userId);
+        canEnroll = enrollmentsDAO.getCanEnroll(UserSession.getInstance().getLoggedInUser().getCurrentStudent().getUserId());
 
 
         // Print the canEnroll list to check if data is being retrieved
@@ -135,7 +134,7 @@ System.out.println(userId);
     @FXML
     private void handleSubmitButtonClick() {
         // Check if the student is already enrolled in a course
-        if (enrollmentsDAO.isAlreadyEnrolled(userId)) {
+        if (enrollmentsDAO.isAlreadyEnrolled(UserSession.getInstance().getLoggedInUser().getCurrentStudent().getUserId())) {
             // Show an alert to the student
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Already Enrolled");
