@@ -158,12 +158,28 @@ public class HelloController {
                 throw new IllegalStateException("Controller could not be retrieved. Check FXML configuration.");
             }
 
+            // Create a new Scene based on the loaded FXML
+            Scene scene = new Scene(root);
+
+            // Create the Stage
             Stage stage = new Stage();
             stage.setTitle("Doctor Course Display");
-            stage.setScene(new Scene(root, 1000, 400));
 
+            // Set the scene for the stage
+            stage.setScene(scene);
+
+            // Wait for the scene to be rendered, then get the preferred width
             stage.show();
 
+            // Get the preferred width of the content and set it as the width for the Stage
+            double contentWidth = scene.getRoot().prefWidth(-1);  // -1 means "use the preferred width of the root node"
+            stage.setWidth(contentWidth);  // Set stage width based on the content's preferred width
+            stage.setHeight(470);  // Set fixed height
+
+            // Set minimum width (optional, you can adjust this as needed)
+            stage.setMinWidth(600);
+
+            // Close the login stage
             Stage currentStage = (Stage) loginButton.getScene().getWindow();
             currentStage.close();
 
@@ -172,6 +188,8 @@ public class HelloController {
             messageLabel.setText("Error loading the next screen. Please try again.");
         }
     }
+
+
 
 
     @FXML

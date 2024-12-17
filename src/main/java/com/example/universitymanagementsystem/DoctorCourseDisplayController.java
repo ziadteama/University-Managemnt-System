@@ -74,8 +74,8 @@ public class DoctorCourseDisplayController<StudentListController> {
             index++; // Increment index for the next color switch
         }
         if (!courses.isEmpty()) {
-            nameLabel.setText("Hello " + role + courses.getFirst().getDoctorName() + "!");
-        } else nameLabel.setText("Hello " + role + user.getName() + "\nYou Have NO Courses!!");
+            nameLabel.setText("Hello " + role.toUpperCase() +" "+ courses.getFirst().getDoctorName() + "!");
+        } else nameLabel.setText("Hello " + role.toUpperCase() + user.getName() + "\nYou Have NO Courses!!");
 
     }
 
@@ -128,16 +128,20 @@ public class DoctorCourseDisplayController<StudentListController> {
             stage.setTitle("Grade Entry - Section: " + sectionId);
             stage.setScene(scene);
 
+            // Set the width and height manually
+            stage.setWidth(800);  // Set your desired width
+            stage.setHeight(700); // Set your desired height
+
             // Pass the sectionId to the GradeEntryController
             GradeEntryController controller = loader.getController();
             controller.setSectionId(sectionId);
-
 
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
 
     public void handleLogout(ActionEvent event) {
