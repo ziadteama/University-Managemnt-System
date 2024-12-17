@@ -29,6 +29,7 @@ public class TaRegistrationController {
     private List<CanEnroll> canEnroll;
     private List<Node> courseCards;
     private EnrollmentsDAO enrollmentsDAO;
+
     // Setter method for Student
     public void setStudent(Student student) {
 
@@ -51,7 +52,7 @@ public class TaRegistrationController {
                 throw new RuntimeException("Failed to initialize EnrollmentsDAO");
             }
         }
-System.out.println(UserSession.getInstance().getLoggedInUser().getCurrentStudent().getUserId());
+        System.out.println(UserSession.getInstance().getLoggedInUser().getCurrentStudent().getUserId());
         canEnroll = enrollmentsDAO.getCanEnroll(UserSession.getInstance().getLoggedInUser().getCurrentStudent().getUserId());
 
 
@@ -85,7 +86,7 @@ System.out.println(UserSession.getInstance().getLoggedInUser().getCurrentStudent
 
         for (CanEnroll course : canEnroll) {
             // Create a card dynamically
-            Node courseCard = TACourseCardController.createCard(course.getSectionId(), course.getCourseName(), course.getCourseCode(), course.getCreditHours(), course.getLecturerName(), course.getTutorName(), course.getLectureTime(), course.getTutorialTime(), this);
+            Node courseCard = CourseCardController.createCard(course.getSectionId(), course.getCourseName(), course.getCourseCode(), course.getCreditHours(), course.getLecturerName(), course.getTutorName(), course.getLectureTime(), course.getTutorialTime(), this);
 
             // Add the card to the container
             if (courseCard != null) {

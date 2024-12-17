@@ -142,11 +142,12 @@ public class CourseCardController {
                 if (updateSuccessful) {
 // Remove the course card from the parent container
                     studentRegisterController.removeCourseCard((Node) addCourseButton.getParent());
+                    taRegistrationController.removeCourseCard((Node) addCourseButton.getParent());
 
 // Remove other cards with the same course name
                     String courseName = courseNameLabel2.getText();
                     studentRegisterController.removeOtherCardsWithSameCourseName(courseName);
-
+                    taRegistrationController.removeOtherCardsWithSameCourseName(courseName);
 // Show confirmation message
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Course Added");
