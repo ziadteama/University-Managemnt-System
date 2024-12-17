@@ -176,10 +176,11 @@ public class DoctorCourseDisplayController<StudentListController> {
         }
     }
 
+    @FXML
     private void handleTaRegister(ActionEvent event) {
         try {
             // Load FXML for new scene
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("student_list.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TaStudentList.fxml"));
             AnchorPane root = loader.load();
 
             // Get Controller of new scene
