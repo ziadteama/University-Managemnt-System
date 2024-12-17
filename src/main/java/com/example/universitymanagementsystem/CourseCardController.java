@@ -24,9 +24,9 @@ public class CourseCardController {
 
     private String sectionId;
 
-    private ScheduleDAO scheduleDAO;
+    ScheduleDAO scheduleDAO;
     private StudentRegisterController studentRegisterController;
-    private TaRegistrationController taRegistrationController;
+    TaRegistrationController taRegistrationController;
 
     /**
      * Sets the course details on the card.
@@ -73,7 +73,13 @@ public class CourseCardController {
             return null;
         }
     }
+    public String getSectionId() {
+        return this.sectionId;
+    }
 
+    public String getCourseName() {
+        return courseNameLabel2.getText();
+    }
     /**
      * Handles the "Add Course" button click event.
      */
