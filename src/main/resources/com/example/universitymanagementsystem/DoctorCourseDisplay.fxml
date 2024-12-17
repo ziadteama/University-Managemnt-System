@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane stylesheets="@styles.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.example.universitymanagementsystem.DoctorCourseDisplayController">
+<BorderPane stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.DoctorCourseDisplayController">
 
     <!-- Top Section -->
     <top>
@@ -26,11 +26,12 @@
     <bottom>
         <StackPane styleClass="bottom-bar">
             <!-- HBox for buttons -->
-            <HBox spacing="10" alignment="center">
+            <HBox alignment="center" spacing="10">
+                <!-- View Schedule Button -->
+                <Button fx:id="viewScheduleButton" mnemonicParsing="false" onAction="#handleViewSchedule" styleClass="modern-logout-button" text="View Schedule" />
+            <Button fx:id="taRegisterButton" mnemonicParsing="false" onAction="#handleTaRegister" styleClass="modern-logout-button" text="Register" />
                 <!-- Logout Button -->
                 <Button fx:id="logoutButton" onAction="#handleLogout" styleClass="modern-logout-button" text="Logout" />
-                <!-- View Schedule Button -->
-                <Button fx:id="viewScheduleButton" mnemonicParsing="false" styleClass="modern-logout-button" onAction="#handleViewSchedule" text="View Schedule" />
             </HBox>
         </StackPane>
     </bottom>

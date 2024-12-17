@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -17,16 +18,19 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class DoctorCourseDisplayController {
+public class DoctorCourseDisplayController<StudentListController> {
 
     @FXML
     private Label nameLabel;
+    @FXML
+    private Button taRegisterButton;
 
     @FXML
     private GridPane courseGrid;
 
     @FXML
     private Button viewScheduleButton;
+    private StudentDAO studentDAO = new StudentDAO(DataBaseConnection.getConnection());
 
     private UserDAO doctorDAO = new UserDAO(DataBaseConnection.getConnection());
 
@@ -34,10 +38,18 @@ public class DoctorCourseDisplayController {
     }
 
     public void initialize() throws SQLException {
-        Doctor dr = (Doctor) UserSession.getInstance().getLoggedInUser();
+        String role = UserSession.getInstance().getLoggedInUser().getRole();
+        User user = UserSession.getInstance().getLoggedInUser();
+        if (role.equals("dr")) {
+            user = (Doctor) user;
+            taRegisterButton.setVisible(false);
+        }
+        else if (role.equals("ta"))
+            user = (Tutor) user;
+
 
         // Get the courses for the doctor using the DAO
-        List<Course> courses = doctorDAO.getCoursesForTeacher(dr.getUserId());
+        List<Course> courses = doctorDAO.getCoursesForTeacher(user.getUserId());
 
         int column = 0;
         int row = 0;
@@ -61,10 +73,9 @@ public class DoctorCourseDisplayController {
 
             index++; // Increment index for the next color switch
         }
-        if (!courses.isEmpty())
-            nameLabel.setText("Hello Dr. " + courses.getFirst().getDoctorName() + "!");
-
-      else   nameLabel.setText("Hello Dr. " + dr.getName() + "     \n        You Have NO Courses!!");
+        if (!courses.isEmpty()) {
+            nameLabel.setText("Hello " + role + courses.getFirst().getDoctorName() + "!");
+        } else nameLabel.setText("Hello " + role + user.getName() + "\nYou Have NO Courses!!");
 
     }
 
@@ -165,6 +176,27 @@ public class DoctorCourseDisplayController {
         }
     }
 
+    private void handleTaRegister(ActionEvent event) {
+        try {
+            // Load FXML for new scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("student_list.fxml"));
+            AnchorPane root = loader.load();
 
+            // Get Controller of new scene
+            TaStudentListController controller = loader.getController();
+
+            // Fetch data from database and pass to the controller
+            List<Student> students = studentDAO.getStudentsByTaId(UserSession.getInstance().getLoggedInUser().getUserId());
+            controller.setStudentList(students);
+
+            // Set the new scene
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Student List");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
 

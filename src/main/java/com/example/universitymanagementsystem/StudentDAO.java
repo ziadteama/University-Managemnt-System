@@ -156,6 +156,7 @@ public class StudentDAO {
 
         return null;  // Return null if no student marks are found
     }
+
     public List<Semester> getSemestersTaken(int userId) {
         String query = "SELECT DISTINCT " +
                 "s.year, " +
@@ -187,4 +188,28 @@ public class StudentDAO {
 
         return null;  // Return null if no semesters are found
     }
+
+    public List<Student> getStudentsByTaId(int taId) throws SQLException {
+        List<Student> students = new ArrayList<>();
+        String query = """
+                    SELECT u.user_id, u.name
+                    FROM users u
+                    JOIN students s ON u.user_id = s.student_id
+                    WHERE s.advisor_id = ? AND u.role = 'student'
+                """;
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+        preparedStatement.setInt(1, taId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            int userId = resultSet.getInt("user_id");
+            String studentName = resultSet.getString("student_name");
+            students.add(new Student(userId, studentName));
+        }
+
+        return students;
+    }
 }
+
