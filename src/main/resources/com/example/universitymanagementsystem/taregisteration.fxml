@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.FlowPane?>
 
 <AnchorPane prefHeight="455.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.universitymanagementsystem.TaRegistrationController">
-      <Label fx:id="studentName" layoutX="47.0" layoutY="31.0" prefHeight="49.0" prefWidth="94.0" text="Student Name" />
-      <Label fx:id="studentId" layoutX="47.0" layoutY="81.0" text="Student ID" />
+    <Label fx:id="studentName" layoutX="47.0" layoutY="31.0" prefHeight="49.0" prefWidth="94.0" text="Student Name" />
+    <Label fx:id="studentId" layoutX="47.0" layoutY="81.0" text="Student ID" />
     <fx:include source="registertableview.fxml" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" />
-   <FlowPane fx:id="coursesContainer" layoutX="134.0" layoutY="28.0" prefHeight="200.0" prefWidth="260.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="66.79999999999995" AnchorPane.topAnchor="28.0" />
-   <Button layoutX="500.0" layoutY="274.0" mnemonicParsing="false" onAction="#handleSubmitButtonClick" text="enroll" />
-   <Button layoutX="500.0" layoutY="337.0" mnemonicParsing="false" onAction="#handleClearSchedule" text="clear" />
+    <FlowPane fx:id="coursesContainer" layoutX="134.0" layoutY="28.0" prefHeight="200.0" prefWidth="260.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="66.79999999999995" AnchorPane.topAnchor="28.0" />
+    <Button layoutX="500.0" layoutY="274.0" mnemonicParsing="false" onAction="#handleSubmitButtonClick" text="enroll" />
+    <Button layoutX="500.0" layoutY="337.0" mnemonicParsing="false" onAction="#handleClearSchedule" text="clear" />
 
 </AnchorPane>

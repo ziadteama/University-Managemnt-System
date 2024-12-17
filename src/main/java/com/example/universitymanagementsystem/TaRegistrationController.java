@@ -29,10 +29,10 @@ public class TaRegistrationController {
     private List<CanEnroll> canEnroll;
     private List<Node> courseCards;
     private EnrollmentsDAO enrollmentsDAO;
-
+Tutor tutor=new Tutor()
     // Setter method for Student
     public void setStudent(Student student) {
-        this.userId = student.getUserId();
+        (Tutor) UserSession.getInstance().getLoggedInUser() = student.getUserId();
         this.currentSemester = student.getCurrentSemester();
         studentName.setText(student.getName());
         studentId.setText(String.valueOf(student.getUserId()));
@@ -52,8 +52,8 @@ public class TaRegistrationController {
                 throw new RuntimeException("Failed to initialize EnrollmentsDAO");
             }
         }
-
-            canEnroll = enrollmentsDAO.getCanEnroll(userId);
+System.out.println(userId);
+        canEnroll = enrollmentsDAO.getCanEnroll(userId);
 
 
         // Print the canEnroll list to check if data is being retrieved

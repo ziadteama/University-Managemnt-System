@@ -56,7 +56,7 @@ public class TaStudentListController {
         try {
             // Load the registration FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/universitymanagementsystem/taregisteration.fxml"));
-
+System.out.println("line 60 "+studentId);
             // Assuming you have a 'student' object already created and available
             Student student = studentDAO.getStudentById(studentId);  // Replace with your actual method to get the student
 
