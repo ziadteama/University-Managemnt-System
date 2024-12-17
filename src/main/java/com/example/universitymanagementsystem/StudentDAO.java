@@ -192,7 +192,7 @@ public class StudentDAO {
     public List<Student> getStudentsByTaId(int taId) throws SQLException {
         List<Student> students = new ArrayList<>();
         String query = """
-                    SELECT u.user_id, u.name
+                    SELECT u.user_id, u.name ,s.current_semester
                     FROM users u
                     JOIN students s ON u.user_id = s.student_id
                     WHERE s.advisor_id = ? AND u.role = 'student'
@@ -205,8 +205,10 @@ public class StudentDAO {
 
         while (resultSet.next()) {
             int userId = resultSet.getInt("user_id");
+            int currentSemester = resultSet.getInt("current_semester");
+
             String studentName = resultSet.getString("name");
-            students.add(new Student(userId, studentName));
+            students.add(new Student(userId, studentName,currentSemester));
         }
 
         return students;

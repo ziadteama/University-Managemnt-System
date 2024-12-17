@@ -25,8 +25,9 @@ public class Student extends User {
         this.enrollments = new ArrayList<>();
         this.semesters = new ArrayList<>();
     }
-    public Student(int userId, String name) {
+    public Student(int userId, String name, int currentSemester) {
         super(userId, name);
+        this.currentSemester = currentSemester;
     }
     // Getters and Setters
     public double getGpa() {

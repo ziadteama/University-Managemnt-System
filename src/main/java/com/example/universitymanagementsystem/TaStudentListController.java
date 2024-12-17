@@ -1,12 +1,18 @@
 package com.example.universitymanagementsystem;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.List;
 
 public class TaStudentListController {
@@ -39,5 +45,20 @@ public class TaStudentListController {
 
     // Method to handle register button click
     private void handleRegisterClick(Student student) {
-        System.out.println("Register button clicked for Student ID: " + student.getUserId());
-    }}
+        try {
+            // Load the registration FXML and pass the studentId to the controller
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/universitymanagementsystem/taRegistration.fxml"));
+            loader.setController(new TaRegistrationController(student);
+
+            // Load the scene
+            Node root = loader.load();
+
+            // Get the current stage (window) and set the new scene
+            Stage stage = (Stage) studentVBox.getScene().getWindow();
+            stage.setScene(new Scene((Parent) root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

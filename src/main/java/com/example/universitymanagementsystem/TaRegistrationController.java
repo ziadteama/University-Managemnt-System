@@ -17,8 +17,13 @@ import java.util.Set;
 public class TaRegistrationController {
 
 
-   @FXML
+    @FXML
     private FlowPane coursesContainer;
+
+    @FXML
+    private Label studentName;
+    @FXML
+    private Label studentId;
 
     private List<CanEnroll> canEnroll;
     private List<Node> courseCards;
@@ -27,8 +32,11 @@ public class TaRegistrationController {
     private int studentid;
 
 
-    public TaRegistrationController(int studentId) {
-        this.studentid = studentId;
+    public TaRegistrationController(Student student) {
+        this.student = student;
+        studentName.setText(student.getName());
+        studentName.setText(String.valueOf(student.getUserId()));
+
         try {
             // Initialize the database connection
             Connection dbConnection = DataBaseConnection.getConnection();
@@ -165,6 +173,7 @@ public class TaRegistrationController {
             System.out.println("No courses selected for enrollment.");
         }
     }
+
     @FXML
     private void handleClearSchedule() {
         // Get the current schedule
