@@ -54,8 +54,9 @@ public class TaStudentListController {
     private void handleRegisterClick(int studentId) {
         try {
             // Load the registration FXML and pass the studentId to the controller
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/universitymanagementsystem/taRegistration.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/universitymanagementsystem/taregistration.fxml"));
             Student student= studentDAO.getStudentById(studentId);
+            System.out.println(student.getName());
             loader.setController(new TaRegistrationController(student));
 
             // Load the scene
