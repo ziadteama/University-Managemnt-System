@@ -136,13 +136,7 @@ public class TaRegistrationController {
     private void handleSubmitButtonClick() {
         // Check if the student is already enrolled in a course
         if (enrollmentsDAO.isAlreadyEnrolled(UserSession.getInstance().getLoggedInUser().getCurrentStudent().getUserId())) {
-            // Show an alert to the student
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Already Enrolled");
-            alert.setHeaderText("Already Enrolled");
-            alert.setContentText("You are already enrolled in a course. Please head to your TA to discuss further enrollment options.");
-            alert.showAndWait();
-            return;
+            enrollmentsDAO.dropEnrollments(UserSession.getInstance().getLoggedInUser().getCurrentStudent().getUserId());
         }
 
         List<String> selectedSectionIds = new ArrayList<>();

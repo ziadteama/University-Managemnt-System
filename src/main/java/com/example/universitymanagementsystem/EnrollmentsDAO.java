@@ -131,4 +131,15 @@ public class EnrollmentsDAO {
             return false; // Returns false if an error occurs
         }
     }
+    public void dropEnrollments(int userId) {
+        String query = "DELETE FROM enrollments WHERE user_id = ? ;";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
