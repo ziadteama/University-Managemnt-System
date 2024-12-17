@@ -12,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -56,10 +57,10 @@ public class DoctorCourseDisplayController {
 
             index++; // Increment index for the next color switch
         }
+        if (!courses.isEmpty())
+            nameLabel.setText("Hello Dr. " + courses.getFirst().getDoctorName() + "!");
 
-        nameLabel.setText("Hello Dr. " + courses.getFirst().getDoctorName() + "!");
-
-        // Add action listener for the View Schedule button
+        nameLabel.setText("Hello Dr. " + dr.getName() + "You Have NO Courses!!");
 
     }
 
@@ -117,8 +118,6 @@ public class DoctorCourseDisplayController {
             controller.setSectionId(sectionId);
 
 
-
-
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,6 +142,7 @@ public class DoctorCourseDisplayController {
             e.printStackTrace();
         }
     }
+
     public void handleViewSchedule(ActionEvent event) {
         try {
             // Load the TeacherScheduleView.fxml
