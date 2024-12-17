@@ -70,6 +70,8 @@ public class MenuController {
             // Load the Marks scene
             FXMLLoader loader = new FXMLLoader(getClass().getResource("studentsmarksscene.fxml"));
             Parent root = loader.load();
+// Check the controller and passed data here
+
 
             // Get the current stage and set the new scene (Marks screen)
             Stage stage = (Stage) resultsButton.getScene().getWindow();

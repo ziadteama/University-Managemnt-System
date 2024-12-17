@@ -64,7 +64,7 @@ public class DoctorCourseDisplayController {
         if (!courses.isEmpty())
             nameLabel.setText("Hello Dr. " + courses.getFirst().getDoctorName() + "!");
 
-        nameLabel.setText("Hello Dr. " + dr.getName() + "You Have NO Courses!!");
+      else   nameLabel.setText("Hello Dr. " + dr.getName() + "     \n        You Have NO Courses!!");
 
     }
 
