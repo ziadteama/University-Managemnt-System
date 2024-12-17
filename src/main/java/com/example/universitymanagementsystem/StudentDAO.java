@@ -205,7 +205,7 @@ public class StudentDAO {
 
         while (resultSet.next()) {
             int userId = resultSet.getInt("user_id");
-            String studentName = resultSet.getString("student_name");
+            String studentName = resultSet.getString("name");
             students.add(new Student(userId, studentName));
         }
 

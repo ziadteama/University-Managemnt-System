@@ -106,7 +106,7 @@ public class HelloController {
                         showDoctorDashboard();
                         break;
                     case "ta":
-                        showTADashboard(UserSession.getInstance().getLoggedInUser().getUserId());
+                       showDoctorDashboard();
                         break;
                     default:
                         messageLabel.setText("Unknown role.");
@@ -173,9 +173,6 @@ public class HelloController {
         }
     }
 
-    private void showTADashboard(int tutorId) {
-        //
-    }
 
     @FXML
     private void handleForgotPassword() {
